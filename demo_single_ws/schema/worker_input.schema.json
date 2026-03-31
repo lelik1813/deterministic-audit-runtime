@@ -1,0 +1,729 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.inner-agent-state.local/worker_input.schema.json",
+  "title": "Worker Input Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "slice_id",
+    "worker_role",
+    "task",
+    "snapshot_ref",
+    "target_paths",
+    "relevant_observations",
+    "open_questions",
+    "constraints",
+    "allowed_outputs",
+    "forbidden_outputs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "slice_id": {
+      "$ref": "#/$defs/sliceId"
+    },
+    "worker_role": {
+      "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/workerRole"
+    },
+    "task": {
+      "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/task"
+    },
+    "snapshot_ref": {
+      "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/snapshotRef"
+    },
+    "target_paths": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/nonEmptyString"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "target_sources": {
+      "$ref": "#/$defs/targetSources"
+    },
+    "relevant_observations": {
+      "$ref": "#/$defs/relevantObservationMap"
+    },
+    "open_questions": {
+      "$ref": "#/$defs/openQuestionMap"
+    },
+    "answered_questions": {
+      "$ref": "#/$defs/answeredQuestionMap"
+    },
+    "constraints": {
+      "$ref": "#/$defs/constraints"
+    },
+    "allowed_outputs": {
+      "$ref": "#/$defs/allowedOutputs"
+    },
+    "forbidden_outputs": {
+      "$ref": "#/$defs/forbiddenOutputs"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "worker_role": {
+            "const": "Reader"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "task": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/task"
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "module_scan"
+                  },
+                  "target": {
+                    "properties": {
+                      "kind": {
+                        "enum": [
+                          "path",
+                          "module"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "allowed_outputs": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/allowedOutputs"
+              },
+              {
+                "properties": {
+                  "candidate_event_types": {
+                    "const": [
+                      "hypothesis.proposed",
+                      "observation.proposed",
+                      "question.opened"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "forbidden_outputs": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/forbiddenOutputs"
+              },
+              {
+                "properties": {
+                  "candidate_event_types": {
+                    "const": [
+                      "contradiction.registered",
+                      "issue.proposed",
+                      "observation.rejected",
+                      "observation.verified"
+                    ]
+                  },
+                  "actions": {
+                    "const": [
+                      "issue_creation",
+                      "severity_assignment",
+                      "hypothesis_to_fact_promotion"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "worker_role": {
+            "const": "Verifier"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "task": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/task"
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "verify_claim"
+                  },
+                  "target": {
+                    "properties": {
+                      "kind": {
+                        "enum": [
+                          "observation",
+                          "hypothesis"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "relevant_observations": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/relevantObservationMap"
+              },
+              {
+                "minProperties": 1
+              }
+            ]
+          },
+          "allowed_outputs": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/allowedOutputs"
+              },
+              {
+                "properties": {
+                  "candidate_event_types": {
+                    "const": [
+                      "contradiction.registered",
+                      "hypothesis.rejected",
+                      "hypothesis.sent_to_verification",
+                      "hypothesis.supported",
+                      "hypothesis.unresolved_conflict",
+                      "observation.rejected",
+                      "observation.verified",
+                      "question.opened"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "forbidden_outputs": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/forbiddenOutputs"
+              },
+              {
+                "properties": {
+                  "candidate_event_types": {
+                    "const": [
+                      "hypothesis.proposed",
+                      "issue.proposed",
+                      "observation.proposed"
+                    ]
+                  },
+                  "actions": {
+                    "const": [
+                      "issue_creation",
+                      "unsupported_claims",
+                      "inference_without_evidence"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "worker_role": {
+            "const": "IssueComposer"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "task": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/task"
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "compose_issue"
+                  },
+                  "target": {
+                    "properties": {
+                      "kind": {
+                        "const": "observation"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "relevant_observations": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/verifiedObservationMap"
+              },
+              {
+                "minProperties": 1
+              }
+            ]
+          },
+          "allowed_outputs": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/allowedOutputs"
+              },
+              {
+                "properties": {
+                  "candidate_event_types": {
+                    "const": [
+                      "issue.proposed"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "forbidden_outputs": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/forbiddenOutputs"
+              },
+              {
+                "properties": {
+                  "candidate_event_types": {
+                    "const": [
+                      "contradiction.registered",
+                      "hypothesis.proposed",
+                      "observation.proposed",
+                      "observation.rejected",
+                      "observation.verified",
+                      "question.opened"
+                    ]
+                  },
+                  "actions": {
+                    "const": [
+                      "use_unverified_observations_as_facts",
+                      "unsupported_claims"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "worker_role": {
+            "const": "CandidateGenerator"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "task": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/task"
+              },
+              {
+                "properties": {
+                  "type": {
+                    "const": "generate_candidates"
+                  },
+                  "target": {
+                    "properties": {
+                      "kind": {
+                        "enum": [
+                          "path",
+                          "module"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "allowed_outputs": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/allowedOutputs"
+              },
+              {
+                "properties": {
+                  "candidate_event_types": {
+                    "const": [
+                      "candidate.proposed"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "forbidden_outputs": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/forbiddenOutputs"
+              },
+              {
+                "properties": {
+                  "candidate_event_types": {
+                    "const": [
+                      "contradiction.registered",
+                      "hypothesis.proposed",
+                      "issue.proposed",
+                      "observation.proposed",
+                      "observation.rejected",
+                      "observation.verified",
+                      "question.opened"
+                    ]
+                  },
+                  "actions": {
+                    "const": [
+                      "direct_state_mutation",
+                      "issue_creation",
+                      "observation_creation",
+                      "severity_assignment",
+                      "truth_claims"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "constraints": {
+            "$ref": "#/$defs/candidateGeneratorConstraints"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sliceId": {
+      "type": "string",
+      "pattern": "^slice_[a-f0-9]{16}$"
+    },
+    "targetSources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file_path", "snapshot_ref", "file_content"],
+        "additionalProperties": false,
+        "properties": {
+          "file_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "snapshot_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "file_content": {
+            "type": "string",
+            "description": "Full text content of the target file"
+          },
+          "file_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{7,128}$"
+          },
+          "line_range": {
+            "type": "object",
+            "properties": {
+              "start": {"type": "integer", "minimum": 1},
+              "end": {"type": "integer", "minimum": 1}
+            }
+          }
+        }
+      }
+    },
+    "candidateEventType": {
+      "type": "string",
+      "enum": [
+        "candidate.proposed",
+        "contradiction.registered",
+        "hypothesis.proposed",
+        "hypothesis.rejected",
+        "hypothesis.sent_to_verification",
+        "hypothesis.supported",
+        "hypothesis.unresolved_conflict",
+        "issue.proposed",
+        "observation.proposed",
+        "observation.rejected",
+        "observation.verified",
+        "question.opened"
+      ]
+    },
+    "candidateGeneratorForbiddenAction": {
+      "type": "string",
+      "enum": [
+        "direct_state_mutation",
+        "issue_creation",
+        "observation_creation",
+        "severity_assignment",
+        "truth_claims"
+      ]
+    },
+    "forbiddenAction": {
+      "type": "string",
+      "enum": [
+        "hypothesis_to_fact_promotion",
+        "inference_without_evidence",
+        "issue_creation",
+        "severity_assignment",
+        "unsupported_claims",
+        "use_unverified_observations_as_facts"
+      ]
+    },
+    "openQuestion": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/question"
+        },
+        {
+          "properties": {
+            "status": {
+              "const": "open"
+            }
+          }
+        }
+      ]
+    },
+    "answeredQuestion": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/question"
+        },
+        {
+          "properties": {
+            "status": {
+              "const": "answered"
+            }
+          }
+        }
+      ]
+    },
+    "verifiedObservation": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/observation"
+        },
+        {
+          "properties": {
+            "status": {
+              "const": "verified"
+            }
+          }
+        }
+      ]
+    },
+    "relevantObservationMap": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^obs_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/observation"
+      }
+    },
+    "verifiedObservationMap": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^obs_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/verifiedObservation"
+      }
+    },
+    "openQuestionMap": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^question_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/openQuestion"
+      }
+    },
+    "answeredQuestionMap": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^question_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/answeredQuestion"
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context_source",
+        "conversational_context_allowed",
+        "unstored_context_allowed",
+        "full_state_injection_allowed",
+        "structured_output_required",
+        "prose_state_mutation_allowed",
+        "facts_require_source_binding",
+        "implicit_guessing_allowed",
+        "uncertainty_expression"
+      ],
+      "properties": {
+        "context_source": {
+          "type": "string",
+          "const": "canonical_state_plus_task_only"
+        },
+        "conversational_context_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "unstored_context_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "full_state_injection_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "structured_output_required": {
+          "type": "boolean",
+          "const": true
+        },
+        "prose_state_mutation_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "facts_require_source_binding": {
+          "type": "boolean",
+          "const": true
+        },
+        "implicit_guessing_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "uncertainty_expression": {
+          "type": "string",
+          "enum": [
+            "emit_hypothesis_or_question_instead_of_guessing"
+          ]
+        }
+      }
+    },
+    "allowedOutputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_event_types"
+      ],
+      "properties": {
+        "candidate_event_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/candidateEventType"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "forbiddenOutputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_event_types",
+        "actions"
+      ],
+      "properties": {
+        "candidate_event_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/candidateEventType"
+          },
+          "uniqueItems": true
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/forbiddenAction"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "candidateGeneratorConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context_source",
+        "conversational_context_allowed",
+        "unstored_context_allowed",
+        "full_state_injection_allowed",
+        "structured_output_required",
+        "prose_state_mutation_allowed",
+        "candidates_are_proposals_only",
+        "candidates_are_non_authoritative",
+        "uncertainty_must_remain_explicit",
+        "no_direct_path_to_issue_or_report"
+      ],
+      "properties": {
+        "context_source": {
+          "type": "string",
+          "const": "canonical_state_plus_task_only"
+        },
+        "conversational_context_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "unstored_context_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "full_state_injection_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "structured_output_required": {
+          "type": "boolean",
+          "const": true
+        },
+        "prose_state_mutation_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "candidates_are_proposals_only": {
+          "type": "boolean",
+          "const": true
+        },
+        "candidates_are_non_authoritative": {
+          "type": "boolean",
+          "const": true
+        },
+        "uncertainty_must_remain_explicit": {
+          "type": "boolean",
+          "const": true
+        },
+        "no_direct_path_to_issue_or_report": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    }
+  }
+}

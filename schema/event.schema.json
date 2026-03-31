@@ -1,0 +1,569 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.inner-agent-state.local/event.schema.json",
+  "title": "Audit Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "audit_id",
+    "entity_type",
+    "entity_id",
+    "event_type",
+    "occurred_at",
+    "actor",
+    "snapshot_ref",
+    "idempotency_key",
+    "caused_by_event_id",
+    "payload",
+    "acceptance"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "id": {
+      "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/eventId"
+    },
+    "audit_id": {
+      "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/auditId"
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "audit",
+        "task",
+        "observation",
+        "hypothesis",
+        "issue",
+        "question",
+        "contradiction",
+        "decision",
+        "candidate",
+        "coverage"
+      ]
+    },
+    "entity_id": {
+      "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/entityId"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "audit.created",
+        "audit.updated",
+        "audit.completed",
+        "audit.cancelled",
+        "task.created",
+        "task.started",
+        "task.completed",
+        "task.failed",
+        "task.retried",
+        "observation.proposed",
+        "observation.verified",
+        "observation.rejected",
+        "hypothesis.proposed",
+        "hypothesis.closed",
+        "hypothesis.rejected",
+        "issue.proposed",
+        "issue.accepted",
+        "issue.rejected",
+        "issue.closed",
+        "question.opened",
+        "question.answered",
+        "question.closed",
+        "contradiction.registered",
+        "contradiction.resolved",
+        "decision.recorded",
+        "candidate.proposed",
+        "candidate.routed_to_verify",
+        "candidate.rejected",
+        "candidate.promoted_to_observation"
+      ]
+    },
+    "occurred_at": {
+      "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/timestamp"
+    },
+    "actor": {
+      "$ref": "#/$defs/actor"
+    },
+    "snapshot_ref": {
+      "anyOf": [
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/snapshotRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "idempotency_key": {
+      "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/nonEmptyString"
+    },
+    "caused_by_event_id": {
+      "anyOf": [
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/eventId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "payload": {
+      "oneOf": [
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/audit"
+        },
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/task"
+        },
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/observation"
+        },
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/hypothesis"
+        },
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/issue"
+        },
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/question"
+        },
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/contradiction"
+        },
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/decision"
+        },
+        {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/candidate"
+        }
+      ]
+    },
+    "acceptance": {
+      "$ref": "#/$defs/acceptance"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "audit"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/auditId"
+          },
+          "event_type": {
+            "enum": [
+              "audit.created",
+              "audit.updated",
+              "audit.completed",
+              "audit.cancelled"
+            ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/audit"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "task"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/taskId"
+          },
+          "event_type": {
+            "enum": [
+            "task.created",
+            "task.started",
+            "task.completed",
+            "task.failed",
+            "task.retried"
+          ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/task"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "observation"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/observationId"
+          },
+          "event_type": {
+            "enum": [
+              "observation.proposed",
+              "observation.verified",
+              "observation.rejected"
+            ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/observation"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "hypothesis"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/hypothesisId"
+          },
+          "event_type": {
+            "enum": [
+              "hypothesis.proposed",
+              "hypothesis.closed",
+              "hypothesis.rejected"
+            ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/hypothesis"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "issue"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/issueId"
+          },
+          "event_type": {
+            "enum": [
+              "issue.proposed",
+              "issue.accepted",
+              "issue.rejected",
+              "issue.closed"
+            ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/issue"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "question"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/questionId"
+          },
+          "event_type": {
+            "enum": [
+              "question.opened",
+              "question.answered",
+              "question.closed"
+            ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/question"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "contradiction"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/contradictionId"
+          },
+          "event_type": {
+            "enum": [
+              "contradiction.registered",
+              "contradiction.resolved"
+            ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/contradiction"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "decision"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/decisionId"
+          },
+          "event_type": {
+            "enum": [
+              "decision.recorded"
+            ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/decision"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "entity_type": {
+            "const": "candidate"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "entity_id": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/candidateId"
+          },
+          "event_type": {
+            "enum": [
+              "candidate.proposed",
+              "candidate.routed_to_verify",
+              "candidate.rejected",
+              "candidate.promoted_to_observation"
+            ]
+          },
+          "payload": {
+            "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/candidate"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor_type",
+        "actor_id",
+        "role"
+      ],
+      "properties": {
+        "actor_type": {
+          "type": "string",
+          "enum": [
+            "user",
+            "worker",
+            "system"
+          ]
+        },
+        "actor_id": {
+          "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/nonEmptyString"
+        },
+        "role": {
+          "anyOf": [
+            {
+              "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/workerRole"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "actor_type": {
+                "const": "worker"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "actor_type": {
+                "enum": [
+                  "user",
+                  "system"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "decided_at",
+        "decided_by",
+        "reason"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "accepted",
+            "rejected"
+          ]
+        },
+        "decided_at": {
+          "anyOf": [
+            {
+              "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "decided_by": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/actor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "https://schemas.inner-agent-state.local/audit.schema.json#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "pending"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "decided_at": {
+                "type": "null"
+              },
+              "decided_by": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "accepted",
+                  "rejected"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "decided_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "decided_by": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "rejected"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

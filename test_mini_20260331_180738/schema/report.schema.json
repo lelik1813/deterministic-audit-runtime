@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dar/report.schema.json",
+  "title": "DAR Report Schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "source_audit_id",
+    "source_state_digest",
+    "audit",
+    "summary",
+    "findings",
+    "verified_observations",
+    "open_questions",
+    "suppression_records",
+    "contradictions",
+    "decisions"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "report_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_audit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_state_digest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audit": {
+      "type": "object"
+    },
+    "summary": {
+      "type": "object"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "verified_observations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "suppression_records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/suppression_record"
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "required": [
+        "finding_id",
+        "issue_id",
+        "status",
+        "title",
+        "summary",
+        "severity",
+        "confidence",
+        "impact",
+        "recommended_fix",
+        "severity_rule_ref",
+        "source_observation_ids",
+        "supporting_observation_ids",
+        "supporting_evidence_classes",
+        "supporting_evidence",
+        "uncertainty"
+      ],
+      "properties": {
+        "finding_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issue_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "accepted_risk",
+            "fixed",
+            "false_positive",
+            "rejected"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "impact": {
+          "type": "string"
+        },
+        "recommended_fix": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "severity_rule_ref": {
+          "type": "string"
+        },
+        "source_observation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supporting_observation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supporting_evidence_classes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supporting_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "uncertainty": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "suppression_record": {
+      "type": "object",
+      "required": [
+        "suppression_id",
+        "observation_id",
+        "reason_code",
+        "reason_detail",
+        "status"
+      ],
+      "properties": {
+        "suppression_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason_code": {
+          "type": "string",
+          "enum": [
+            "below_threshold",
+            "policy_suppressed",
+            "duplicate_of",
+            "mapping_metadata_missing",
+            "insufficient_structured_fields"
+          ]
+        },
+        "reason_detail": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "const": "suppressed"
+        },
+        "canonical_finding_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

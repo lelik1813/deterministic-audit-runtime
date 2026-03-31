@@ -1,0 +1,93 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "issue.proposed"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "creating unsupported claims",
+      "using unverified observations as facts"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {
+    "obs_f9e2ee07935d9c95": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T16:10:03Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_f9e2ee07935d9c95",
+      "pattern_match_ids": [
+        "pm_marshal_loads_a3d05506deb0defb"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "return marshal.loads(data)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 52,
+              "start": 52
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "marshal.loads is used on input data, which is unsafe for untrusted content.",
+      "status": "verified",
+      "updated_at": "2026-03-31T16:22:42Z"
+    }
+  },
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "38112ad5922514ccad09f2839ea5e9d6a6b9df59408fa00d3ea68ee32739ec9a",
+  "slice_id": "slice_38112ad5922514cc",
+  "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+  "target_paths": [
+    "app.py"
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_test_mini",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_c6e245bf1b99d3c5",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "observation",
+      "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+      "value": "obs_f9e2ee07935d9c95"
+    },
+    "type": "compose_issue",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "IssueComposer"
+}

@@ -1,0 +1,36 @@
+{
+  "audit": {
+    "created_at": "2026-03-29T11:10:03Z",
+    "current_snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+    "id": "audit_dir_real",
+    "status": "initialized",
+    "target": {
+      "repo_label": "runtime-audit-fixture",
+      "repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\runtime-audit-fixture",
+      "vcs": "git"
+    },
+    "title": "Directory target real Codex",
+    "updated_at": "2026-03-29T11:10:04Z"
+  },
+  "candidates": {},
+  "contradictions": {},
+  "decisions": {},
+  "hypotheses": {},
+  "issues": {},
+  "observations": {},
+  "questions": {
+    "question_308f96e88092bd14": {
+      "answer": null,
+      "audit_id": "audit_dir_real",
+      "context": null,
+      "created_at": "2026-03-29T11:10:31Z",
+      "id": "question_308f96e88092bd14",
+      "prompt": "What concrete files and file contents under target path 'app' at snapshot_ref '00d7f5425395220f39cab9c733be8fdeb0564599' should be scanned? The provided input includes no source content to bind observations.",
+      "related_entity_refs": [],
+      "status": "open",
+      "updated_at": "2026-03-29T11:10:31Z"
+    }
+  },
+  "schema_version": "1.0.0",
+  "tasks": {}
+}

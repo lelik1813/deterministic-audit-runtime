@@ -1,0 +1,97 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "contradiction.registered",
+      "hypothesis.rejected",
+      "hypothesis.sent_to_verification",
+      "hypothesis.supported",
+      "observation.rejected",
+      "observation.verified",
+      "question.opened"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "inference without evidence",
+      "issue creation",
+      "unsupported claims"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {
+    "obs_e17d0e6c0d590889": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_e17d0e6c0d590889",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "@admin_bp.route('/debug/config', methods=['GET']) def debug_config(): \"\"\"Debug endpoint to view configuration (only in debug mode).\"\"\" # Check is based on request parameter, not actual config if request.args.get('debug') == 'true': config_data = { 'database_url': current_app.config.get('DATABASE_URL'), 'secret_key': current_app.config.get('SECRET_KEY'), 'payment_api_key': current_app.config.get('PAYMENT_API_KEY'), 'smtp_password': current_app.config.get('SMTP_PASSWORD'), 'admin_password': current_app.config.get('ADMIN_PASSWORD'), 'environment': current_app.config.get('ENV'), 'debug': current_app.config.get('DEBUG') } return jsonify(config_data), 200 return jsonify({'error': 'Debug mode not enabled'}), 403",
+            "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+            "file_path": "app/routes/admin.py",
+            "line_range": {
+              "end": 121,
+              "start": 103
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Unauthenticated debug configuration endpoint discloses sensitive secrets (SECRET_KEY, API keys, SMTP/admin credentials) based only on query parameter debug=true.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    }
+  },
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "540cdb813f2b400f186c1959bab412c677d31b3db52c2345d8ead6a33db0d624",
+  "slice_id": "slice_540cdb813f2b400f",
+  "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+  "target_paths": [
+    "app/routes/admin.py"
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_codex_manual",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_b5c1d4c32c685181",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "observation",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+      "value": "obs_e17d0e6c0d590889"
+    },
+    "type": "verify_claim",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "Verifier"
+}

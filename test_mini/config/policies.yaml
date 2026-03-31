@@ -1,0 +1,227 @@
+# Audit Policy Profiles (v1.1 Step 9)
+#
+# Policy profiles control runtime behavior in controlled, testable ways.
+# Each profile defines thresholds that affect:
+# - question emission thresholds
+# - task expansion aggressiveness
+# - compose_issue fan-out budgets
+# - issue composition strictness
+#
+# Profiles do NOT weaken validators or evidence discipline.
+
+schema_version: "1.0.0"
+
+profiles:
+  strict_security:
+    description: |
+      High-sensitivity mode for security audits.
+      Emits questions more readily to avoid missing ambiguities.
+      Allows aggressive issue composition to ensure comprehensive coverage.
+
+    question_emission:
+      # Emit questions on ambiguity, potential security concern, or unclear intent
+      emit_on_ambiguity: true
+      emit_on_security_concern: true
+      emit_on_unclear_intent: true
+      # Don't suppress questions even if similar to existing
+      suppress_near_duplicates: false
+      # Maximum questions per slice
+      max_questions_per_slice: 12
+
+    task_expansion:
+      # Aggressively expand verify_claim tasks
+      verify_claim_per_observation: true
+      # Allow compose_issue for all verified observations
+      compose_issue_for_verified: true
+      # Don't defer tasks due to budget unless critical
+      defer_on_budget_soft: false
+
+    verify_claim_budget:
+      # Maximum verify_claim tasks per audit
+      max_per_audit: 100
+      # Maximum verify_claim tasks per observation (prevents duplicates)
+      max_per_observation: 1
+      # Maximum new verify_claim tasks per follow-up iteration (fan-out limit)
+      max_follow_up_per_iteration: 5
+
+    compose_issue_budget:
+      # Maximum active compose_issue tasks per audit
+      max_per_audit: 48
+      # Maximum active compose_issue tasks per source path
+      max_per_source_path: 8
+      # Allow issues from inferred_hypothesis evidence class (with warning)
+      allow_inferred_evidence: true
+
+    issue_composition:
+      # Require rule binding for severity assignment
+      require_rule_binding_for_severity: true
+      # Include low-confidence findings (explicitly marked)
+      include_low_confidence: true
+      # Minimum evidence class for issue-backed findings
+      min_evidence_class: "inferred_hypothesis"
+
+    candidate_routing:
+      # Maximum candidates to accept per audit
+      max_candidates_per_audit: 100
+      # Maximum verify_claim tasks from candidates per routing run
+      max_verify_tasks_per_run: 40
+      # Maximum module_scan tasks per cross_file_correlation
+      max_module_scan_per_cross_file: 5
+      # Maximum total tasks per candidate
+      max_total_tasks_per_candidate: 5
+      # Route low confidence candidates
+      defer_low_confidence: false
+      # Suppress candidates targeting same file as existing candidate
+      suppress_near_duplicate_files: false
+      # Enable routing for each candidate type
+      route_risk_candidates: true
+      route_policy_candidates: true
+      route_cross_file_correlations: true
+      route_verification_targets: true
+
+  low_noise:
+    description: |
+      Conservative mode for focused audits.
+      Emits questions only on genuine blockers.
+      Limits task expansion to reduce duplicate work.
+
+    question_emission:
+      # Only emit questions when truly blocked
+      emit_on_ambiguity: false
+      emit_on_security_concern: true
+      emit_on_unclear_intent: false
+      # Suppress questions similar to existing open questions
+      suppress_near_duplicates: true
+      # Maximum questions per slice
+      max_questions_per_slice: 4
+
+    task_expansion:
+      # Only expand verify_claim for high-priority observations
+      verify_claim_per_observation: true
+      # Only compose issues for high-quality evidence
+      compose_issue_for_verified: true
+      # Defer tasks when budget thresholds approached
+      defer_on_budget_soft: true
+
+    verify_claim_budget:
+      # Balanced limits — allow verification of all proposed observations
+      max_per_audit: 100
+      max_per_observation: 1
+      max_follow_up_per_iteration: 15
+
+    compose_issue_budget:
+      # Allow more issues through for security findings
+      max_per_audit: 50
+      # Maximum active compose_issue tasks per source path
+      max_per_source_path: 10
+      # Only allow direct_code_fact and derived_structural_fact
+      allow_inferred_evidence: false
+
+    issue_composition:
+      # Require rule binding for severity assignment
+      require_rule_binding_for_severity: true
+      # Exclude low-confidence findings
+      include_low_confidence: false
+      # Minimum evidence class for issue-backed findings
+      min_evidence_class: "derived_structural_fact"
+
+    candidate_routing:
+      # Maximum candidates to accept per audit (conservative)
+      max_candidates_per_audit: 30
+      # Maximum verify_claim tasks from candidates per routing run
+      max_verify_tasks_per_run: 10
+      # Maximum module_scan tasks per cross_file_correlation
+      max_module_scan_per_cross_file: 2
+      # Maximum total tasks per candidate
+      max_total_tasks_per_candidate: 2
+      # Don't route low confidence candidates (reduce noise)
+      defer_low_confidence: true
+      # Suppress candidates targeting same file as existing candidate
+      suppress_near_duplicate_files: true
+      # Enable routing for each candidate type (selective)
+      route_risk_candidates: true
+      route_policy_candidates: true
+      route_cross_file_correlations: false
+      route_verification_targets: true
+
+  exploratory:
+    description: |
+      Open-ended mode for initial reconnaissance.
+      Emits questions freely to map unknowns.
+      Limits issue composition to avoid premature conclusions.
+
+    question_emission:
+      # Emit questions freely for exploration
+      emit_on_ambiguity: true
+      emit_on_security_concern: true
+      emit_on_unclear_intent: true
+      # Don't suppress - exploration needs all signals
+      suppress_near_duplicates: false
+      # Higher limit for exploratory questions
+      max_questions_per_slice: 20
+
+    task_expansion:
+      # Expand all verification tasks
+      verify_claim_per_observation: true
+      # Limit issue composition - focus on observation gathering
+      compose_issue_for_verified: true
+      # Defer on budget to prevent runaway expansion
+      defer_on_budget_soft: true
+
+    verify_claim_budget:
+      # Higher limits for exploration
+      max_per_audit: 200
+      max_per_observation: 1
+      max_follow_up_per_iteration: 10
+
+    compose_issue_budget:
+      # Strict limit on issue composition during exploration
+      max_per_audit: 8
+      # Maximum active compose_issue tasks per source path
+      max_per_source_path: 2
+      # Only direct code facts - no inference
+      allow_inferred_evidence: false
+
+    issue_composition:
+      # Require rule binding for severity assignment
+      require_rule_binding_for_severity: true
+      # Exclude low-confidence - focus on clear findings
+      include_low_confidence: false
+      # Only direct code facts for exploratory issues
+      min_evidence_class: "direct_code_fact"
+
+    candidate_routing:
+      # Maximum candidates to accept per audit (exploratory)
+      max_candidates_per_audit: 200
+      # Maximum verify_claim tasks from candidates per routing run
+      max_verify_tasks_per_run: 30
+      # Maximum module_scan tasks per cross_file_correlation
+      max_module_scan_per_cross_file: 4
+      # Maximum total tasks per candidate
+      max_total_tasks_per_candidate: 4
+      # Route even low confidence to maximize discovery
+      defer_low_confidence: false
+      # Don't suppress - exploration needs all signals
+      suppress_near_duplicate_files: false
+      # Enable all candidate routing for exploration
+      route_risk_candidates: true
+      route_policy_candidates: true
+      route_cross_file_correlations: true
+      route_verification_targets: true
+
+# Default profile when none specified
+default_profile: "low_noise"
+
+# Valid evidence classes in order of strength (strongest first)
+evidence_class_hierarchy:
+  - "direct_code_fact"
+  - "derived_structural_fact"
+  - "pattern_match"
+  - "inferred_hypothesis"
+  - "blocked_verification"
+
+# Valid evidence origins (how the observation originated)
+evidence_origin_hierarchy:
+  - "deterministic_pattern"
+  - "mixed_pattern_model"
+  - "model_discovered"

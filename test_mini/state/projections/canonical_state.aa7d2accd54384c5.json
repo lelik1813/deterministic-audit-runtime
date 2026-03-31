@@ -1,0 +1,24 @@
+{
+  "audit": {
+    "created_at": "2026-03-31T10:14:23Z",
+    "current_snapshot_ref": null,
+    "id": "audit_test_mini",
+    "status": "initialized",
+    "target": {
+      "repo_label": "dar-fixture-mini",
+      "repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\dar-fixture-mini",
+      "vcs": "git"
+    },
+    "title": "Mini fixture test",
+    "updated_at": "2026-03-31T10:14:23Z"
+  },
+  "candidates": {},
+  "contradictions": {},
+  "decisions": {},
+  "hypotheses": {},
+  "issues": {},
+  "observations": {},
+  "questions": {},
+  "schema_version": "1.0.0",
+  "tasks": {}
+}

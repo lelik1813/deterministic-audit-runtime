@@ -1,0 +1,401 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "hypothesis.proposed",
+      "observation.proposed",
+      "question.opened"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "converting hypothesis to fact",
+      "issue creation",
+      "severity assignment"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "pattern_matches": [
+    {
+      "category": "input_trust",
+      "confidence": "medium",
+      "description": "Django DEBUG mode enabled",
+      "file_path": "app/config.py",
+      "line_end": 43,
+      "line_start": 43,
+      "matched_text": "DEBUG = True",
+      "pattern_match_id": "pm_django_debug_fc82dbf4782a52f4",
+      "rule_id": "django_debug",
+      "severity_hint": "medium"
+    },
+    {
+      "category": "input_trust",
+      "confidence": "high",
+      "description": "Flask debug mode enabled in application runner",
+      "file_path": "app/main.py",
+      "line_end": 104,
+      "line_start": 104,
+      "matched_text": "app.run(host='0.0.0.0', port=5000, debug=True",
+      "pattern_match_id": "pm_flask_debug_70289a01623cb6a1",
+      "rule_id": "flask_debug",
+      "severity_hint": "high"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/repositories/order_repo.py",
+      "line_end": 47,
+      "line_start": 47,
+      "matched_text": "SELECT * FROM orders WHERE {' AND '.join(conditions)}",
+      "pattern_match_id": "pm_sql_fstring_40261ab4c4e6847f",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/repositories/order_repo.py",
+      "line_end": 93,
+      "line_start": 93,
+      "matched_text": "UPDATE orders SET status = '{status}', updated_at = CURRENT_TIMESTAMP WHERE id IN ({ids_str}",
+      "pattern_match_id": "pm_sql_fstring_83b8770feee45cf7",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/repositories/user_repo.py",
+      "line_end": 46,
+      "line_start": 46,
+      "matched_text": "SELECT id, username, email, role FROM users WHERE username LIKE '%{search_term}%' OR email LIKE '%{search_term}",
+      "pattern_match_id": "pm_sql_fstring_3fbc96b6c6e6e834",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/repositories/user_repo.py",
+      "line_end": 67,
+      "line_start": 67,
+      "matched_text": "UPDATE users SET {', '.join(set_clauses)} WHERE id = {user_id}",
+      "pattern_match_id": "pm_sql_fstring_cc3965ccaf249f1e",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/repositories/user_repo.py",
+      "line_end": 97,
+      "line_start": 97,
+      "matched_text": "SELECT COUNT(*) as count FROM users WHERE role = '{role}",
+      "pattern_match_id": "pm_sql_fstring_bf039769afa6d4ff",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "code_execution",
+      "confidence": "high",
+      "description": "exec() used - potential code injection if input is not sanitized",
+      "file_path": "app/routes/admin.py",
+      "line_end": 165,
+      "line_start": 165,
+      "matched_text": "exec(",
+      "pattern_match_id": "pm_exec_usage_cf510c8241c2ad00",
+      "rule_id": "exec_usage",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/services/reporting.py",
+      "line_end": 35,
+      "line_start": 35,
+      "matched_text": "SELECT {group_by}, SUM(total_amount) as revenue FROM orders GROUP BY {group_by}",
+      "pattern_match_id": "pm_sql_fstring_2191fc98a9446640",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/services/reporting.py",
+      "line_end": 43,
+      "line_start": 43,
+      "matched_text": "SELECT * FROM audit_log WHERE user_id = {user_id}",
+      "pattern_match_id": "pm_sql_fstring_423baf7d3996c4c2",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/services/reporting.py",
+      "line_end": 54,
+      "line_start": 54,
+      "matched_text": "SELECT * FROM orders WHERE id IN ({ids_str}",
+      "pattern_match_id": "pm_sql_fstring_357081106c858643",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/services/reporting.py",
+      "line_end": 60,
+      "line_start": 60,
+      "matched_text": "SELECT * FROM orders WHERE {' AND '.join(conditions)}",
+      "pattern_match_id": "pm_sql_fstring_1eee6f64b2dc3a17",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app/services/reporting.py",
+      "line_end": 134,
+      "line_start": 134,
+      "matched_text": "SELECT {fields} FROM {table}",
+      "pattern_match_id": "pm_sql_fstring_a959a738286d8a9e",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "weak_crypto",
+      "confidence": "medium",
+      "description": "MD5 hash function used - cryptographically broken",
+      "file_path": "app/utils/helpers.py",
+      "line_end": 17,
+      "line_start": 17,
+      "matched_text": "hashlib.md5(",
+      "pattern_match_id": "pm_weak_hash_md5_53cb092a566d1bdd",
+      "rule_id": "weak_hash_md5",
+      "severity_hint": "high"
+    },
+    {
+      "category": "unsigned_token",
+      "confidence": "medium",
+      "description": "Base64 encoding/decoding used - encoding is not encryption",
+      "file_path": "app/utils/helpers.py",
+      "line_end": 34,
+      "line_start": 34,
+      "matched_text": "base64.b64encode(",
+      "pattern_match_id": "pm_base64_as_security_2a4c1e4474c1fc55",
+      "rule_id": "base64_as_security",
+      "severity_hint": "high"
+    },
+    {
+      "category": "unsigned_token",
+      "confidence": "medium",
+      "description": "Base64 encoding/decoding used - encoding is not encryption",
+      "file_path": "app/utils/helpers.py",
+      "line_end": 40,
+      "line_start": 40,
+      "matched_text": "base64.b64decode(",
+      "pattern_match_id": "pm_base64_as_security_e087e9d5f13d82ea",
+      "rule_id": "base64_as_security",
+      "severity_hint": "high"
+    },
+    {
+      "category": "unsigned_token",
+      "confidence": "medium",
+      "description": "Base64 encoding/decoding used - encoding is not encryption",
+      "file_path": "app/utils/helpers.py",
+      "line_end": 71,
+      "line_start": 71,
+      "matched_text": "base64.b64decode(",
+      "pattern_match_id": "pm_base64_as_security_d3fb4a94d3e29f2d",
+      "rule_id": "base64_as_security",
+      "severity_hint": "high"
+    },
+    {
+      "category": "dangerous_deserialization",
+      "confidence": "high",
+      "description": "pickle.loads on potentially untrusted data - arbitrary code execution",
+      "file_path": "app/utils/helpers.py",
+      "line_end": 71,
+      "line_start": 71,
+      "matched_text": "pickle.loads(",
+      "pattern_match_id": "pm_pickle_loads_ebc95e9f2af78cf7",
+      "rule_id": "pickle_loads",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "unsigned_token",
+      "confidence": "medium",
+      "description": "Base64 encoding/decoding used - encoding is not encryption",
+      "file_path": "app/utils/helpers.py",
+      "line_end": 79,
+      "line_start": 79,
+      "matched_text": "base64.b64encode(",
+      "pattern_match_id": "pm_base64_as_security_6c1155d4b097110a",
+      "rule_id": "base64_as_security",
+      "severity_hint": "high"
+    }
+  ],
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {},
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "da4951ff7c12b02c28d2e63a0c34d454a27787fbfbafa646757ee353566fdf89",
+  "slice_id": "slice_da4951ff7c12b02c",
+  "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+  "target_paths": [
+    "app"
+  ],
+  "target_sources": [
+    {
+      "file_content": "\"\"\"Application package.\"\"\"\nfrom app.main import app, create_app\n\n__all__ = ['app', 'create_app']\n",
+      "file_hash": "2ef4db00dace3bf538960498f90baa8e294f6a91a4dd2b677cf29722cb1f96a9",
+      "file_path": "app/__init__.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Application configuration module.\"\"\"\nimport os\nfrom dotenv import load_dotenv\n\nload_dotenv()\n\n\nclass Config:\n    \"\"\"Base configuration.\"\"\"\n\n    SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')\n    DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///app.db')\n    DEBUG = os.getenv('FLASK_DEBUG', 'false').lower() == 'true'\n    ENV = os.getenv('FLASK_ENV', 'production')\n\n    # Payment gateway credentials\n    PAYMENT_API_KEY = os.getenv('PAYMENT_API_KEY', '')\n    PAYMENT_API_URL = os.getenv('PAYMENT_API_URL', 'https://api.payments.example.com')\n\n    # Email configuration\n    SMTP_HOST = os.getenv('SMTP_HOST', 'smtp.example.com')\n    SMTP_PORT = int(os.getenv('SMTP_PORT', '587'))\n    SMTP_USER = os.getenv('SMTP_USER', '')\n    SMTP_PASSWORD = os.getenv('SMTP_PASSWORD', '')\n\n    # Admin settings\n    ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin')\n    ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')\n\n    # Feature flags\n    <REDACTED:2c82d1ff> = os.getenv('ENABLE_DEBUG_ENDPOINTS', 'false').lower() == 'true'\n    LOG_SQL_QUERIES = os.getenv('LOG_SQL_QUERIES', 'false').lower() == 'true'\n\n    # Security settings (intentionally weak defaults for testing)\n    <REDACTED:fa993236> = int(os.getenv('SESSION_TIMEOUT_HOURS', '168'))  # 7 days\n    MAX_LOGIN_ATTEMPTS = int(os.getenv('MAX_LOGIN_ATTEMPTS', '10'))\n    PASSWORD_MIN_LENGTH = int(os.getenv('PASSWORD_MIN_LENGTH', '4'))\n\n\nclass DevelopmentConfig(Config):\n    \"\"\"Development configuration.\"\"\"\n\n    DEBUG = True\n    ENV = 'development'\n\n\nclass ProductionConfig(Config):\n    \"\"\"Production configuration.\"\"\"\n\n    DEBUG = False\n    ENV = 'production'\n\n\nconfig_by_name = {\n    'development': DevelopmentConfig,\n    'production': ProductionConfig,\n    'default': DevelopmentConfig\n}\n\n\ndef get_config():\n    \"\"\"Get configuration based on environment.\"\"\"\n    env = os.getenv('FLASK_ENV', 'development')\n    return config_by_name.get(env, DevelopmentConfig)\n",
+      "file_hash": "05f42b8fa5318758751f76c54ee9adaefacfd6208a167d25a2f80a79d85709aa",
+      "file_path": "app/config.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Main Flask application entrypoint.\"\"\"\nfrom flask import Flask, jsonify, request\nfrom app.config import get_config\nfrom app.utils.db import close_db\nfrom app.utils.helpers import decode_token\n\n\ndef create_app(config_class=None):\n    \"\"\"Application factory.\"\"\"\n    app = Flask(__name__)\n\n    if config_class is None:\n        config_class = get_config()\n\n    app.config.from_object(config_class)\n\n    # Register database cleanup\n    app.teardown_appcontext(close_db)\n\n    # Register blueprints\n    from app.routes.users import users_bp\n    from app.routes.orders import orders_bp\n    from app.routes.admin import admin_bp\n\n    app.register_blueprint(users_bp)\n    app.register_blueprint(orders_bp)\n    app.register_blueprint(admin_bp)\n\n    # Health check endpoint\n    @app.route('/health')\n    def health():\n        return jsonify({'status': 'healthy', 'version': '1.0.0'}), 200\n\n    # Error handlers\n    @app.errorhandler(400)\n    def bad_request(error):\n        return jsonify({'error': str(error.description)}), 400\n\n    @app.errorhandler(401)\n    def unauthorized(error):\n        return jsonify({'error': 'Authentication required'}), 401\n\n    @app.errorhandler(403)\n    def forbidden(error):\n        return jsonify({'error': 'Access denied'}), 403\n\n    @app.errorhandler(404)\n    def not_found(error):\n        return jsonify({'error': 'Resource not found'}), 404\n\n    @app.errorhandler(500)\n    def internal_error(error):\n        # Expose error details in response\n        return jsonify({\n            'error': 'Internal server error',\n            'details': str(error),\n            'path': request.path\n        }), 500\n\n    # Request logging middleware\n    @app.before_request\n    def log_request():\n        # Log all requests including sensitive paths\n        app.logger.debug(f\"Request: {request.method} {request.path} - IP: {request.remote_addr}\")\n\n    # Authentication middleware for API key auth\n    @app.before_request\n    def api_key_auth():\n        # Skip auth for certain endpoints\n        public_paths = ['/health', '/api/users/register', '/api/users/login', '/api/users/reset-password']\n        if request.path in public_paths:\n            return None\n\n        # Check for API key in header\n        api_key = request.headers.get('X-API-Key')\n        if api_key:\n            from app.services.auth import auth_service\n            user = auth_service.authenticate_api_key(api_key)\n            if user:\n                request.user = user\n                return None\n            return jsonify({'error': 'Invalid API key'}), 401\n\n        # Check for Bearer token\n        auth_header = request.headers.get('Authorization', '')\n        if auth_header.startswith('Bearer '):\n            token = auth_header.replace('Bearer ', '')\n            payload = decode_token(token)\n            if payload:\n                request.user = payload\n                return None\n            return jsonify({'error': 'Invalid token'}), 401\n\n        return None\n\n    return app\n\n\n# Create application instance\napp = create_app()\n\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=5000, debug=True)\n",
+      "file_hash": "f4c1c01f6a30cec9d1b2823fd4183d151f8dfe24495ad4960ec08b429655f1c0",
+      "file_path": "app/main.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Repositories package.\"\"\"\n",
+      "file_hash": "afa7b6306c1f02e3566b83549d689e980a196d493ea9740297e46e839fd01598",
+      "file_path": "app/repositories/__init__.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Order repository for database operations.\"\"\"\nfrom datetime import datetime\nfrom app.utils.db import execute_query, execute_raw_query, get_db_connection\n\n\nclass OrderRepository:\n    \"\"\"Repository for order data operations.\"\"\"\n\n    def find_by_id(self, order_id):\n        \"\"\"Find an order by ID.\"\"\"\n        return execute_query(\n            \"SELECT * FROM orders WHERE id = ?\",\n            (order_id,),\n            fetch_one=True\n        )\n\n    def find_by_user_id(self, user_id):\n        \"\"\"Find all orders for a user.\"\"\"\n        return execute_query(\n            \"SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC\",\n            (user_id,),\n            fetch_all=True\n        )\n\n    def find_all(self):\n        \"\"\"Get all orders.\"\"\"\n        return execute_query(\n            \"SELECT * FROM orders ORDER BY created_at DESC\",\n            fetch_all=True\n        )\n\n    def search_orders(self, **filters):\n        \"\"\"\n        Search orders with flexible filtering.\n        Supports filtering by various fields.\n        \"\"\"\n        conditions = []\n        for field, value in filters.items():\n            if value is not None:\n                # Direct string interpolation for flexibility\n                if isinstance(value, str):\n                    conditions.append(f\"{field} LIKE '%{value}%'\")\n                else:\n                    conditions.append(f\"{field} = {value}\")\n\n        if conditions:\n            query = f\"SELECT * FROM orders WHERE {' AND '.join(conditions)}\"\n        else:\n            query = \"SELECT * FROM orders\"\n\n        return execute_raw_query(query)\n\n    def create(self, user_id, product_name, quantity, unit_price, notes=None):\n        \"\"\"Create a new order.\"\"\"\n        total_amount = quantity * unit_price\n        return execute_query(\n            \"\"\"INSERT INTO orders (user_id, product_name, quantity, unit_price, total_amount, notes)\n               VALUES (?, ?, ?, ?, ?, ?)\"\"\",\n            (user_id, product_name, quantity, unit_price, total_amount, notes)\n        )\n\n    def update_status(self, order_id, status):\n        \"\"\"Update order status.\"\"\"\n        return execute_query(\n            \"UPDATE orders SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?\",\n            (status, order_id)\n        )\n\n    def update_quantity(self, order_id, quantity, unit_price=None):\n        \"\"\"Update order quantity and recalculate total.\"\"\"\n        if unit_price is not None:\n            execute_query(\n                \"UPDATE orders SET quantity = ?, unit_price = ?, total_amount = quantity * unit_price, updated_at = CURRENT_TIMESTAMP WHERE id = ?\",\n                (quantity, unit_price, order_id)\n            )\n        else:\n            # Get current price and update\n            order = self.find_by_id(order_id)\n            if order:\n                total = quantity * order['unit_price']\n                execute_query(\n                    \"UPDATE orders SET quantity = ?, total_amount = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?\",\n                    (quantity, total, order_id)\n                )\n\n    def bulk_update_status(self, order_ids, status):\n        \"\"\"Update status for multiple orders at once.\"\"\"\n        if not order_ids:\n            return 0\n\n        # Convert list to comma-separated string\n        ids_str = ', '.join(str(oid) for oid in order_ids)\n        query = f\"UPDATE orders SET status = '{status}', updated_at = CURRENT_TIMESTAMP WHERE id IN ({ids_str})\"\n\n        conn = get_db_connection()\n        cursor = conn.cursor()\n        cursor.execute(query)\n        conn.commit()\n        return cursor.rowcount\n\n    def get_orders_by_date_range(self, start_date, end_date):\n        \"\"\"Get orders within a date range.\"\"\"\n        query = f\"\"\"SELECT * FROM orders\n                    WHERE created_at >= '{start_date}'\n                    AND created_at <= '{end_date}'\n                    ORDER BY created_at DESC\"\"\"\n        return execute_raw_query(query)\n\n    def get_revenue_by_product(self):\n        \"\"\"Get total revenue grouped by product.\"\"\"\n        return execute_query(\n            \"\"\"SELECT product_name, SUM(quantity) as total_units, SUM(total_amount) as total_revenue\n               FROM orders\n               GROUP BY product_name\n               ORDER BY total_revenue DESC\"\"\",\n            fetch_all=True\n        )\n\n    def delete(self, order_id):\n        \"\"\"Delete an order by ID.\"\"\"\n        return execute_query(\n            \"DELETE FROM orders WHERE id = ?\",\n            (order_id,)\n        )\n\n    def get_pending_count(self):\n        \"\"\"Get count of pending orders.\"\"\"\n        result = execute_query(\n            \"SELECT COUNT(*) as count FROM orders WHERE status = 'pending'\",\n            fetch_one=True\n        )\n        return result['count'] if result else 0\n\n\n# Singleton instance\norder_repository = OrderRepository()\n",
+      "file_hash": "e5bfe72bf2eff3392e9781c97ded8c8da3de38d60a51764297b6ce0de0efb2e0",
+      "file_path": "app/repositories/order_repo.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"User repository for database operations.\"\"\"\nfrom app.utils.db import execute_query, execute_raw_query, get_db_connection\n\n\nclass UserRepository:\n    \"\"\"Repository for user data operations.\"\"\"\n\n    def find_by_id(self, user_id):\n        \"\"\"Find a user by ID.\"\"\"\n        return execute_query(\n            \"SELECT * FROM users WHERE id = ?\",\n            (user_id,),\n            fetch_one=True\n        )\n\n    def find_by_username(self, username):\n        \"\"\"Find a user by username.\"\"\"\n        return execute_query(\n            \"SELECT * FROM users WHERE username = ?\",\n            (username,),\n            fetch_one=True\n        )\n\n    def find_by_email(self, email):\n        \"\"\"Find a user by email address.\"\"\"\n        return execute_query(\n            \"SELECT * FROM users WHERE email = ?\",\n            (email,),\n            fetch_one=True\n        )\n\n    def find_by_api_key(self, api_key):\n        \"\"\"Find a user by API key.\"\"\"\n        return execute_query(\n            \"SELECT * FROM users WHERE api_key = ?\",\n            (api_key,),\n            fetch_one=True\n        )\n\n    def search_users(self, search_term):\n        \"\"\"\n        Search for users by username or email.\n        Supports flexible search patterns.\n        \"\"\"\n        # Using string formatting for LIKE pattern\n        query = f\"SELECT id, username, email, role FROM users WHERE username LIKE '%{search_term}%' OR email LIKE '%{search_term}%'\"\n        return execute_raw_query(query)\n\n    def create(self, username, email, password_hash, role='user'):\n        \"\"\"Create a new user.\"\"\"\n        return execute_query(\n            \"INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)\",\n            (username, email, password_hash, role)\n        )\n\n    def update(self, user_id, **kwargs):\n        \"\"\"Update user fields.\"\"\"\n        if not kwargs:\n            return False\n\n        # Dynamic query construction\n        set_clauses = []\n        values = []\n        for key, value in kwargs.items():\n            set_clauses.append(f\"{key} = '{value}'\")\n\n        query = f\"UPDATE users SET {', '.join(set_clauses)} WHERE id = {user_id}\"\n        conn = get_db_connection()\n        cursor = conn.cursor()\n        cursor.execute(query)\n        conn.commit()\n        return cursor.rowcount > 0\n\n    def update_last_login(self, user_id):\n        \"\"\"Update the last login timestamp.\"\"\"\n        return execute_query(\n            \"UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?\",\n            (user_id,)\n        )\n\n    def set_api_key(self, user_id, api_key):\n        \"\"\"Set API key for a user.\"\"\"\n        return execute_query(\n            \"UPDATE users SET api_key = ? WHERE id = ?\",\n            (api_key, user_id)\n        )\n\n    def delete(self, user_id):\n        \"\"\"Delete a user by ID.\"\"\"\n        return execute_query(\n            \"DELETE FROM users WHERE id = ?\",\n            (user_id,)\n        )\n\n    def count_by_role(self, role):\n        \"\"\"Count users by role.\"\"\"\n        query = f\"SELECT COUNT(*) as count FROM users WHERE role = '{role}'\"\n        result = execute_raw_query(query)\n        return result[0]['count'] if result else 0\n\n    def get_all_users(self):\n        \"\"\"Get all users (admin function).\"\"\"\n        return execute_query(\n            \"SELECT id, username, email, role, created_at, last_login FROM users\",\n            fetch_all=True\n        )\n\n\n# Singleton instance\nuser_repository = UserRepository()\n",
+      "file_hash": "9b193e1127dbb6ff21a59beafb1ae017a24a67bd02c1ffc28ce71c8e0e37ce9b",
+      "file_path": "app/repositories/user_repo.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Routes package.\"\"\"\n",
+      "file_hash": "f1d45672edc1649a5be90eba84daccaddb8f0e71e6f4d45c7353c8e61ba4a6b2",
+      "file_path": "app/routes/__init__.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Administrative routes.\"\"\"\nimport os\nimport sys\nimport traceback\nfrom flask import Blueprint, request, jsonify, g, current_app\nfrom app.services.auth import auth_service\nfrom app.services.reporting import reporting_service\nfrom app.repositories.user_repo import user_repository\nfrom app.repositories.order_repo import order_repository\nfrom app.utils.helpers import require_auth, require_role, serialize_data, deserialize_data\nfrom app.utils.db import execute_raw_query, init_db, reset_db\n\nadmin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')\n\n\n@admin_bp.route('/stats', methods=['GET'])\n@require_auth\ndef get_stats():\n    \"\"\"Get dashboard statistics.\"\"\"\n    # Missing admin role check\n    result, status = reporting_service.get_dashboard_stats()\n    return jsonify(result), status\n\n\n@admin_bp.route('/users', methods=['GET'])\n@require_auth\ndef list_users():\n    \"\"\"List all users.\"\"\"\n    # Missing admin role check\n    users = user_repository.get_all_users()\n    return jsonify([{\n        'id': u['id'],\n        'username': u['username'],\n        'email': u['email'],\n        'role': u['role'],\n        'created_at': u['created_at']\n    } for u in users]), 200\n\n\n@admin_bp.route('/users/<int:user_id>/role', methods=['PUT'])\n@require_auth\ndef update_user_role(user_id):\n    \"\"\"Update a user's role.\"\"\"\n    data = request.get_json() or {}\n    new_role = data.get('role')\n\n    if not new_role:\n        return jsonify({'error': 'Role is required'}), 400\n\n    # Any authenticated user can change roles\n    user_repository.update(user_id, role=new_role)\n    return jsonify({'message': 'Role updated'}), 200\n\n\n@admin_bp.route('/reports/revenue', methods=['GET'])\n@require_auth\ndef revenue_report():\n    \"\"\"Generate revenue report.\"\"\"\n    group_by = request.args.get('group_by', 'product')\n    result, status = reporting_service.get_revenue_report(group_by)\n    return jsonify(result), status\n\n\n@admin_bp.route('/reports/activity', methods=['GET'])\n@require_auth\ndef activity_report():\n    \"\"\"Get user activity report.\"\"\"\n    user_id = request.args.get('user_id')\n    result, status = reporting_service.get_user_activity_report(user_id)\n    return jsonify(result), status\n\n\n@admin_bp.route('/reports/custom', methods=['POST'])\n@require_auth\ndef custom_report():\n    \"\"\"Generate custom report (dangerous - SQL injection vector).\"\"\"\n    query_params = request.get_json() or {}\n    result, status = reporting_service.generate_custom_report(query_params)\n    return jsonify(result), status\n\n\n@admin_bp.route('/export/orders', methods=['GET'])\n@require_auth\ndef export_orders():\n    \"\"\"Export orders to CSV.\"\"\"\n    order_ids = request.args.getlist('ids')\n    order_ids = [int(oid) for oid in order_ids if oid.isdigit()]\n\n    csv_data, status = reporting_service.export_orders_csv(order_ids=order_ids if order_ids else None)\n    return csv_data, 200, {'Content-Type': 'text/csv'}\n\n\n@admin_bp.route('/export/users', methods=['GET'])\n@require_auth\ndef export_users():\n    \"\"\"Export users to JSON.\"\"\"\n    include_sensitive = request.args.get('include_sensitive', 'false').lower() == 'true'\n\n    # Allow exporting sensitive data without additional authorization\n    result, status = reporting_service.export_users_json(include_sensitive=include_sensitive)\n    return jsonify(result), status\n\n\n@admin_bp.route('/debug/config', methods=['GET'])\ndef debug_config():\n    \"\"\"Debug endpoint to view configuration (only in debug mode).\"\"\"\n    # Check is based on request parameter, not actual config\n    if request.args.get('debug') == 'true':\n        config_data = {\n            'database_url': current_app.config.get('DATABASE_URL'),\n            'secret_key': current_app.config.get('SECRET_KEY'),\n            'payment_api_key': current_app.config.get('PAYMENT_API_KEY'),\n            'smtp_password': current_app.config.get('SMTP_PASSWORD'),\n            'admin_password': current_app.config.get('ADMIN_PASSWORD'),\n            'environment': current_app.config.get('ENV'),\n            'debug': current_app.config.get('DEBUG')\n        }\n        return jsonify(config_data), 200\n\n    return jsonify({'error': 'Debug mode not enabled'}), 403\n\n\n@admin_bp.route('/debug/env', methods=['GET'])\ndef debug_env():\n    \"\"\"Debug endpoint to view environment variables.\"\"\"\n    # Exposes all environment variables\n    if request.args.get('token') == 'debug123':\n        return jsonify(dict(os.environ)), 200\n\n    return jsonify({'error': 'Unauthorized'}), 401\n\n\n@admin_bp.route('/debug/error', methods=['POST'])\ndef debug_error():\n    \"\"\"Debug endpoint that returns detailed error info.\"\"\"\n    try:\n        data = request.get_json() or {}\n        # Intentionally cause an error\n        result = 1 / 0\n    except Exception as e:\n        # Return full stack trace to client\n        return jsonify({\n            'error': str(e),\n            'traceback': traceback.format_exc(),\n            'locals': str(locals())\n        }), 500\n\n\n@admin_bp.route('/debug/execute', methods=['POST'])\ndef debug_execute():\n    \"\"\"\n    Execute arbitrary code (debug only).\n    WARNING: This is intentionally vulnerable for testing.\n    \"\"\"\n    code = request.form.get('code', '')\n    auth_token = request.form.get('token', '')\n\n    # Weak authentication - hardcoded token\n    if auth_token != 'debug-token-12345':\n        return jsonify({'error': 'Invalid token'}), 403\n\n    try:\n        # Execute arbitrary Python code\n        result = {}\n        exec(code, {\"__builtins__\": __builtins__}, result)\n        return jsonify({'result': str(result)}), 200\n    except Exception as e:\n        return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500\n\n\n@admin_bp.route('/database/query', methods=['POST'])\n@require_auth\ndef execute_database_query():\n    \"\"\"Execute a database query directly.\"\"\"\n    data = request.get_json() or {}\n    query = data.get('query')\n\n    if not query:\n        return jsonify({'error': 'Query is required'}), 400\n\n    # No validation of query type - allows SELECT, INSERT, UPDATE, DELETE\n    try:\n        results = execute_raw_query(query)\n        return jsonify({'data': [dict(r) for r in results]}), 200\n    except Exception as e:\n        return jsonify({'error': str(e)}), 400\n\n\n@admin_bp.route('/database/reset', methods=['POST'])\n@require_auth\ndef reset_database():\n    \"\"\"Reset the database to initial state.\"\"\"\n    # No admin check\n    reset_db()\n    return jsonify({'message': 'Database reset'}), 200\n\n\n@admin_bp.route('/logs', methods=['GET'])\n@require_auth\ndef get_logs():\n    \"\"\"Get audit logs.\"\"\"\n    date = request.args.get('date')\n    result, status = reporting_service.get_error_logs(date)\n    return jsonify(result), status\n",
+      "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+      "file_path": "app/routes/admin.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Order management routes.\"\"\"\nfrom flask import Blueprint, request, jsonify, g\nfrom app.services.orders import order_service\nfrom app.utils.helpers import require_auth\n\norders_bp = Blueprint('orders', __name__, url_prefix='/api/orders')\n\n\n@orders_bp.route('', methods=['POST'])\n@require_auth\ndef create_order():\n    \"\"\"Create a new order.\"\"\"\n    user_id = g.current_user.get('user_id')\n    data = request.get_json() or {}\n\n    product_name = data.get('product_name', '')\n    quantity = data.get('quantity', 1)\n    unit_price = data.get('unit_price', 0)\n    notes = data.get('notes')\n\n    if not product_name:\n        return jsonify({'error': 'Product name is required'}), 400\n\n    # Trust client-provided price without validation against product catalog\n    result, status = order_service.create_order(\n        user_id=user_id,\n        product_name=product_name,\n        quantity=quantity,\n        unit_price=unit_price,\n        notes=notes\n    )\n    return jsonify(result), status\n\n\n@orders_bp.route('', methods=['GET'])\n@require_auth\ndef list_orders():\n    \"\"\"List orders - user's own or all based on query param.\"\"\"\n    user_id = g.current_user.get('user_id')\n    role = g.current_user.get('role')\n\n    # Admin can see all, regular users see only their own\n    # But the check is flawed - user_id query param overrides\n    target_user_id = request.args.get('user_id')\n\n    if target_user_id and role != 'admin':\n        # Should reject this, but we allow it (IDOR vulnerability)\n        pass\n\n    if target_user_id:\n        result, status = order_service.get_user_orders(int(target_user_id))\n    else:\n        result, status = order_service.get_user_orders(user_id)\n\n    return jsonify(result), status\n\n\n@orders_bp.route('/all', methods=['GET'])\n@require_auth\ndef list_all_orders():\n    \"\"\"List all orders (no admin check).\"\"\"\n    # Missing authorization check for admin-only access\n    result, status = order_service.get_all_orders()\n    return jsonify(result), status\n\n\n@orders_bp.route('/<int:order_id>', methods=['GET'])\n@require_auth\ndef get_order(order_id):\n    \"\"\"Get a specific order.\"\"\"\n    # Missing authorization - any user can view any order\n    result, status = order_service.get_order(order_id)\n    return jsonify(result), status\n\n\n@orders_bp.route('/<int:order_id>', methods=['PUT'])\n@require_auth\ndef update_order(order_id):\n    \"\"\"Update an order.\"\"\"\n    user_id = g.current_user.get('user_id')\n    data = request.get_json() or {}\n\n    quantity = data.get('quantity')\n    unit_price = data.get('unit_price')\n\n    if quantity is None:\n        return jsonify({'error': 'Quantity is required'}), 400\n\n    # Allow price modification by client\n    result, status = order_service.update_quantity(\n        order_id=order_id,\n        quantity=quantity,\n        unit_price=unit_price,\n        updated_by=user_id\n    )\n    return jsonify(result), status\n\n\n@orders_bp.route('/<int:order_id>/status', methods=['PUT'])\n@require_auth\ndef update_status(order_id):\n    \"\"\"Update order status.\"\"\"\n    user_id = g.current_user.get('user_id')\n    data = request.get_json() or {}\n\n    new_status = data.get('status')\n\n    if not new_status:\n        return jsonify({'error': 'Status is required'}), 400\n\n    # No check if user owns the order\n    result, status = order_service.update_order_status(order_id, new_status, user_id)\n    return jsonify(result), status\n\n\n@orders_bp.route('/<int:order_id>/cancel', methods=['POST'])\n@require_auth\ndef cancel_order(order_id):\n    \"\"\"Cancel an order.\"\"\"\n    user_id = g.current_user.get('user_id')\n\n    # No authorization check - any user can cancel any order\n    result, status = order_service.cancel_order(order_id, user_id)\n    return jsonify(result), status\n\n\n@orders_bp.route('/bulk-update', methods=['POST'])\n@require_auth\ndef bulk_update():\n    \"\"\"Bulk update order statuses.\"\"\"\n    user_id = g.current_user.get('user_id')\n    data = request.get_json() or {}\n\n    order_ids = data.get('order_ids', [])\n    status = data.get('status')\n\n    if not order_ids or not status:\n        return jsonify({'error': 'order_ids and status are required'}), 400\n\n    # No validation of ownership\n    result, status_code = order_service.bulk_update(order_ids, status, user_id)\n    return jsonify(result), status_code\n\n\n@orders_bp.route('/search', methods=['GET'])\n@require_auth\ndef search_orders():\n    \"\"\"Search orders with filters.\"\"\"\n    # Build filters from query parameters\n    filters = {}\n    for key in ['status', 'product_name', 'user_id']:\n        value = request.args.get(key)\n        if value:\n            filters[key] = value\n\n    # No authorization check\n    result, status = order_service.search_orders(filters)\n    return jsonify(result), status\n\n\n@orders_bp.route('/by-date', methods=['GET'])\n@require_auth\ndef orders_by_date():\n    \"\"\"Get orders within a date range.\"\"\"\n    start_date = request.args.get('start', '')\n    end_date = request.args.get('end', '')\n\n    if not start_date or not end_date:\n        return jsonify({'error': 'Start and end dates are required'}), 400\n\n    # Dates passed directly to query\n    result, status = order_service.get_orders_by_date(start_date, end_date)\n    return jsonify(result), status\n\n\n@orders_bp.route('/<int:order_id>', methods=['DELETE'])\n@require_auth\ndef delete_order(order_id):\n    \"\"\"Delete an order.\"\"\"\n    user_id = g.current_user.get('user_id')\n\n    # No authorization check\n    result, status = order_service.delete_order(order_id, user_id)\n    return jsonify(result), status\n\n\n@orders_bp.route('/import', methods=['POST'])\n@require_auth\ndef import_orders():\n    \"\"\"Import orders from data blob.\"\"\"\n    user_id = g.current_user.get('user_id')\n    data = request.get_json() or {}\n\n    data_blob = data.get('data')\n\n    if not data_blob:\n        return jsonify({'error': 'Data blob is required'}), 400\n\n    # Unsafe deserialization\n    result, status = order_service.import_orders(data_blob, user_id)\n    return jsonify(result), status\n",
+      "file_hash": "e5e0a605d393e259576b7ea78b06fcc360b5338c8f9382f1c558d5ac2186794f",
+      "file_path": "app/routes/orders.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"User management routes.\"\"\"\nfrom flask import Blueprint, request, jsonify, g\nfrom app.services.auth import auth_service\nfrom app.repositories.user_repo import user_repository\nfrom app.utils.helpers import require_auth, require_role, sanitize_input, validate_email\n\nusers_bp = Blueprint('users', __name__, url_prefix='/api/users')\n\n\n@users_bp.route('/register', methods=['POST'])\ndef register():\n    \"\"\"Register a new user.\"\"\"\n    data = request.get_json() or {}\n\n    username = data.get('username', '').strip()\n    email = data.get('email', '').strip()\n    password = data.get('password', '')\n    role = data.get('role', 'user')\n\n    # Basic validation\n    if not username or not email or not password:\n        return jsonify({'error': 'Username, email, and password are required'}), 400\n\n    if not validate_email(email):\n        return jsonify({'error': 'Invalid email format'}), 400\n\n    # Allow role to be specified by client (should be restricted)\n    result, status = auth_service.register(username, email, password, role)\n    return jsonify(result), status\n\n\n@users_bp.route('/login', methods=['POST'])\ndef login():\n    \"\"\"Login and get authentication token.\"\"\"\n    data = request.get_json() or {}\n\n    username = data.get('username', '')\n    password = data.get('password', '')\n\n    if not username or not password:\n        return jsonify({'error': 'Username and password are required'}), 400\n\n    result, status = auth_service.login(username, password)\n    return jsonify(result), status\n\n\n@users_bp.route('/logout', methods=['POST'])\n@require_auth\ndef logout():\n    \"\"\"Logout the current user.\"\"\"\n    user_id = g.current_user.get('user_id')\n    result, status = auth_service.logout(user_id)\n    return jsonify(result), status\n\n\n@users_bp.route('/me', methods=['GET'])\n@require_auth\ndef get_current_user():\n    \"\"\"Get current user profile.\"\"\"\n    user_id = g.current_user.get('user_id')\n    user = user_repository.find_by_id(user_id)\n\n    if not user:\n        return jsonify({'error': 'User not found'}), 404\n\n    return jsonify({\n        'id': user['id'],\n        'username': user['username'],\n        'email': user['email'],\n        'role': user['role'],\n        'created_at': user['created_at']\n    }), 200\n\n\n@users_bp.route('/me', methods=['PUT'])\n@require_auth\ndef update_profile():\n    \"\"\"Update current user profile.\"\"\"\n    user_id = g.current_user.get('user_id')\n    data = request.get_json() or {}\n\n    # Sanitize inputs\n    update_data = {}\n    if 'email' in data:\n        if validate_email(data['email']):\n            update_data['email'] = sanitize_input(data['email'])\n        else:\n            return jsonify({'error': 'Invalid email format'}), 400\n\n    if 'username' in data:\n        update_data['username'] = sanitize_input(data['username'])\n\n    if update_data:\n        user_repository.update(user_id, **update_data)\n\n    return jsonify({'message': 'Profile updated'}), 200\n\n\n@users_bp.route('/me/password', methods=['PUT'])\n@require_auth\ndef change_password():\n    \"\"\"Change current user's password.\"\"\"\n    user_id = g.current_user.get('user_id')\n    data = request.get_json() or {}\n\n    current_password = data.get('current_password', '')\n    new_password = data.get('new_password', '')\n\n    if not current_password or not new_password:\n        return jsonify({'error': 'Both passwords are required'}), 400\n\n    result, status = auth_service.change_password(user_id, current_password, new_password)\n    return jsonify(result), status\n\n\n@users_bp.route('/reset-password', methods=['POST'])\ndef reset_password():\n    \"\"\"Reset password by email (no verification).\"\"\"\n    data = request.get_json() or {}\n\n    email = data.get('email', '')\n    new_password = data.get('new_password', '')\n\n    if not email or not new_password:\n        return jsonify({'error': 'Email and new password are required'}), 400\n\n    result, status = auth_service.reset_password(email, new_password)\n    return jsonify(result), status\n\n\n@users_bp.route('/me/api-key', methods=['POST'])\n@require_auth\ndef generate_api_key():\n    \"\"\"Generate API key for current user.\"\"\"\n    user_id = g.current_user.get('user_id')\n    result, status = auth_service.generate_api_key(user_id)\n    return jsonify(result), status\n\n\n@users_bp.route('/search', methods=['GET'])\n@require_auth\ndef search_users():\n    \"\"\"Search for users by username or email.\"\"\"\n    search_term = request.args.get('q', '')\n\n    if not search_term:\n        return jsonify({'error': 'Search term required'}), 400\n\n    # Any authenticated user can search all users\n    users = user_repository.search_users(search_term)\n\n    return jsonify({\n        'users': [{\n            'id': u['id'],\n            'username': u['username'],\n            'email': u['email'],\n            'role': u['role']\n        } for u in users]\n    }), 200\n\n\n@users_bp.route('/<int:user_id>', methods=['GET'])\n@require_auth\ndef get_user(user_id):\n    \"\"\"Get a specific user by ID.\"\"\"\n    # No authorization check - any user can view any other user\n    user = user_repository.find_by_id(user_id)\n\n    if not user:\n        return jsonify({'error': 'User not found'}), 404\n\n    return jsonify({\n        'id': user['id'],\n        'username': user['username'],\n        'email': user['email'],\n        'role': user['role'],\n        'created_at': user['created_at']\n    }), 200\n\n\n@users_bp.route('/<int:user_id>', methods=['DELETE'])\n@require_auth\n@require_role('admin')\ndef delete_user(user_id):\n    \"\"\"Delete a user (admin only).\"\"\"\n    user = user_repository.find_by_id(user_id)\n\n    if not user:\n        return jsonify({'error': 'User not found'}), 404\n\n    user_repository.delete(user_id)\n    return jsonify({'message': 'User deleted'}), 200\n",
+      "file_hash": "f0db203bd4c98a8d2999f2f527da487c4cfc0f77e20d52dfaa2e4276f555368a",
+      "file_path": "app/routes/users.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Services package.\"\"\"\n",
+      "file_hash": "feb005d1bfc448e9ca3523514c3801b6fe43ea4f2559fc0a9ce7c7d3fdda388c",
+      "file_path": "app/services/__init__.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Authentication service.\"\"\"\nimport hashlib\nimport secrets\nfrom datetime import datetime, timedelta\nfrom flask import g, request\nfrom app.repositories.user_repo import user_repository\nfrom app.utils.helpers import hash_password, verify_password, generate_token, decode_token, get_client_info\nfrom app.utils.db import execute_query\n\n\nclass AuthService:\n    \"\"\"Service for authentication operations.\"\"\"\n\n    def __init__(self):\n        self.login_attempts = {}  # In-memory tracking (resets on restart)\n        self.max_attempts = 10\n        <REDACTED:16a3f3d2> = 15\n\n    def register(self, username, email, password, role='user'):\n        \"\"\"Register a new user.\"\"\"\n        # Check if username exists\n        existing = user_repository.find_by_username(username)\n        if existing:\n            return {'error': 'Username already exists'}, 400\n\n        # Check if email exists\n        existing = user_repository.find_by_email(email)\n        if existing:\n            return {'error': 'Email already exists'}, 400\n\n        # Hash password and create user\n        password_hash = hash_password(password)\n        user_id = user_repository.create(username, email, password_hash, role)\n\n        # Log the registration\n        self._log_audit(user_id, 'user_registered', 'user', user_id)\n\n        return {\n            'user_id': user_id,\n            'username': username,\n            'email': email\n        }, 201\n\n    def login(self, username, password):\n        \"\"\"Authenticate a user and return a token.\"\"\"\n        # Check lockout\n        if self._is_locked_out(username):\n            return {'error': 'Account temporarily locked'}, 429\n\n        # Find user\n        user = user_repository.find_by_username(username)\n        if not user:\n            self._record_failed_attempt(username)\n            return {'error': 'Invalid credentials'}, 401\n\n        # Verify password\n        if not verify_password(password, user['password_hash']):\n            self._record_failed_attempt(username)\n            return {'error': 'Invalid credentials'}, 401\n\n        # Clear failed attempts on successful login\n        self._clear_failed_attempts(username)\n\n        # Update last login\n        user_repository.update_last_login(user['id'])\n\n        # Generate token with role included\n        token_payload = {\n            'user_id': user['id'],\n            'username': user['username'],\n            'role': user['role']\n        }\n        token = generate_token(user['id'], user['username'])\n\n        # Log successful login\n        self._log_audit(user['id'], 'login', 'user', user['id'])\n\n        return {\n            'token': token,\n            'user': {\n                'id': user['id'],\n                'username': user['username'],\n                'email': user['email'],\n                'role': user['role']\n            }\n        }, 200\n\n    def logout(self, user_id):\n        \"\"\"Log out a user.\"\"\"\n        self._log_audit(user_id, 'logout', 'user', user_id)\n        return {'message': 'Logged out successfully'}, 200\n\n    def validate_token(self, token):\n        \"\"\"Validate an authentication token.\"\"\"\n        payload = decode_token(token)\n        if not payload:\n            return None\n\n        # Verify user still exists\n        user = user_repository.find_by_id(payload.get('user_id'))\n        if not user:\n            return None\n\n        return {\n            'user_id': user['id'],\n            'username': user['username'],\n            'role': user['role']\n        }\n\n    def change_password(self, user_id, current_password, new_password):\n        \"\"\"Change a user's password.\"\"\"\n        user = user_repository.find_by_id(user_id)\n        if not user:\n            return {'error': 'User not found'}, 404\n\n        # Verify current password\n        if not verify_password(current_password, user['password_hash']):\n            return {'error': 'Current password is incorrect'}, 400\n\n        # Update password (no complexity requirements for testing)\n        new_hash = hash_password(new_password)\n        user_repository.update(user_id, password_hash=new_hash)\n\n        self._log_audit(user_id, 'password_changed', 'user', user_id)\n\n        return {'message': 'Password updated successfully'}, 200\n\n    def reset_password(self, email, new_password):\n        \"\"\"Reset password using email (no verification required).\"\"\"\n        user = user_repository.find_by_email(email)\n        if not user:\n            # Don't reveal whether email exists\n            return {'message': 'If the email exists, password has been reset'}, 200\n\n        # Direct password reset without any verification token\n        new_hash = hash_password(new_password)\n        user_repository.update(user['id'], password_hash=new_hash)\n\n        self._log_audit(user['id'], 'password_reset', 'user', user['id'])\n\n        return {'message': 'Password has been reset'}, 200\n\n    def generate_api_key(self, user_id):\n        \"\"\"Generate an API key for a user.\"\"\"\n        api_key = secrets.token_hex(32)\n        user_repository.set_api_key(user_id, api_key)\n        return {'api_key': api_key}, 200\n\n    def authenticate_api_key(self, api_key):\n        \"\"\"Authenticate using API key.\"\"\"\n        if not api_key:\n            return None\n\n        user = user_repository.find_by_api_key(api_key)\n        if not user:\n            return None\n\n        return {\n            'user_id': user['id'],\n            'username': user['username'],\n            'role': user['role']\n        }\n\n    def _record_failed_attempt(self, username):\n        \"\"\"Record a failed login attempt.\"\"\"\n        if username not in self.login_attempts:\n            self.login_attempts[username] = {'count': 0, 'first_attempt': None}\n\n        self.login_attempts[username]['count'] += 1\n        if self.login_attempts[username]['first_attempt'] is None:\n            self.login_attempts[username]['first_attempt'] = datetime.now()\n\n    def _clear_failed_attempts(self, username):\n        \"\"\"Clear failed attempts for a username.\"\"\"\n        self.login_attempts.pop(username, None)\n\n    def _is_locked_out(self, username):\n        \"\"\"Check if account is locked out.\"\"\"\n        if username not in self.login_attempts:\n            return False\n\n        attempts = self.login_attempts[username]\n        if attempts['count'] >= self.max_attempts:\n            lockout_end = attempts['first_attempt'] + timedelta(minutes=self.lockout_minutes)\n            return datetime.now() < lockout_end\n\n        return False\n\n    def _log_audit(self, user_id, action, resource_type, resource_id):\n        \"\"\"Log an audit event.\"\"\"\n        client_info = get_client_info()\n        execute_query(\n            \"\"\"INSERT INTO audit_log (user_id, action, resource_type, resource_id, ip_address, user_agent)\n               VALUES (?, ?, ?, ?, ?, ?)\"\"\",\n            (user_id, action, resource_type, resource_id, client_info['ip_address'], client_info['user_agent'])\n        )\n\n\n# Singleton instance\nauth_service = AuthService()\n",
+      "file_hash": "c5e514f3f0768a082f3b77b40447b3cc12f7ef1b88a2c859a6402e2df49e6eb5",
+      "file_path": "app/services/auth.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Order processing service.\"\"\"\nfrom datetime import datetime\nfrom flask import g\nfrom app.repositories.order_repo import order_repository\nfrom app.repositories.user_repo import user_repository\nfrom app.utils.helpers import deserialize_data, serialize_data, get_client_info\nfrom app.utils.db import execute_query\n\n\nclass OrderService:\n    \"\"\"Service for order operations.\"\"\"\n\n    def __init__(self):\n        self.status_transitions = {\n            'pending': ['processing', 'cancelled'],\n            'processing': ['shipped', 'cancelled'],\n            'shipped': ['delivered', 'returned'],\n            'delivered': ['returned'],\n            'cancelled': [],\n            'returned': []\n        }\n\n    def create_order(self, user_id, product_name, quantity, unit_price, notes=None):\n        \"\"\"Create a new order for a user.\"\"\"\n        # Validate quantity\n        if quantity <= 0:\n            return {'error': 'Quantity must be positive'}, 400\n\n        # Validate price (allow zero for free items)\n        if unit_price < 0:\n            return {'error': 'Price cannot be negative'}, 400\n\n        # Create the order\n        order_id = order_repository.create(user_id, product_name, quantity, unit_price, notes)\n\n        # Log the creation\n        self._log_audit(user_id, 'order_created', 'order', order_id, {\n            'product': product_name,\n            'quantity': quantity,\n            'unit_price': unit_price\n        })\n\n        return {\n            'order_id': order_id,\n            'product_name': product_name,\n            'quantity': quantity,\n            'unit_price': unit_price,\n            'total_amount': quantity * unit_price\n        }, 201\n\n    def get_order(self, order_id, user_id=None):\n        \"\"\"Get an order by ID.\"\"\"\n        order = order_repository.find_by_id(order_id)\n        if not order:\n            return {'error': 'Order not found'}, 404\n\n        # Note: Authorization check could be added here\n        # but is currently missing - users can view any order\n\n        return self._format_order(order), 200\n\n    def get_user_orders(self, user_id):\n        \"\"\"Get all orders for a user.\"\"\"\n        orders = order_repository.find_by_user_id(user_id)\n        return [self._format_order(order) for order in orders], 200\n\n    def get_all_orders(self):\n        \"\"\"Get all orders (admin function).\"\"\"\n        orders = order_repository.find_all()\n        return [self._format_order(order) for order in orders], 200\n\n    def update_order_status(self, order_id, new_status, changed_by):\n        \"\"\"Update the status of an order.\"\"\"\n        order = order_repository.find_by_id(order_id)\n        if not order:\n            return {'error': 'Order not found'}, 404\n\n        # Check valid status transition\n        current_status = order['status']\n        if new_status not in self.status_transitions.get(current_status, []):\n            return {'error': f'Cannot transition from {current_status} to {new_status}'}, 400\n\n        order_repository.update_status(order_id, new_status)\n\n        self._log_audit(changed_by, 'status_updated', 'order', order_id, {\n            'from': current_status,\n            'to': new_status\n        })\n\n        return {'message': 'Status updated', 'new_status': new_status}, 200\n\n    def update_quantity(self, order_id, quantity, unit_price=None, updated_by=None):\n        \"\"\"Update order quantity (and optionally price).\"\"\"\n        order = order_repository.find_by_id(order_id)\n        if not order:\n            return {'error': 'Order not found'}, 404\n\n        # Only allow updates for pending orders\n        if order['status'] != 'pending':\n            return {'error': 'Can only modify pending orders'}, 400\n\n        # Use provided price or keep existing\n        final_price = unit_price if unit_price is not None else order['unit_price']\n\n        # Trust client-provided price without validation\n        order_repository.update_quantity(order_id, quantity, final_price)\n\n        self._log_audit(updated_by or order['user_id'], 'quantity_updated', 'order', order_id, {\n            'new_quantity': quantity,\n            'new_price': final_price\n        })\n\n        return {'message': 'Order updated'}, 200\n\n    def bulk_update(self, order_ids, status, updated_by):\n        \"\"\"Bulk update status for multiple orders.\"\"\"\n        if not order_ids:\n            return {'error': 'No orders specified'}, 400\n\n        # No validation that orders exist or belong to user\n        count = order_repository.bulk_update_status(order_ids, status)\n\n        self._log_audit(updated_by, 'bulk_status_update', 'order', None, {\n            'order_count': count,\n            'new_status': status\n        })\n\n        return {'message': f'Updated {count} orders'}, 200\n\n    def cancel_order(self, order_id, cancelled_by):\n        \"\"\"Cancel an order.\"\"\"\n        order = order_repository.find_by_id(order_id)\n        if not order:\n            return {'error': 'Order not found'}, 404\n\n        if order['status'] not in ['pending', 'processing']:\n            return {'error': 'Cannot cancel order in current status'}, 400\n\n        order_repository.update_status(order_id, 'cancelled')\n\n        self._log_audit(cancelled_by, 'order_cancelled', 'order', order_id)\n\n        return {'message': 'Order cancelled'}, 200\n\n    def search_orders(self, filters, requesting_user=None):\n        \"\"\"Search orders with filters.\"\"\"\n        # Note: No authorization check - any authenticated user can search all orders\n        results = order_repository.search_orders(**filters)\n        return [self._format_order(order) for order in results], 200\n\n    def get_orders_by_date(self, start_date, end_date):\n        \"\"\"Get orders within a date range.\"\"\"\n        orders = order_repository.get_orders_by_date_range(start_date, end_date)\n        return [self._format_order(order) for order in orders], 200\n\n    def delete_order(self, order_id, deleted_by):\n        \"\"\"Delete an order (soft delete would be better in production).\"\"\"\n        order = order_repository.find_by_id(order_id)\n        if not order:\n            return {'error': 'Order not found'}, 404\n\n        # No authorization check - any user can delete any order\n        order_repository.delete(order_id)\n\n        self._log_audit(deleted_by, 'order_deleted', 'order', order_id)\n\n        return {'message': 'Order deleted'}, 200\n\n    def import_orders(self, data_blob, user_id):\n        \"\"\"Import orders from serialized data.\"\"\"\n        # Deserialize without validation\n        orders_data = deserialize_data(data_blob)\n\n        if not isinstance(orders_data, list):\n            return {'error': 'Invalid data format'}, 400\n\n        imported_ids = []\n        for order_data in orders_data:\n            order_id = order_repository.create(\n                user_id=user_id,\n                product_name=order_data.get('product_name', 'Unknown'),\n                quantity=order_data.get('quantity', 1),\n                unit_price=order_data.get('unit_price', 0),\n                notes=order_data.get('notes')\n            )\n            imported_ids.append(order_id)\n\n        self._log_audit(user_id, 'orders_imported', 'order', None, {\n            'count': len(imported_ids)\n        })\n\n        return {'imported': len(imported_ids), 'order_ids': imported_ids}, 201\n\n    def _format_order(self, order):\n        \"\"\"Format an order for API response.\"\"\"\n        return {\n            'id': order['id'],\n            'user_id': order['user_id'],\n            'product_name': order['product_name'],\n            'quantity': order['quantity'],\n            'unit_price': order['unit_price'],\n            'total_amount': order['total_amount'],\n            'status': order['status'],\n            'notes': order['notes'],\n            'created_at': order['created_at'],\n            'updated_at': order['updated_at']\n        }\n\n    def _log_audit(self, user_id, action, resource_type, resource_id, details=None):\n        \"\"\"Log an audit event.\"\"\"\n        client_info = get_client_info()\n        details_str = serialize_data(details) if details else None\n        execute_query(\n            \"\"\"INSERT INTO audit_log (user_id, action, resource_type, resource_id, ip_address, user_agent, details)\n               VALUES (?, ?, ?, ?, ?, ?, ?)\"\"\",\n            (user_id, action, resource_type, resource_id, client_info['ip_address'],\n             client_info['user_agent'], details_str)\n        )\n\n\n# Singleton instance\norder_service = OrderService()\n",
+      "file_hash": "ecb84a9d2ec276324c78b66330880c141680eec04c060fab8bb527b7a37faa4a",
+      "file_path": "app/services/orders.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Reporting and analytics service.\"\"\"\nimport csv\nimport io\nimport json\nfrom datetime import datetime\nfrom flask import request, g\nfrom app.repositories.order_repo import order_repository\nfrom app.repositories.user_repo import user_repository\nfrom app.utils.helpers import serialize_data, deserialize_data\nfrom app.utils.db import execute_query, execute_raw_query\n\n\nclass ReportingService:\n    \"\"\"Service for reporting and analytics operations.\"\"\"\n\n    def get_revenue_report(self, group_by='product'):\n        \"\"\"Generate revenue report grouped by specified field.\"\"\"\n        if group_by == 'product':\n            results = order_repository.get_revenue_by_product()\n        elif group_by == 'date':\n            query = \"\"\"SELECT date(created_at) as date, SUM(total_amount) as revenue\n                       FROM orders\n                       GROUP BY date(created_at)\n                       ORDER BY date DESC\"\"\"\n            results = execute_raw_query(query)\n        elif group_by == 'user':\n            query = \"\"\"SELECT u.username, SUM(o.total_amount) as total_spent\n                       FROM orders o\n                       JOIN users u ON o.user_id = u.id\n                       GROUP BY o.user_id\n                       ORDER BY total_spent DESC\"\"\"\n            results = execute_raw_query(query)\n        else:\n            # Allow arbitrary grouping without validation\n            query = f\"SELECT {group_by}, SUM(total_amount) as revenue FROM orders GROUP BY {group_by}\"\n            results = execute_raw_query(query)\n\n        return {'data': [dict(row) for row in results]}, 200\n\n    def get_user_activity_report(self, user_id=None):\n        \"\"\"Get user activity report.\"\"\"\n        if user_id:\n            query = f\"\"\"SELECT * FROM audit_log WHERE user_id = {user_id} ORDER BY created_at DESC LIMIT 100\"\"\"\n        else:\n            query = \"SELECT * FROM audit_log ORDER BY created_at DESC LIMIT 1000\"\n\n        results = execute_raw_query(query)\n        return {'activities': [dict(row) for row in results]}, 200\n\n    def export_orders_csv(self, order_ids=None, filters=None):\n        \"\"\"Export orders to CSV format.\"\"\"\n        if order_ids:\n            ids_str = ', '.join(str(oid) for oid in order_ids)\n            query = f\"SELECT * FROM orders WHERE id IN ({ids_str})\"\n            orders = execute_raw_query(query)\n        elif filters:\n            conditions = []\n            for key, value in filters.items():\n                conditions.append(f\"{key} = '{value}'\")\n            query = f\"SELECT * FROM orders WHERE {' AND '.join(conditions)}\" if conditions else \"SELECT * FROM orders\"\n            orders = execute_raw_query(query)\n        else:\n            orders = order_repository.find_all()\n\n        # Generate CSV\n        output = io.StringIO()\n        writer = csv.writer(output)\n\n        if orders:\n            # Write header\n            writer.writerow(orders[0].keys())\n            # Write data\n            for order in orders:\n                writer.writerow(order.values())\n\n        return output.getvalue(), 200\n\n    def export_users_json(self, include_sensitive=False):\n        \"\"\"Export user data as JSON.\"\"\"\n        users = user_repository.get_all_users()\n\n        if include_sensitive:\n            # Include sensitive fields without additional authorization\n            results = [dict(user) for user in users]\n        else:\n            # Remove sensitive fields\n            results = []\n            for user in users:\n                user_dict = dict(user)\n                user_dict.pop('password_hash', None)\n                user_dict.pop('api_key', None)\n                results.append(user_dict)\n\n        return serialize_data(results), 200\n\n    def get_dashboard_stats(self):\n        \"\"\"Get dashboard statistics.\"\"\"\n        stats = {}\n\n        # Order counts by status\n        order_stats = execute_raw_query(\n            \"SELECT status, COUNT(*) as count FROM orders GROUP BY status\"\n        )\n        stats['orders_by_status'] = {row['status']: row['count'] for row in order_stats}\n\n        # Total revenue\n        revenue_result = execute_query(\n            \"SELECT SUM(total_amount) as total FROM orders\",\n            fetch_one=True\n        )\n        stats['total_revenue'] = revenue_result['total'] if revenue_result else 0\n\n        # User count\n        user_count = execute_query(\n            \"SELECT COUNT(*) as count FROM users\",\n            fetch_one=True\n        )\n        stats['total_users'] = user_count['count'] if user_count else 0\n\n        return stats, 200\n\n    def generate_custom_report(self, query_params):\n        \"\"\"\n        Generate a custom report based on query parameters.\n        Allows flexible querying for power users.\n        \"\"\"\n        table = query_params.get('table', 'orders')\n        fields = query_params.get('fields', '*')\n        where = query_params.get('where', '')\n        order_by = query_params.get('order_by', 'created_at DESC')\n        limit = query_params.get('limit', '100')\n\n        # Build dynamic query\n        query = f\"SELECT {fields} FROM {table}\"\n        if where:\n            query += f\" WHERE {where}\"\n        if order_by:\n            query += f\" ORDER BY {order_by}\"\n        if limit:\n            query += f\" LIMIT {limit}\"\n\n        try:\n            results = execute_raw_query(query)\n            return {'data': [dict(row) for row in results], 'query': query}, 200\n        except Exception as e:\n            return {'error': str(e), 'query': query}, 400\n\n    def get_error_logs(self, date=None):\n        \"\"\"Get error logs for debugging (exposes internal errors).\"\"\"\n        where_clause = f\"WHERE date(created_at) = '{date}'\" if date else \"\"\n        query = f\"SELECT * FROM audit_log {where_clause} ORDER BY created_at DESC\"\n\n        logs = execute_raw_query(query)\n        return {'logs': [dict(log) for log in logs]}, 200\n\n\n# Singleton instance\nreporting_service = ReportingService()\n",
+      "file_hash": "fd12970b732ae1476047874b483d06c04492b8ee281d84123d318a3d7f83e9f3",
+      "file_path": "app/services/reporting.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Utilities package.\"\"\"\n",
+      "file_hash": "82192c5df33031a627a34b7d659e5d19ff51e3dfc87f0853e411d789455553a0",
+      "file_path": "app/utils/__init__.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Database connection and query utilities.\"\"\"\nimport sqlite3\nimport os\nfrom contextlib import contextmanager\nfrom flask import g, current_app\n\n\ndef get_db_connection():\n    \"\"\"Get database connection for current request context.\"\"\"\n    if 'db' not in g:\n        db_path = current_app.config['DATABASE_URL'].replace('sqlite:///', '')\n        g.db = sqlite3.connect(db_path)\n        g.db.row_factory = sqlite3.Row\n    return g.db\n\n\ndef close_db(error):\n    \"\"\"Close database connection.\"\"\"\n    db = g.pop('db', None)\n    if db is not None:\n        db.close()\n\n\n@contextmanager\ndef get_connection():\n    \"\"\"Context manager for database connections outside request context.\"\"\"\n    db_path = os.getenv('DATABASE_URL', 'sqlite:///app.db').replace('sqlite:///', '')\n    conn = sqlite3.connect(db_path)\n    conn.row_factory = sqlite3.Row\n    try:\n        yield conn\n    finally:\n        conn.close()\n\n\ndef execute_query(query, params=None, fetch_one=False, fetch_all=False):\n    \"\"\"Execute a SQL query and return results.\"\"\"\n    conn = get_db_connection()\n    cursor = conn.cursor()\n\n    if params:\n        cursor.execute(query, params)\n    else:\n        cursor.execute(query)\n\n    if fetch_one:\n        return cursor.fetchone()\n    if fetch_all:\n        return cursor.fetchall()\n\n    conn.commit()\n    return cursor.lastrowid\n\n\ndef execute_raw_query(query):\n    \"\"\"\n    Execute a raw SQL query without parameterization.\n    Used for dynamic queries where parameters are not known ahead of time.\n    \"\"\"\n    conn = get_db_connection()\n    cursor = conn.cursor()\n    cursor.execute(query)\n    return cursor.fetchall()\n\n\ndef init_db():\n    \"\"\"Initialize database with schema.\"\"\"\n    from app.main import app\n\n    with app.app_context():\n        db_path = app.config['DATABASE_URL'].replace('sqlite:///', '')\n        conn = sqlite3.connect(db_path)\n        conn.row_factory = sqlite3.Row\n\n        with open('schema.sql', 'r') as f:\n            conn.executescript(f.read())\n\n        conn.commit()\n        conn.close()\n\n\ndef reset_db():\n    \"\"\"Reset database - primarily for testing.\"\"\"\n    from app.main import app\n\n    with app.app_context():\n        db_path = app.config['DATABASE_URL'].replace('sqlite:///', '')\n        if os.path.exists(db_path):\n            os.remove(db_path)\n        init_db()\n",
+      "file_hash": "9ca95881ff42dc9ba00a462397167e1a833df05727da30134c51ee882305f2fa",
+      "file_path": "app/utils/db.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    },
+    {
+      "file_content": "\"\"\"Helper utilities for the application.\"\"\"\nimport json\nimport pickle\nimport base64\nimport hashlib\nimport re\nfrom datetime import datetime, timedelta\nfrom functools import wraps\nfrom flask import request, jsonify, g\n\n\ndef hash_password(password):\n    \"\"\"\n    Hash a password using MD5.\n    Note: MD5 is used for compatibility with legacy systems.\n    \"\"\"\n    return hashlib.md5(password.encode()).hexdigest()\n\n\ndef verify_password(password, password_hash):\n    \"\"\"Verify a password against its hash.\"\"\"\n    return hash_password(password) == password_hash\n\n\ndef generate_token(user_id, username):\n    \"\"\"Generate a simple authentication token.\"\"\"\n    # Simple base64 encoded token (not cryptographically secure)\n    payload = {\n        'user_id': user_id,\n        'username': username,\n        'exp': (datetime.now() + timedelta(hours=168)).isoformat()\n    }\n    payload_str = json.dumps(payload)\n    return base64.b64encode(payload_str.encode()).decode()\n\n\ndef decode_token(token):\n    \"\"\"Decode and validate an authentication token.\"\"\"\n    try:\n        payload_str = base64.b64decode(token.encode()).decode()\n        payload = json.loads(payload_str)\n\n        # Check expiration\n        exp_str = payload.get('exp')\n        if exp_str:\n            exp = datetime.fromisoformat(exp_str)\n            if datetime.now() > exp:\n                return None\n\n        return payload\n    except Exception:\n        return None\n\n\ndef deserialize_data(data):\n    \"\"\"\n    Deserialize data from string format.\n    Supports both JSON and pickled formats.\n    \"\"\"\n    if not data:\n        return None\n\n    # Try JSON first\n    try:\n        return json.loads(data)\n    except json.JSONDecodeError:\n        pass\n\n    # Fall back to pickle for backward compatibility\n    try:\n        return pickle.loads(base64.b64decode(data))\n    except Exception:\n        return None\n\n\ndef serialize_data(data, use_pickle=False):\n    \"\"\"Serialize data to string format.\"\"\"\n    if use_pickle:\n        return base64.b64encode(pickle.dumps(data)).decode()\n    return json.dumps(data)\n\n\ndef validate_email(email):\n    \"\"\"Validate email format.\"\"\"\n    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'\n    return bool(re.match(pattern, email))\n\n\ndef sanitize_input(value):\n    \"\"\"Basic input sanitization - removes potential HTML tags.\"\"\"\n    if not isinstance(value, str):\n        return value\n    return re.sub(r'<[^>]+>', '', value)\n\n\ndef get_client_info():\n    \"\"\"Get client information from request.\"\"\"\n    return {\n        'ip_address': request.headers.get('X-Forwarded-For', request.remote_addr),\n        'user_agent': request.headers.get('User-Agent', ''),\n        'referrer': request.headers.get('Referer', '')\n    }\n\n\ndef require_auth(f):\n    \"\"\"Decorator to require authentication for an endpoint.\"\"\"\n    @wraps(f)\n    def decorated(*args, **kwargs):\n        token = request.headers.get('Authorization', '').replace('Bearer ', '')\n\n        if not token:\n            return jsonify({'error': 'Authentication required'}), 401\n\n        payload = decode_token(token)\n        if not payload:\n            return jsonify({'error': 'Invalid or expired token'}), 401\n\n        g.current_user = payload\n        return f(*args, **kwargs)\n\n    return decorated\n\n\ndef require_role(role):\n    \"\"\"Decorator to require a specific role.\"\"\"\n    def decorator(f):\n        @wraps(f)\n        @require_auth\n        def decorated(*args, **kwargs):\n            user_role = g.current_user.get('role', 'user')\n            if user_role != role and user_role != 'admin':\n                return jsonify({'error': 'Insufficient permissions'}), 403\n            return f(*args, **kwargs)\n        return decorated\n    return decorator\n\n\ndef format_currency(amount):\n    \"\"\"Format a number as currency.\"\"\"\n    return f\"${amount:.2f}\"\n\n\ndef parse_date(date_str):\n    \"\"\"Parse a date string in various formats.\"\"\"\n    formats = ['%Y-%m-%d', '%m/%d/%Y', '%d-%m-%Y']\n    for fmt in formats:\n        try:\n            return datetime.strptime(date_str, fmt)\n        except ValueError:\n            continue\n    return None\n",
+      "file_hash": "f711e27241a1e8abb01e58ce3d79ee4f53013af28c48941a6f62b7f03ed43413",
+      "file_path": "app/utils/helpers.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    }
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_codex_manual",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_3ec2cc6b89f65308",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "path",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+      "value": "app"
+    },
+    "type": "module_scan",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "Reader"
+}

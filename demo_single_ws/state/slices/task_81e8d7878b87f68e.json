@@ -1,0 +1,75 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "hypothesis.proposed",
+      "observation.proposed",
+      "question.opened"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "converting hypothesis to fact",
+      "issue creation",
+      "severity assignment"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {},
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "12cd5829634fffc1ce17c5116dd11fe7dce0f0b839a49b47f7f9802a496dfccf",
+  "slice_id": "slice_12cd5829634fffc1",
+  "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+  "target_paths": [
+    "app/main.py"
+  ],
+  "target_sources": [
+    {
+      "file_content": "\"\"\"Main Flask application entrypoint.\"\"\"\nfrom flask import Flask, jsonify, request\nfrom app.config import get_config\nfrom app.utils.db import close_db\nfrom app.utils.helpers import decode_token\n\n\ndef create_app(config_class=None):\n    \"\"\"Application factory.\"\"\"\n    app = Flask(__name__)\n\n    if config_class is None:\n        config_class = get_config()\n\n    app.config.from_object(config_class)\n\n    # Register database cleanup\n    app.teardown_appcontext(close_db)\n\n    # Register blueprints\n    from app.routes.users import users_bp\n    from app.routes.orders import orders_bp\n    from app.routes.admin import admin_bp\n\n    app.register_blueprint(users_bp)\n    app.register_blueprint(orders_bp)\n    app.register_blueprint(admin_bp)\n\n    # Health check endpoint\n    @app.route('/health')\n    def health():\n        return jsonify({'status': 'healthy', 'version': '1.0.0'}), 200\n\n    # Error handlers\n    @app.errorhandler(400)\n    def bad_request(error):\n        return jsonify({'error': str(error.description)}), 400\n\n    @app.errorhandler(401)\n    def unauthorized(error):\n        return jsonify({'error': 'Authentication required'}), 401\n\n    @app.errorhandler(403)\n    def forbidden(error):\n        return jsonify({'error': 'Access denied'}), 403\n\n    @app.errorhandler(404)\n    def not_found(error):\n        return jsonify({'error': 'Resource not found'}), 404\n\n    @app.errorhandler(500)\n    def internal_error(error):\n        # Expose error details in response\n        return jsonify({\n            'error': 'Internal server error',\n            'details': str(error),\n            'path': request.path\n        }), 500\n\n    # Request logging middleware\n    @app.before_request\n    def log_request():\n        # Log all requests including sensitive paths\n        app.logger.debug(f\"Request: {request.method} {request.path} - IP: {request.remote_addr}\")\n\n    # Authentication middleware for API key auth\n    @app.before_request\n    def api_key_auth():\n        # Skip auth for certain endpoints\n        public_paths = ['/health', '/api/users/register', '/api/users/login', '/api/users/reset-password']\n        if request.path in public_paths:\n            return None\n\n        # Check for API key in header\n        api_key = request.headers.get('X-API-Key')\n        if api_key:\n            from app.services.auth import auth_service\n            user = auth_service.authenticate_api_key(api_key)\n            if user:\n                request.user = user\n                return None\n            return jsonify({'error': 'Invalid API key'}), 401\n\n        # Check for Bearer token\n        auth_header = request.headers.get('Authorization', '')\n        if auth_header.startswith('Bearer '):\n            token = auth_header.replace('Bearer ', '')\n            payload = decode_token(token)\n            if payload:\n                request.user = payload\n                return None\n            return jsonify({'error': 'Invalid token'}), 401\n\n        return None\n\n    return app\n\n\n# Create application instance\napp = create_app()\n\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port=5000, debug=True)\n",
+      "file_hash": "f4c1c01f6a30cec9d1b2823fd4183d151f8dfe24495ad4960ec08b429655f1c0",
+      "file_path": "app/main.py",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    }
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_single_real",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_81e8d7878b87f68e",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "path",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+      "value": "app/main.py"
+    },
+    "type": "module_scan",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "Reader"
+}

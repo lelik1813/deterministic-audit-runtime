@@ -1,0 +1,93 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "issue.proposed"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "creating unsupported claims",
+      "using unverified observations as facts"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {
+    "obs_68a25a9c58fb00f3": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_68a25a9c58fb00f3",
+      "pattern_match_ids": [
+        "pm_sql_fstring_40261ab4c4e6847f"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "# Direct string interpolation for flexibility if isinstance(value, str): conditions.append(f\"{field} LIKE '%{value}%'\") else: conditions.append(f\"{field} = {value}\") if conditions: query = f\"SELECT * FROM orders WHERE {' AND '.join(conditions)}\"",
+            "file_hash": "e5bfe72bf2eff3392e9781c97ded8c8da3de38d60a51764297b6ce0de0efb2e0",
+            "file_path": "app/repositories/order_repo.py",
+            "line_range": {
+              "end": 47,
+              "start": 40
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in order search: query conditions are built with f-string interpolation of field names and values and executed as raw SQL.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:56:14Z"
+    }
+  },
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "5e72cfbc666d2e5c6c9028ff292f3d827d67653be8d6eb323d098f4f79105166",
+  "slice_id": "slice_5e72cfbc666d2e5c",
+  "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+  "target_paths": [
+    "app/repositories/order_repo.py"
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_codex_manual",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_f21cf87315f9ba1d",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "observation",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+      "value": "obs_68a25a9c58fb00f3"
+    },
+    "type": "compose_issue",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "IssueComposer"
+}

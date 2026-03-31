@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "tasks": {
+    "task_81e8d7878b87f68e": {
+      "attempt_count": 1,
+      "audit_id": "audit_single_real",
+      "created_at": "2026-03-29T11:11:01Z",
+      "id": "task_81e8d7878b87f68e",
+      "last_error": "Codex returned invalid structured output for role 'Reader': Reader worker output is invalid: candidate_events.5.payload: {'id': 'hyp_8a18d07666c478e5', 'audit_id': 'audit_single_real', 'status': 'open', 'statement': 'Because the authentication middleware falls through with `return None` when credentials are absent, route protection appears to rely on downstream route-level checks; if such checks are missing on sensitive routes, unauthenticated access may be possible.', 'rationale': 'Derived from transport-layer evidence.', 'created_at': '2026-03-29T11:12:03Z', 'updated_at': '2026-03-29T11:12:03Z', 'supporting_source_refs': [{'file_path': 'app/main.py', 'line_range': {'start': 67, 'end': 94}, 'snapshot_ref': '00d7f5425395220f39cab9c733be8fdeb0564599'}]} is not valid under any of the given schemas; candidate_events.5.payload: 'confidence' is a required property; candidate_events.5.payload: 'origin' is a required property; candidate_events.5.payload.status: 'open' is not one of ['proposed', 'in_verification', 'supported', 'rejected', 'unresolved_conflict']",
+      "status": "failed",
+      "target": {
+        "kind": "path",
+        "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+        "value": "app/main.py"
+      },
+      "type": "module_scan",
+      "updated_at": "2026-03-29T11:12:03Z"
+    }
+  }
+}

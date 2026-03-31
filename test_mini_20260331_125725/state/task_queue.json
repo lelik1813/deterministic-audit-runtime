@@ -1,0 +1,530 @@
+{
+  "schema_version": "1.0.0",
+  "tasks": {
+    "task_014cf18e9efb1d37": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:02:25Z",
+      "id": "task_014cf18e9efb1d37",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_3bf0c0293c514b5b"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:02:25Z"
+    },
+    "task_119602b5c7366b90": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:58:05Z",
+      "id": "task_119602b5c7366b90",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "path",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "app.py"
+      },
+      "type": "module_scan",
+      "updated_at": "2026-03-31T11:00:03Z"
+    },
+    "task_17e0eb81b330b0bd": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:01:38Z",
+      "id": "task_17e0eb81b330b0bd",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_34050a555c33e916"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:01:38Z"
+    },
+    "task_1c01e576b168fcf9": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_1c01e576b168fcf9",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_aaca93f312f6d15e"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:04:21Z"
+    },
+    "task_1d2868cbbb1f8ff2": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_1d2868cbbb1f8ff2",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_53ddabdddbf057a2"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:03:22Z"
+    },
+    "task_1f96113e9a880402": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_1f96113e9a880402",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_3bf0c0293c514b5b"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:02:25Z"
+    },
+    "task_20742a9aa677eaa0": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:03:01Z",
+      "id": "task_20742a9aa677eaa0",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_4bc9d65285970ee8"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:03:01Z"
+    },
+    "task_3068b8c7246f2aad": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_3068b8c7246f2aad",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_ae781312d19f2c4a"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:04:35Z"
+    },
+    "task_32f113c27d717d25": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:03:22Z",
+      "id": "task_32f113c27d717d25",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_53ddabdddbf057a2"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:03:22Z"
+    },
+    "task_39ad98d386dc3f9a": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:01:11Z",
+      "id": "task_39ad98d386dc3f9a",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_1fa004c806903512"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:01:11Z"
+    },
+    "task_3e2d91060712604a": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:25Z",
+      "id": "task_3e2d91060712604a",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "path",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": ".env.example"
+      },
+      "type": "module_scan",
+      "updated_at": "2026-03-31T11:00:25Z"
+    },
+    "task_45b44cbb9228316f": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_45b44cbb9228316f",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_fdf42b7e76b2f439"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:00:03Z"
+    },
+    "task_5daf046583bc05ef": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_5daf046583bc05ef",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_923b2ef4239bf30c"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:04:05Z"
+    },
+    "task_71fc9378e049d0ae": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_71fc9378e049d0ae",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_b12b2b6801600104"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:05:07Z"
+    },
+    "task_72c7d8c5c33372e7": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_72c7d8c5c33372e7",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_67f2974569e0ff41"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:03:38Z"
+    },
+    "task_76f5dad2407a5cec": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_76f5dad2407a5cec",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_e31d05381763cbac"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:00:03Z"
+    },
+    "task_7c6c04cb5ef2f802": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_7c6c04cb5ef2f802",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_37783ddd04ed109b"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:01:51Z"
+    },
+    "task_84fcd9187dd81c8e": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:02:06Z",
+      "id": "task_84fcd9187dd81c8e",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_379bf8e9f28df638"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:02:06Z"
+    },
+    "task_87776ad542481bdc": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:52Z",
+      "id": "task_87776ad542481bdc",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_169c36fe8de3e280"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:00:52Z"
+    },
+    "task_8894c983823bcdd5": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_8894c983823bcdd5",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_379bf8e9f28df638"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:02:06Z"
+    },
+    "task_89c19c3215589b3f": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_89c19c3215589b3f",
+      "last_error": "Codex invocation failed: OpenAI Codex v0.117.0 (research preview)\n--------\nworkdir: C:\\Users\\rocki\\Documents\\EGE\\Projects\\dar-fixture-mini\nmodel: gpt-5.3-codex\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: medium\nreasoning summaries: none\nsession id: 019d4393-e987-7472-9f98-a19a3e6868ba\n--------\nuser\n# Verifier Worker Prompt\n\nYou are operating as the `Verifier` worker for an external repository audit runtime.\n\nYour job is to inspect only the provided worker input JSON and emit structured candidate events.\n\n## Scope\n\n- Read only the supplied worker input.\n- Treat the supplied slice and contract as the full authoritative context for this task.\n- Unstored context is not authoritative.\n- Do not rely on conversational memory, prior turns, or assumptions not present in the input.\n\n## Task Types\n\nThe Verifier handles two distinct task target kinds:\n\n### Observation Verification (task.target.kind == \"observation\")\n\n- Evaluate the targeted observation against the supplied source-bound evidence.\n- Use `relevant_observations` and `open_questions` only as context for verification.\n- If verification is blocked, open a question instead of guessing.\n\n### Hypothesis Verification (task.target.kind == \"hypothesis\")\n\n- Evaluate the targeted hypothesis against the provided evidence set.\n- The evidence set is in `relevant_observations` (bounded to max 10 nodes).\n- Related hypotheses are in `relevant_hypotheses` for context.\n- You must evaluate the hypothesis against multiple evidence nodes, not a single fact.\n- Produce a structured `verification_basis` documenting your reasoning.\n\n## Allowed Outputs\n\nYou may emit candidate events of these types only:\n\n**For observation verification:**\n- `observation.verified`\n- `observation.rejected`\n\n**For hypothesis verification:**\n- `hypothesis.sent_to_verification` (when starting verification)\n- `hypothesis.supported` (when evidence supports the hypothesis)\n- `hypothesis.rejected` (when evidence contradicts the hypothesis)\n- `hypothesis.unresolved_conflict` (when competing hypotheses both have evidence)\n\n**Common:**\n- `contradiction.registered`\n- `question.opened`\n\n## Forbidden Outputs\n\nYou must not:\n- create issues\n- assign severity\n- invent unsupported facts\n- rely on conversational memory\n- convert uncertainty into certainty without evidence\n- emit prose as a state mutation\n\n## Verification Standard\n\n### Observation Verification\n\n- Verification must be evidence-based.\n- A claim may become `observation.verified` only when the supplied evidence supports it.\n- A claim may become `observation.rejected` only when the supplied evidence contradicts it or fails the claim.\n- If evidence conflicts, register the contradiction explicitly with `contradiction.registered`.\n- If verification cannot complete because required evidence is missing or ambiguous, emit `question.opened`.\n\n### Hypothesis Verification (v1.3)\n\n- Hypothesis verification is **proof-like**, not single-fact validation.\n- You must evaluate the hypothesis against an **evidence set** (multiple observations).\n- A `hypothesis.supported` event **MUST** include a `verification_basis` object.\n- The `verification_basis.supporting_observations` array **MUST** be non-empty for supported status.\n- This is the \"no single-fact shortcut\" rule: a supported hypothesis requires at least one supporting observation.\n\n### Competing Hypotheses (v1.3 Step 5)\n\nWhen multiple hypotheses have `contradicting_hypothesis_ids` pointing to each other AND both have supporting evidence, you may emit `hypothesis.unresolved_conflict` instead of forcing a support/reject decision.\n\n**Use unresolved_conflict when:**\n- Multiple competing hypotheses each have supporting observations\n- Available evidence doesn't clearly favor one hypothesis\n- Resolution would require additional investigation\n\n**Do NOT use unresolved_conflict when:**\n- Only one hypothesis has evidence (support it)\n- Evidence clearly contradicts one side (reject it)\n- You're simply missing evidence (open a question instead)\n\n## FORBIDDEN: unresolved_conflict Misuse (STRICT)\n\nThe following uses of `hypothesis.unresolved_conflict` are **FORBIDDEN** and your output **WILL BE REJECTED**:\n\n1. **Empty supporting_observations in any competing entry** - Each competing hypothesis entry MUST have non-empty `supporting_observations`\n2. **Fabricated hypothesis IDs** - All `hypothesis_id` values MUST exist in `relevant_hypotheses`\n3. **Fabricated observation IDs** - All observation IDs MUST exist in `relevant_observations`\n4. **No missing_evidence** - You MUST provide non-empty `missing_evidence` explaining what would resolve the conflict\n5. **No contradiction relationship** - At least one pair of competing hypotheses MUST have `contradicting_hypothesis_ids` pointing to each other\n6. **Single-sided evidence** - If only one side has supporting observations, you MUST support or reject, NOT use unresolved_conflict\n\n**Your output will be REJECTED if these constraints are violated.**\n\n## REQUIRED: unresolved_conflict Fields\n\nWhen emitting `hypothesis.unresolved_conflict`, you MUST:\n\n1. Provide **at least 2 competing hypotheses** in `conflict_context.competing_hypotheses`\n2. Provide **non-empty `supporting_observations`** for EACH competing hypothesis entry\n3. Provide **non-empty `missing_evidence`** explaining what additional evidence would resolve the conflict\n4. Provide **non-empty `summary`** for each competing hypothesis entry\n5. Ensure hypotheses are **actually contradictory** (have `contradicting_hypothesis_ids` relationships)\n\n**Output shape for unresolved_conflict:**\n```json\n{\n  \"event_type\": \"hypothesis.unresolved_conflict\",\n  \"entity_type\": \"hypothesis\",\n  \"entity_id\": \"<target hypothesis id>\",\n  \"payload\": {\n    \"id\": \"<target hypothesis id>\",\n    \"status\": \"unresolved_conflict\",\n    \"verification_basis\": {\n      \"supporting_observations\": [\"obs_for_this_side\"],\n      \"conflict_context\": {\n        \"competing_hypotheses\": [\n          {\n            \"hypothesis_id\": \"hyp_a\",\n            \"supporting_observations\": [\"obs_a1\"],\n            \"summary\": \"Evidence supporting side A\"\n          },\n          {\n            \"hypothesis_id\": \"hyp_b\",\n            \"supporting_observations\": [\"obs_b1\"],\n            \"summary\": \"Evidence supporting side B\"\n          }\n        ],\n        \"conflict_description\": \"Why the evidence doesn't clearly resolve which hypothesis is correct\"\n      },\n      \"missing_evidence\": [\"What additional evidence would resolve this\"],\n      \"contradictions_detected\": []\n    }\n  }\n}\n```\n\n## Evidence Set Evaluation\n\nWhen verifying a hypothesis:\n\n1. **Review all observations** in `relevant_observations` (the evidence set).\n2. **Check related hypotheses** in `relevant_hypotheses` for supporting or contradicting context.\n3. **Evaluate consistency**: Do multiple observations support the same conclusion?\n4. **Identify gaps**: What evidence would strengthen verification but is not available?\n5. **Detect contradictions**: Are there hypotheses in `contradicting_hypothesis_ids` that have been supported?\n\n## verification_basis Structure\n\nFor `hypothesis.supported` and `hypothesis.rejected` events, include a `verification_basis` object:\n\n```json\n{\n  \"verification_basis\": {\n    \"supporting_observations\": [\"obs_id_1\", \"obs_id_2\"],\n    \"supporting_hypotheses\": [\"hyp_related_1\"],\n    \"missing_evidence\": [\"Description of evidence that would help\"],\n    \"contradictions_detected\": [\n      {\n        \"contradicting_hypothesis_id\": \"hyp_alternative\",\n        \"description\": \"Why this contradicts the target hypothesis\"\n      }\n    ]\n  }\n}\n```\n\n### Field Requirements\n\n| Field | Required? | Description |\n|-------|-----------|-------------|\n| `supporting_observations` | **YES for supported** | Observation IDs that support this hypothesis. Must be non-empty for `hypothesis.supported`. |\n| `supporting_hypotheses` | Optional | Other supported hypotheses that inform verification (context only). |\n| `missing_evidence` | Optional | Evidence that would strengthen verification but was not available. |\n| `contradictions_detected` | Optional | Local contradictions found between this hypothesis and evidence. |\n\n### Contradiction Detection (Local Only)\n\nPopulate `contradictions_detected` when:\n- The target hypothesis has `contradicting_hypothesis_ids` in its data\n- Those contradicting hypotheses are present in `relevant_hypotheses`\n- AND they have been supported (status: \"supported\")\n\nFor each detected contradiction:\n- Include the `contradicting_hypothesis_id`\n- Provide a `description` of why it contradicts the target\n\nDo NOT:\n- Traverse the full hypothesis graph\n- Attempt to resolve contradictions\n- Score or rank contradictions\n\n## Source Binding\n\n- Treat source-bound evidence as the basis for verification.\n- Do not verify unsupported claims.\n- Do not introduce new facts without evidence.\n- Do not smooth over ambiguity.\n\n## Truth Boundary\n\n**Hypotheses are NOT observations.**\n- A supported hypothesis does not become a fact.\n- It remains a reasoning construct with evidence backing.\n- Only verified observations can feed issues.\n\n## Output Rules\n\n- Output JSON only.\n- Do not wrap the JSON in markdown fences.\n- Do not include narrative before or after the JSON.\n- The JSON must match `schema/worker_output.schema.json`.\n- Copy through:\n  - `slice_id`\n  - `worker_role`\n  - `task_id`\n- Put candidate events in `candidate_events`.\n- Leave event acceptance metadata in `pending`.\n\n## Output Shape\n\n```json\n{\n  \"schema_version\": \"1.0.0\",\n  \"slice_id\": \"<copy from input>\",\n  \"worker_role\": \"Verifier\",\n  \"task_id\": \"<copy from input.task.id>\",\n  \"candidate_events\": [\n    {\n      \"event_type\": \"hypothesis.supported\",\n      \"entity_type\": \"hypothesis\",\n      \"entity_id\": \"<target hypothesis id>\",\n      \"id\": \"<unique event id>\",\n      \"payload\": {\n        \"id\": \"<target hypothesis id>\",\n        \"status\": \"supported\",\n        \"verification_basis\": {\n          \"supporting_observations\": [\"obs_1\", \"obs_2\"],\n          \"supporting_hypotheses\": [],\n          \"missing_evidence\": [],\n          \"contradictions_detected\": []\n        }\n      }\n    }\n  ]\n}\n```\n\nWorker Input JSON:\nWORKER_INPUT_JSON_BEGIN\n{\n  \"allowed_outputs\": {\n    \"candidate_event_types\": [\n      \"contradiction.registered\",\n      \"hypothesis.rejected\",\n      \"hypothesis.sent_to_verification\",\n      \"hypothesis.supported\",\n      \"hypothesis.unresolved_conflict\",\n      \"observation.rejected\",\n      \"observation.verified\",\n      \"question.opened\"\n    ]\n  },\n  \"constraints\": {\n    \"context_source\": \"canonical_state_plus_task_only\",\n    \"conversational_context_allowed\": false,\n    \"facts_require_source_binding\": true,\n    \"full_state_injection_allowed\": false,\n    \"implicit_guessing_allowed\": false,\n    \"prose_state_mutation_allowed\": false,\n    \"structured_output_required\": true,\n    \"uncertainty_expression\": \"emit_hypothesis_or_question_instead_of_guessing\",\n    \"unstored_context_allowed\": false\n  },\n  \"forbidden_outputs\": {\n    \"actions\": [\n      \"issue_creation\",\n      \"unsupported_claims\",\n      \"inference_without_evidence\"\n    ],\n    \"candidate_event_types\": [\n      \"hypothesis.proposed\",\n      \"issue.proposed\",\n      \"observation.proposed\"\n    ]\n  },\n  \"open_questions\": {},\n  \"relevant_observations\": {\n    \"obs_be15e929c9ae8416\": {\n      \"audit_id\": \"audit_test_mini\",\n      \"confidence\": \"high\",\n      \"created_at\": \"2026-03-31T10:59:59Z\",\n      \"evidence_class\": \"pattern_match\",\n      \"evidence_origin\": \"deterministic_pattern\",\n      \"id\": \"obs_be15e929c9ae8416\",\n      \"pattern_match_ids\": [\n        \"pm_sql_format_string_2bea43845c06a5eb\",\n        \"pm_sql_fstring_b1d942f1c4d653bc\"\n      ],\n      \"provenance\": {\n        \"source_refs\": [\n          {\n            \"excerpt\": \"def filter_users(cursor, role): cursor.execute(\\\"SELECT * FROM users WHERE role = '{}'\\\".format(role))\",\n            \"file_hash\": \"39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790\",\n            \"file_path\": \"app.py\",\n            \"line_range\": {\n              \"end\": 80,\n              \"start\": 79\n            },\n            \"snapshot_ref\": \"c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d\"\n          }\n        ]\n      },\n      \"statement\": \"SQL query uses .format(role) string interpolation, enabling SQL injection.\",\n      \"status\": \"proposed\",\n      \"updated_at\": \"2026-03-31T10:59:59Z\"\n    }\n  },\n  \"schema_version\": \"1.0.0\",\n  \"slice_id\": \"slice_8711ddbb9b496693\",\n  \"snapshot_ref\": \"c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d\",\n  \"target_paths\": [\n    \"app.py\"\n  ],\n  \"task\": {\n    \"attempt_count\": 0,\n    \"audit_id\": \"audit_test_mini\",\n    \"created_at\": \"1970-01-01T00:00:00Z\",\n    \"id\": \"task_89c19c3215589b3f\",\n    \"last_error\": null,\n    \"status\": \"running\",\n    \"target\": {\n      \"kind\": \"observation\",\n      \"snapshot_ref\": \"c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d\",\n      \"value\": \"obs_be15e929c9ae8416\"\n    },\n    \"type\": \"verify_claim\",\n    \"updated_at\": \"1970-01-01T00:00:00Z\"\n  },\n  \"worker_role\": \"Verifier\"\n}\nWORKER_INPUT_JSON_END\n\nTransport Output Envelope:\n- Your final top-level JSON object must contain exactly one key: `payload_json`.\n- `payload_json` must be a JSON string whose decoded value is the transport worker output object described below.\n- The decoded `payload_json` value must be a JSON object, not prose and not markdown.\n- Do not rename `payload_json`.\n- Do not add any sibling keys next to `payload_json`.\n\nTransport Worker Output Shape:\n{\n  \"payload_json\": \"{\"schema_version\":\"1.0.0\",\"slice_id\":\"<copy from input>\",\"worker_role\":\"<role>\",\"task_id\":\"<copy from input.task.id>\",\"candidate_events\":[{\"event_type\":\"observation.proposed\",\"payload\":{\"claim\":\"<claim text>\",\"evidence\":[{\"file_path\":\"src/app.py\",\"line_start\":3,\"line_end\":4,\"snapshot_ref\":\"<snapshot_ref>\"}]}}]}\"\n}\n\nTransport Candidate Event Rules:\n- Keep `schema_version`, `slice_id`, `worker_role`, and `task_id` at the transport worker-output level.\n- For each entry in `candidate_events`, emit only:\n  - `event_type`\n  - `payload`\n- Do not emit internal event-envelope fields such as:\n  - `id`\n  - `entity_id`\n  - `entity_type`\n  - `occurred_at`\n  - `actor`\n  - `idempotency_key`\n  - `caused_by_event_id`\n  - `acceptance`\n  - `pending`\n- The adapter will deterministically add internal metadata after transport parsing.\n\nTransport Payload Rules:\n- For `observation.proposed`, `hypothesis.proposed`, `observation.verified`, and `observation.rejected`:\n  - put the main text in `payload.claim`\n  - put source-bound evidence in `payload.evidence`\n- For `question.opened`:\n  - put the question text in `payload.question`\n  - put any supporting source-bound evidence in `payload.evidence`\n- For `issue.proposed`:\n  - use `payload.title`\n  - use `payload.summary`\n  - use `payload.severity` and `payload.severity_rule_ref` when severity is present\n  - use `payload.evidence.observation_ids`, `payload.evidence.question_ids`, and `payload.evidence.contradiction_ids` when applicable\n- For `contradiction.registered`:\n  - use `payload.summary`\n  - use `payload.conflicting_entity_refs`\n  - use `payload.source_refs`\n\nTransport Evidence Item Shape:\n- Each entry in `payload.evidence` may include:\n  - `file_path`\n  - `line_start`\n  - `line_end`\n  - `snapshot_ref`\n  - optional `file_hash`\n  - optional `excerpt`\n\nERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 3:15 PM.\nERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 3:15 PM.",
+      "status": "failed",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_be15e929c9ae8416"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:07:43Z"
+    },
+    "task_96798cf4ce6d2d46": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_96798cf4ce6d2d46",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_169c36fe8de3e280"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:00:52Z"
+    },
+    "task_a2e8e9f2cf797253": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:39Z",
+      "id": "task_a2e8e9f2cf797253",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_13985d82c2cbe602"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:00:39Z"
+    },
+    "task_aeca72f9cdcbd348": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_aeca72f9cdcbd348",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_44c2d0396c23700a"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:02:48Z"
+    },
+    "task_b2434c579fec8b27": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_b2434c579fec8b27",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_b56c5b7eae1963ab"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:07:39Z"
+    },
+    "task_b97ac5775e6c00bd": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:01:23Z",
+      "id": "task_b97ac5775e6c00bd",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_3342289239cfbcb3"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:01:23Z"
+    },
+    "task_bc807f7bc6957e0b": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_bc807f7bc6957e0b",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_3342289239cfbcb3"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:01:23Z"
+    },
+    "task_c38f8576b98028bb": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_c38f8576b98028bb",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_34050a555c33e916"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:01:38Z"
+    },
+    "task_d2aec5ffbd711cc7": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_d2aec5ffbd711cc7",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_4bc9d65285970ee8"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:03:01Z"
+    },
+    "task_dab56d4d687910ba": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_dab56d4d687910ba",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_1fa004c806903512"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:01:11Z"
+    },
+    "task_f2fcbf53ebea0a00": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_f2fcbf53ebea0a00",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_76a58fb90e752ef9"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:03:51Z"
+    },
+    "task_f3f6e206b9549b5e": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_f3f6e206b9549b5e",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_0251f24ff2cf90af"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:00:25Z"
+    },
+    "task_f7fdb93bafd78471": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_f7fdb93bafd78471",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_b0d9a5946cb7271b"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:04:51Z"
+    },
+    "task_fbeadd19e0d1ef7b": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:00:03Z",
+      "id": "task_fbeadd19e0d1ef7b",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_13985d82c2cbe602"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T11:00:39Z"
+    },
+    "task_ff82cc7b9b17e89c": {
+      "attempt_count": 0,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T11:01:51Z",
+      "id": "task_ff82cc7b9b17e89c",
+      "last_error": null,
+      "status": "pending",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_37783ddd04ed109b"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T11:01:51Z"
+    }
+  }
+}

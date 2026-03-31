@@ -1,0 +1,75 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "hypothesis.proposed",
+      "observation.proposed",
+      "question.opened"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "converting hypothesis to fact",
+      "issue creation",
+      "severity assignment"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {},
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "d69c35fc2fbac8d194459773542f7d58d5a96c155a23dd35483f7de91544b082",
+  "slice_id": "slice_d69c35fc2fbac8d1",
+  "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+  "target_paths": [
+    ".env.example"
+  ],
+  "target_sources": [
+    {
+      "file_content": "# Application Configuration\nFLASK_ENV=development\nFLASK_DEBUG=true\nSECRET_KEY=<REDACTED:78a6c761>\nDATABASE_URL=sqlite:///app.db\n\n# Admin Credentials (for initial setup)\nADMIN_USERNAME=admin\nADMIN_PASSWORD=admin123\n\n# External Services\nPAYMENT_API_KEY=sk_live_payment_key_here\nSMTP_PASSWORD=smtp_password_here\n\n# Debug Settings\nENABLE_DEBUG_ENDPOINTS=true\nLOG_LEVEL=DEBUG\n",
+      "file_hash": "588f1dac6c72ca70056a18f08f1ff55b12bca22ca81bb69a0850d402ce5b2446",
+      "file_path": ".env.example",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+    }
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_codex_manual",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_a7ad8346a02ea9db",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "path",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+      "value": ".env.example"
+    },
+    "type": "module_scan",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "Reader"
+}

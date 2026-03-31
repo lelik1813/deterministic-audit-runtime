@@ -1,0 +1,75 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "hypothesis.proposed",
+      "observation.proposed",
+      "question.opened"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "converting hypothesis to fact",
+      "issue creation",
+      "severity assignment"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {},
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "d054755bdd1d9748cc522c3174a7c9b4368d0799c9e6ed983d93c31972b74850",
+  "slice_id": "slice_d054755bdd1d9748",
+  "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+  "target_paths": [
+    ".env.example"
+  ],
+  "target_sources": [
+    {
+      "file_content": "SECRET_KEY=sk_test_abc123def456\nAPI_KEY=ak_live_zxywvu987654321\nPASSWORD=super_secret_password\nFLASK_DEBUG=true\n",
+      "file_hash": "94cf933bdd27025341a7c5fdcab65e3333557a7d9ec5f555939d6e30915f6002",
+      "file_path": ".env.example",
+      "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+    }
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_test_mini",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_3e2d91060712604a",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "path",
+      "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+      "value": ".env.example"
+    },
+    "type": "module_scan",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "Reader"
+}

@@ -1,0 +1,1559 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.inner-agent-state.local/audit.schema.json",
+  "title": "Canonical Audit State",
+  "description": "Canonical state schema for v1.2. Includes separate namespaces for truth-bearing entities (observations, issues) and non-authoritative candidate proposals.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audit",
+    "tasks",
+    "observations",
+    "hypotheses",
+    "issues",
+    "questions",
+    "contradictions",
+    "decisions",
+    "candidates"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "audit": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/audit"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tasks": {
+      "$ref": "#/$defs/taskCollection"
+    },
+    "observations": {
+      "$ref": "#/$defs/observationCollection"
+    },
+    "hypotheses": {
+      "$ref": "#/$defs/hypothesisCollection"
+    },
+    "issues": {
+      "$ref": "#/$defs/issueCollection"
+    },
+    "questions": {
+      "$ref": "#/$defs/questionCollection"
+    },
+    "contradictions": {
+      "$ref": "#/$defs/contradictionCollection"
+    },
+    "decisions": {
+      "$ref": "#/$defs/decisionCollection"
+    },
+    "candidates": {
+      "$ref": "#/$defs/candidateCollection"
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "snapshotRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auditId": {
+      "type": "string",
+      "pattern": "^audit_[a-z0-9][a-z0-9_-]*$"
+    },
+    "taskId": {
+      "type": "string",
+      "pattern": "^task_[a-z0-9][a-z0-9_-]*$"
+    },
+    "observationId": {
+      "type": "string",
+      "pattern": "^obs_[a-z0-9][a-z0-9_-]*$"
+    },
+    "hypothesisId": {
+      "type": "string",
+      "pattern": "^hyp_[a-z0-9][a-z0-9_-]*$"
+    },
+    "issueId": {
+      "type": "string",
+      "pattern": "^issue_[a-z0-9][a-z0-9_-]*$"
+    },
+    "questionId": {
+      "type": "string",
+      "pattern": "^question_[a-z0-9][a-z0-9_-]*$"
+    },
+    "contradictionId": {
+      "type": "string",
+      "pattern": "^contradiction_[a-z0-9][a-z0-9_-]*$"
+    },
+    "decisionId": {
+      "type": "string",
+      "pattern": "^decision_[a-z0-9][a-z0-9_-]*$"
+    },
+    "candidateId": {
+      "type": "string",
+      "pattern": "^candidate_[a-z0-9][a-z0-9_-]*$",
+      "description": "Identifier for non-authoritative candidate entities"
+    },
+    "eventId": {
+      "type": "string",
+      "pattern": "^event_[a-z0-9][a-z0-9_-]*$"
+    },
+    "entityId": {
+      "type": "string",
+      "pattern": "^(audit|task|obs|hyp|issue|question|contradiction|decision|candidate|event)_[a-z0-9][a-z0-9_-]*$"
+    },
+    "entityType": {
+      "type": "string",
+      "enum": [
+        "audit",
+        "task",
+        "observation",
+        "hypothesis",
+        "issue",
+        "question",
+        "contradiction",
+        "decision",
+        "candidate",
+        "event"
+      ]
+    },
+    "workerRole": {
+      "type": "string",
+      "enum": [
+        "Reader",
+        "Verifier",
+        "IssueComposer",
+        "CandidateGenerator"
+      ]
+    },
+    "lineRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "columnRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "sourceReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file_path",
+        "line_range",
+        "snapshot_ref"
+      ],
+      "properties": {
+        "file_path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "line_range": {
+          "$ref": "#/$defs/lineRange"
+        },
+        "column_range": {
+          "$ref": "#/$defs/columnRange"
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/snapshotRef"
+        },
+        "file_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{7,128}$"
+        },
+        "excerpt": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "entityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity_type",
+        "entity_id"
+      ],
+      "properties": {
+        "entity_type": {
+          "$ref": "#/$defs/entityType"
+        },
+        "entity_id": {
+          "$ref": "#/$defs/entityId"
+        }
+      }
+    },
+    "auditTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo_path",
+        "vcs"
+      ],
+      "properties": {
+        "repo_path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "vcs": {
+          "type": "string",
+          "const": "git"
+        },
+        "repo_label": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "taskType": {
+      "type": "string",
+      "enum": [
+        "module_scan",
+        "verify_claim",
+        "compose_issue"
+      ]
+    },
+    "taskStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "done",
+        "failed"
+      ]
+    },
+    "observationStatus": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "verified",
+        "rejected"
+      ]
+    },
+    "hypothesisStatus": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "in_verification",
+        "supported",
+        "rejected",
+        "unresolved_conflict"
+      ],
+      "description": "v1.3 hypothesis lifecycle states. Hypothesis is a non-truth-bearing reasoning entity. 'unresolved_conflict' indicates competing hypotheses with evidence on both sides (v1.3 Step 5)."
+    },
+    "hypothesisConfidence": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "description": "Confidence level for a hypothesis. Does NOT indicate truth - only reasoning strength."
+    },
+    "hypothesisOrigin": {
+      "type": "string",
+      "enum": [
+        "reader_inference",
+        "verifier_guess",
+        "cross_file_pattern",
+        "temporal_pattern",
+        "architectural_guess",
+        "external_knowledge"
+      ],
+      "description": "Origin of the hypothesis - where the reasoning came from."
+    },
+    "issueStatus": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "accepted",
+        "rejected",
+        "closed"
+      ]
+    },
+    "questionStatus": {
+      "type": "string",
+      "enum": [
+        "open",
+        "answered",
+        "closed"
+      ]
+    },
+    "contradictionStatus": {
+      "type": "string",
+      "enum": [
+        "open",
+        "resolved"
+      ]
+    },
+    "auditStatus": {
+      "type": "string",
+      "enum": [
+        "initialized",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ]
+    },
+    "decisionKind": {
+      "type": "string",
+      "enum": [
+        "event_acceptance",
+        "event_rejection",
+        "question_resolution",
+        "contradiction_resolution",
+        "audit_control"
+      ]
+    },
+    "severityLevel": {
+      "type": "string",
+      "enum": [
+        "informational",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "evidenceClass": {
+      "type": "string",
+      "enum": [
+        "direct_code_fact",
+        "derived_structural_fact",
+        "pattern_match",
+        "inferred_hypothesis",
+        "blocked_verification"
+      ]
+    },
+    "taskTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value",
+        "snapshot_ref"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "path",
+            "module",
+            "observation",
+            "hypothesis",
+            "issue",
+            "question",
+            "contradiction",
+            "audit",
+            "candidate"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/snapshotRef"
+        },
+        "line_range": {
+          "$ref": "#/$defs/lineRange"
+        }
+      }
+    },
+    "observationProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_refs"
+      ],
+      "properties": {
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceReference"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "candidate_ref": {
+          "$ref": "#/$defs/candidateId",
+          "description": "Links this observation to the candidate it was promoted from (if applicable). Enables bidirectional traceability: candidate.promoted_observation_id → observation, observation.provenance.candidate_ref → candidate."
+        }
+      }
+    },
+    "issueEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observation_ids"
+      ],
+      "properties": {
+        "observation_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observationId"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "question_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/questionId"
+          },
+          "uniqueItems": true
+        },
+        "contradiction_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contradictionId"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "status",
+        "target",
+        "created_at",
+        "updated_at",
+        "current_snapshot_ref"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "status": {
+          "$ref": "#/$defs/auditStatus"
+        },
+        "target": {
+          "$ref": "#/$defs/auditTarget"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "current_snapshot_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/snapshotRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "audit_id",
+        "type",
+        "status",
+        "target",
+        "attempt_count",
+        "last_error",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/taskId"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "type": {
+          "$ref": "#/$defs/taskType"
+        },
+        "status": {
+          "$ref": "#/$defs/taskStatus"
+        },
+        "target": {
+          "$ref": "#/$defs/taskTarget"
+        },
+        "attempt_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "audit_id",
+        "status",
+        "statement",
+        "evidence_class",
+        "provenance",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/observationId"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "status": {
+          "$ref": "#/$defs/observationStatus"
+        },
+        "statement": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "evidence_class": {
+          "$ref": "#/$defs/evidenceClass"
+        },
+        "provenance": {
+          "$ref": "#/$defs/observationProvenance"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "hypothesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "audit_id",
+        "status",
+        "statement",
+        "rationale",
+        "confidence",
+        "origin",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/hypothesisId"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "status": {
+          "$ref": "#/$defs/hypothesisStatus"
+        },
+        "statement": {
+          "$ref": "#/$defs/nonEmptyString",
+          "description": "The hypothesis statement. NOT a claim of fact - a reasoning proposal."
+        },
+        "rationale": {
+          "$ref": "#/$defs/nonEmptyString",
+          "description": "Why this hypothesis was proposed. The reasoning chain."
+        },
+        "confidence": {
+          "$ref": "#/$defs/hypothesisConfidence",
+          "description": "Confidence level of the reasoning. NOT truth probability."
+        },
+        "origin": {
+          "$ref": "#/$defs/hypothesisOrigin",
+          "description": "Where the hypothesis originated - the reasoning source."
+        },
+        "supporting_source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceReference"
+          },
+          "uniqueItems": true,
+          "description": "Source code references that informed the hypothesis. NOT evidence of truth."
+        },
+        "supporting_observation_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observationId"
+          },
+          "uniqueItems": true,
+          "description": "Observations that inform this hypothesis. These are NOT proof - just context."
+        },
+        "supporting_hypothesis_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hypothesisId"
+          },
+          "uniqueItems": true,
+          "description": "Other hypotheses that this hypothesis builds upon or derives from. Relationships do NOT affect truth directly - they are reasoning context only."
+        },
+        "contradicting_hypothesis_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hypothesisId"
+          },
+          "uniqueItems": true,
+          "description": "Hypotheses that this hypothesis contradicts or provides an alternative to. Relationships do NOT affect truth directly - they are reasoning context only."
+        },
+        "related_observation_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observationId"
+          },
+          "uniqueItems": true,
+          "description": "Related observations. DEPRECATED: use supporting_observation_ids instead."
+        },
+        "verification_plan_ref": {
+          "type": "string",
+          "description": "Reference to a plan for verifying this hypothesis. Optional - for future v1.3 verification planning."
+        },
+        "verification_basis": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Structured evidence composition from hypothesis verification (v1.3 Step 4). Populated when hypothesis status is supported/rejected. Proof-like verification requires evidence sets, not single facts.",
+          "properties": {
+            "supporting_observations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/observationId"
+              },
+              "uniqueItems": true,
+              "description": "Verified observations that support this hypothesis. MUST be non-empty for supported status - no single-fact shortcut allowed."
+            },
+            "supporting_hypotheses": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/hypothesisId"
+              },
+              "uniqueItems": true,
+              "description": "Other supported hypotheses that inform this verification. Context only - not proof."
+            },
+            "missing_evidence": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true,
+              "description": "Evidence that would strengthen verification but was not available. Structured description of gaps."
+            },
+            "contradictions_detected": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["contradicting_hypothesis_id", "description"],
+                "properties": {
+                  "contradicting_hypothesis_id": {
+                    "$ref": "#/$defs/hypothesisId"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Why this contradiction was detected"
+                  }
+                }
+              },
+              "description": "Contradictions found between this hypothesis and supporting evidence or related hypotheses. Local detection only - no resolution."
+            }
+          }
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "audit_id",
+        "status",
+        "title",
+        "summary",
+        "severity",
+        "severity_rule_ref",
+        "evidence",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/issueId"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "status": {
+          "$ref": "#/$defs/issueStatus"
+        },
+        "title": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "severity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/severityLevel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "severity_rule_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "$ref": "#/$defs/issueEvidence"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "severity": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity_rule_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "severity_rule_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "audit_id",
+        "status",
+        "prompt",
+        "context",
+        "answer",
+        "related_entity_refs",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/questionId"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "status": {
+          "$ref": "#/$defs/questionStatus"
+        },
+        "prompt": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "context": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "answer": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "related_entity_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entityRef"
+          },
+          "uniqueItems": true
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "answered"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "answer": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "contradiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "audit_id",
+        "status",
+        "summary",
+        "conflicting_entity_refs",
+        "source_refs",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/contradictionId"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "status": {
+          "$ref": "#/$defs/contradictionStatus"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "conflicting_entity_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entityRef"
+          },
+          "minItems": 2,
+          "uniqueItems": true
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceReference"
+          },
+          "uniqueItems": true
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "audit_id",
+        "kind",
+        "summary",
+        "rationale",
+        "basis_entity_refs",
+        "source_refs",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/decisionId"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "kind": {
+          "$ref": "#/$defs/decisionKind"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "rationale": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "basis_entity_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entityRef"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceReference"
+          },
+          "uniqueItems": true
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "taskCollection": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^task_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/task"
+      }
+    },
+    "observationCollection": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^obs_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/observation"
+      }
+    },
+    "hypothesisCollection": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^hyp_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/hypothesis"
+      }
+    },
+    "issueCollection": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^issue_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/issue"
+      }
+    },
+    "questionCollection": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^question_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/question"
+      }
+    },
+    "contradictionCollection": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^contradiction_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/contradiction"
+      }
+    },
+    "decisionCollection": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^decision_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/decision"
+      }
+    },
+    "candidateStatus": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "routed_to_verify",
+        "rejected",
+        "resolved_promoted"
+      ],
+      "description": "Non-authoritative candidate lifecycle status"
+    },
+    "candidateType": {
+      "type": "string",
+      "enum": [
+        "risk_candidate",
+        "policy_candidate",
+        "cross_file_correlation",
+        "verification_target"
+      ],
+      "description": "Type of non-authoritative candidate proposal. Semantic Exclusivity: candidate types MUST NOT share terminology with the Hypothesis entity."
+    },
+    "candidateConfidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "supportingEvidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file_path",
+        "line_range",
+        "snapshot_ref"
+      ],
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line_range": {
+          "$ref": "#/$defs/lineRange"
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/snapshotRef"
+        },
+        "file_hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{7,128}$"
+        },
+        "excerpt": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "verificationTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_type",
+        "target_id"
+      ],
+      "properties": {
+        "target_type": {
+          "type": "string",
+          "enum": [
+            "observation",
+            "hypothesis",
+            "candidate"
+          ],
+          "description": "Only upstream evidence types allowed for verification targets"
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "riskCandidate": {
+      "type": "object",
+      "description": "Non-authoritative risk candidate requiring verification",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "candidate_type",
+        "audit_id",
+        "proposed_claim",
+        "confidence",
+        "supporting_evidence_refs",
+        "reasoning_basis",
+        "status",
+        "created_at",
+        "updated_at",
+        "risk_category"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/candidateId"
+        },
+        "candidate_type": {
+          "const": "risk_candidate"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "proposed_claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "$ref": "#/$defs/candidateConfidence"
+        },
+        "supporting_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/supportingEvidenceRef"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reasoning_basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "$ref": "#/$defs/candidateStatus"
+        },
+        "rejection_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promoted_observation_id": {
+          "$ref": "#/$defs/observationId"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "risk_category": {
+          "type": "string",
+          "enum": [
+            "injection",
+            "authentication",
+            "access_control",
+            "cryptography",
+            "data_exposure",
+            "configuration",
+            "dependency",
+            "other"
+          ]
+        },
+        "severity_hint": {
+          "type": "string",
+          "enum": [
+            "informational",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "description": "Preliminary severity hint for routing - NOT equivalent to issue.severity"
+        },
+        "trigger_observation_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observationId"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "risk_category"
+          ]
+        }
+      ]
+    },
+    "policyCandidate": {
+      "type": "object",
+      "description": "Non-authoritative policy violation candidate requiring verification",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "candidate_type",
+        "audit_id",
+        "proposed_claim",
+        "confidence",
+        "supporting_evidence_refs",
+        "reasoning_basis",
+        "status",
+        "created_at",
+        "updated_at",
+        "policy_rule_ref"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/candidateId"
+        },
+        "candidate_type": {
+          "const": "policy_candidate"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "proposed_claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "$ref": "#/$defs/candidateConfidence"
+        },
+        "supporting_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/supportingEvidenceRef"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reasoning_basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "$ref": "#/$defs/candidateStatus"
+        },
+        "rejection_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promoted_observation_id": {
+          "$ref": "#/$defs/observationId"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "policy_rule_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_category": {
+          "type": "string",
+          "enum": [
+            "security_baseline",
+            "compliance_requirement",
+            "coding_standard",
+            "architectural_constraint",
+            "other"
+          ]
+        },
+        "trigger_observation_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observationId"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "policy_rule_ref"
+          ]
+        }
+      ]
+    },
+    "crossFileHypothesis": {
+      "type": "object",
+      "description": "Non-authoritative cross-file relationship hypothesis requiring verification",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "candidate_type",
+        "audit_id",
+        "proposed_claim",
+        "confidence",
+        "supporting_evidence_refs",
+        "reasoning_basis",
+        "status",
+        "created_at",
+        "updated_at",
+        "relationship_type",
+        "involved_file_paths"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/candidateId"
+        },
+        "candidate_type": {
+          "const": "cross_file_correlation"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "proposed_claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "$ref": "#/$defs/candidateConfidence"
+        },
+        "supporting_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/supportingEvidenceRef"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reasoning_basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "$ref": "#/$defs/candidateStatus"
+        },
+        "rejection_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promoted_observation_id": {
+          "$ref": "#/$defs/observationId"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "relationship_type": {
+          "type": "string",
+          "enum": [
+            "data_flow",
+            "control_flow",
+            "dependency",
+            "configuration_link",
+            "api_contract",
+            "other"
+          ]
+        },
+        "involved_file_paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 2,
+          "uniqueItems": true
+        },
+        "related_observation_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observationId"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "relationship_type",
+            "involved_file_paths"
+          ]
+        }
+      ]
+    },
+    "verificationHypothesis": {
+      "type": "object",
+      "description": "Non-authoritative verification hypothesis - NOT a task, expresses that verification may be needed",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "candidate_type",
+        "audit_id",
+        "proposed_claim",
+        "confidence",
+        "supporting_evidence_refs",
+        "reasoning_basis",
+        "status",
+        "created_at",
+        "updated_at",
+        "verification_target"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/candidateId"
+        },
+        "candidate_type": {
+          "const": "verification_target"
+        },
+        "audit_id": {
+          "$ref": "#/$defs/auditId"
+        },
+        "proposed_claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "$ref": "#/$defs/candidateConfidence"
+        },
+        "supporting_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/supportingEvidenceRef"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reasoning_basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "$ref": "#/$defs/candidateStatus"
+        },
+        "rejection_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promoted_observation_id": {
+          "$ref": "#/$defs/observationId"
+        },
+        "created_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "verification_target": {
+          "$ref": "#/$defs/verificationTarget"
+        },
+        "verification_questions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "trigger_observation_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observationId"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "verification_target"
+          ]
+        }
+      ]
+    },
+    "candidate": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/riskCandidate"
+        },
+        {
+          "$ref": "#/$defs/policyCandidate"
+        },
+        {
+          "$ref": "#/$defs/crossFileHypothesis"
+        },
+        {
+          "$ref": "#/$defs/verificationHypothesis"
+        }
+      ]
+    },
+    "candidateCollection": {
+      "type": "object",
+      "description": "Collection of non-authoritative candidate entities. These are proposals subject to validation and are NOT part of canonical truth.",
+      "propertyNames": {
+        "pattern": "^candidate_[a-z0-9][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/candidate"
+      }
+    }
+  }
+}

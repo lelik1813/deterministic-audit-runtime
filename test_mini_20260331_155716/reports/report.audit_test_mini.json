@@ -1,0 +1,86 @@
+{
+  "audit": {
+    "current_snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+    "id": "audit_test_mini",
+    "status": "initialized",
+    "target": {
+      "repo_label": "dar-fixture-mini",
+      "repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\dar-fixture-mini",
+      "vcs": "git"
+    },
+    "title": "Mini fixture test"
+  },
+  "contradictions": [],
+  "decisions": [],
+  "findings": [],
+  "open_questions": [],
+  "report_id": "report_15061b8a02b56c51",
+  "schema_version": "1.0.0",
+  "source_audit_id": "audit_test_mini",
+  "source_state_digest": "15061b8a02b56c51a2eb524532ec08ef8ce2eccc6218b3ea22885feea974d68a",
+  "summary": {
+    "contradiction_count": 0,
+    "decision_count": 0,
+    "finding_count": 0,
+    "open_question_count": 0,
+    "verified_observation_count": 2,
+    "verified_observation_evidence_class_counts": {
+      "blocked_verification": 0,
+      "derived_structural_fact": 0,
+      "direct_code_fact": 2,
+      "inferred_hypothesis": 0,
+      "pattern_match": 0
+    },
+    "verified_observation_evidence_origin_counts": {
+      "deterministic_pattern": 2,
+      "mixed_pattern_model": 0,
+      "model_discovered": 0
+    }
+  },
+  "verified_observations": [
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_069615bab9ab3316",
+      "pattern_match_ids": [
+        "pm_cors_wildcard_75f446faac3487a4"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "CORS(app, resources={r\"/*\": {\"origins\": \"*\"}})",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 26,
+            "start": 26
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "CORS is configured with wildcard origins for all routes, allowing cross-origin requests from arbitrary domains.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_09a8bb0c4db55ff5",
+      "pattern_match_ids": [
+        "pm_jwt_no_verify_138441a180d340db"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return jwt.decode(token, algorithms=[\"HS256\"], options={\"verify_signature\": False})",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 89,
+            "start": 89
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "JWT decoding explicitly disables signature verification, permitting acceptance of forged tokens.",
+      "status": "verified"
+    }
+  ]
+}

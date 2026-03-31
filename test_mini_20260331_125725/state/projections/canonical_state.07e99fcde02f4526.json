@@ -1,0 +1,703 @@
+{
+  "audit": {
+    "created_at": "2026-03-31T10:57:37Z",
+    "current_snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+    "id": "audit_test_mini",
+    "status": "initialized",
+    "target": {
+      "repo_label": "dar-fixture-mini",
+      "repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\dar-fixture-mini",
+      "vcs": "git"
+    },
+    "title": "Mini fixture test",
+    "updated_at": "2026-03-31T10:57:53Z"
+  },
+  "candidates": {},
+  "contradictions": {},
+  "decisions": {},
+  "hypotheses": {},
+  "issues": {},
+  "observations": {
+    "obs_0251f24ff2cf90af": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_0251f24ff2cf90af",
+      "pattern_match_ids": [
+        "pm_marshal_loads_a3d05506deb0defb"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def load_cache(data): return marshal.loads(data)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 52,
+              "start": 51
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "marshal.loads is used on external data, which is unsafe for untrusted input.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_13985d82c2cbe602": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_13985d82c2cbe602",
+      "pattern_match_ids": [
+        "pm_flask_debug_7b98c2bbc77b8325"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "if __name__ == \"__main__\": app.run(debug=True)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 109,
+              "start": 108
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "Flask development server is started with debug=True, exposing debugger behavior in runtime.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:00:38Z"
+    },
+    "obs_169c36fe8de3e280": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_169c36fe8de3e280",
+      "pattern_match_ids": [
+        "pm_weak_random_5874e8d409391e2c"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def generate_code(): return random.randint(100000, 999999)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 39,
+              "start": 38
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "Security code generation uses random.randint from non-cryptographic PRNG.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:00:51Z"
+    },
+    "obs_1fa004c806903512": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_1fa004c806903512",
+      "pattern_match_ids": [
+        "pm_weak_hash_md5_26b5b48a479c5680"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def hash_password(pwd): return hashlib.md5(pwd.encode()).hexdigest()",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 31,
+              "start": 30
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "MD5 is used for password hashing, which is cryptographically weak for credential storage.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:01:10Z"
+    },
+    "obs_3342289239cfbcb3": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_3342289239cfbcb3",
+      "pattern_match_ids": [
+        "pm_django_debug_bff090975b25f29b"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "DEBUG = True",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 25,
+              "start": 25
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "Application-level DEBUG mode is enabled via static configuration.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:01:22Z"
+    },
+    "obs_34050a555c33e916": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_34050a555c33e916",
+      "pattern_match_ids": [
+        "pm_hardcoded_password_dab9981e17dd86e2",
+        "pm_api_key_in_source_979fca905e19a52c"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "password = \"<REDACTED_PASSWORD>\" password = \"<REDACTED_PASSWORD>\"",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 22,
+              "start": 21
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "Hardcoded password values are present in source code.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:01:37Z"
+    },
+    "obs_37783ddd04ed109b": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_37783ddd04ed109b",
+      "pattern_match_ids": [
+        "pm_cors_wildcard_75f446faac3487a4"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "CORS(app, resources={r\"/*\": {\"origins\": \"*\"}})",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 26,
+              "start": 26
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "CORS is configured with wildcard origin allowing any origin access.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:01:50Z"
+    },
+    "obs_379bf8e9f28df638": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_379bf8e9f28df638",
+      "pattern_match_ids": [
+        "pm_yaml_unsafe_load_105b2a1a7b6e5302"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def load_config(text): return yaml.load(text)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 48,
+              "start": 47
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "yaml.load is called without SafeLoader, allowing unsafe object construction/deserialization behavior.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:02:05Z"
+    },
+    "obs_3bf0c0293c514b5b": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_3bf0c0293c514b5b",
+      "pattern_match_ids": [
+        "pm_default_secret_key_2011cafe1fa83fb3"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "SECRET_KEY = \"<REDACTED:ee0e9a70>\"",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 20,
+              "start": 20
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "Hardcoded Flask SECRET_KEY is stored in source code instead of being sourced from secure configuration.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:02:24Z"
+    },
+    "obs_44c2d0396c23700a": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_44c2d0396c23700a",
+      "pattern_match_ids": [
+        "pm_base64_as_security_22b0c6d07f8108d8",
+        "pm_pickle_loads_4243488059fd2c45"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def load_data(raw): return pickle.loads(base64.b64decode(raw))",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 44,
+              "start": 43
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "Untrusted input is deserialized with pickle.loads, enabling arbitrary code execution via crafted payloads.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_4bc9d65285970ee8": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_4bc9d65285970ee8",
+      "pattern_match_ids": [
+        "pm_eval_usage_652dac92f98befb7"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def run_custom(expr): return eval(expr)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 57,
+              "start": 56
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "eval() executes caller-provided expression, creating code injection risk.",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:03:00Z"
+    },
+    "obs_53ddabdddbf057a2": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_53ddabdddbf057a2",
+      "pattern_match_ids": [
+        "pm_assert_in_production_03d2c5dcd91542ab"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "assert DEBUG, \"not in debug mode\"",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 104,
+              "start": 104
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "assert is used as a runtime gate; this check is removed under Python optimized mode (-O).",
+      "status": "verified",
+      "updated_at": "2026-03-31T11:03:21Z"
+    },
+    "obs_67f2974569e0ff41": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_67f2974569e0ff41",
+      "pattern_match_ids": [
+        "pm_subprocess_shell_9fedc4f78eebe92f"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def shell_cmd(cmd): return subprocess.run(cmd, shell=True)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 65,
+              "start": 64
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "subprocess.run is called with shell=True and a caller-supplied command string, enabling command injection.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_76a58fb90e752ef9": {
+      "audit_id": "audit_test_mini",
+      "confidence": "medium",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_76a58fb90e752ef9",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def search_items(cursor, term): q = \"SELECT * FROM items WHERE name = '\" + term + \"'\" cursor.execute(q)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 76,
+              "start": 74
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "SQL query concatenates term into SQL string directly, enabling SQL injection.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_923b2ef4239bf30c": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_923b2ef4239bf30c",
+      "pattern_match_ids": [
+        "pm_sql_string_concat_27f4955eb3229d5f",
+        "pm_sqlalchemy_text_concat_07b2dca29f2a6ba3"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def raw_query(cursor, table): cursor.execute(text(\"SELECT * FROM \" + table))",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 84,
+              "start": 83
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "SQLAlchemy text query concatenates table name directly into SQL, enabling injection through identifier manipulation.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_aaca93f312f6d15e": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_aaca93f312f6d15e",
+      "pattern_match_ids": [
+        "pm_exec_usage_31319582a4227319"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def run_script(code): exec(code)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 61,
+              "start": 60
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "exec() executes dynamic code input directly, enabling arbitrary code execution.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_ae781312d19f2c4a": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_ae781312d19f2c4a",
+      "pattern_match_ids": [
+        "pm_sql_fstring_51af24de28ff1e85"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def get_user(cursor, uid): query = f\"SELECT * FROM users WHERE id = {uid}\" cursor.execute(query)",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 71,
+              "start": 69
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "SQL query is built with f-string interpolation of uid, enabling SQL injection.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_b0d9a5946cb7271b": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_b0d9a5946cb7271b",
+      "pattern_match_ids": [
+        "pm_disabled_csrf_0c0984f717c57ee6"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "@csrf_exempt @app.route(\"/debug\") @app.route(\"/debug\") def debug_env():",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 103,
+              "start": 100
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "CSRF protection is explicitly disabled on the /debug route with @csrf_exempt.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_b12b2b6801600104": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_b12b2b6801600104",
+      "pattern_match_ids": [
+        "pm_base64_as_security_921a60e68eeeb044"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def make_token(uid): return base64.b64encode(str(uid).encode()).decode()",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 93,
+              "start": 92
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "Token creation is only base64 encoding of user ID with no signature or encryption, allowing tampering.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_b56c5b7eae1963ab": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_b56c5b7eae1963ab",
+      "pattern_match_ids": [
+        "pm_assert_in_production_03d2c5dcd91542ab"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def debug_env(): assert DEBUG, \"not in debug mode\" return jsonify({\"key\": SECRET_KEY})",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 105,
+              "start": 103
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "Debug endpoint returns SECRET_KEY in HTTP response, exposing sensitive secret material.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_be15e929c9ae8416": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_be15e929c9ae8416",
+      "pattern_match_ids": [
+        "pm_sql_format_string_2bea43845c06a5eb",
+        "pm_sql_fstring_b1d942f1c4d653bc"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def filter_users(cursor, role): cursor.execute(\"SELECT * FROM users WHERE role = '{}'\".format(role))",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 80,
+              "start": 79
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "SQL query uses .format(role) string interpolation, enabling SQL injection.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_e31d05381763cbac": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_e31d05381763cbac",
+      "pattern_match_ids": [
+        "pm_jwt_no_verify_138441a180d340db"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def decode_jwt(token): return jwt.decode(token, algorithms=[\"HS256\"], options={\"verify_signature\": False})",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 89,
+              "start": 88
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "JWT is decoded with signature verification explicitly disabled, allowing forged tokens.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    },
+    "obs_fdf42b7e76b2f439": {
+      "audit_id": "audit_test_mini",
+      "confidence": "high",
+      "created_at": "2026-03-31T10:59:59Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_fdf42b7e76b2f439",
+      "pattern_match_ids": [
+        "pm_weak_hash_sha1_90323145e9472410"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def hash_token(data): return hashlib.sha1(data.encode()).hexdigest()",
+            "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+            "file_path": "app.py",
+            "line_range": {
+              "end": 35,
+              "start": 34
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "SHA-1 is used for token hashing, which is cryptographically weak for security-sensitive use.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T10:59:59Z"
+    }
+  },
+  "questions": {
+    "question_8f642774186a9634": {
+      "answer": null,
+      "audit_id": "audit_test_mini",
+      "context": null,
+      "created_at": "2026-03-31T11:02:46Z",
+      "id": "question_8f642774186a9634",
+      "prompt": "Can we confirm that `raw` in `load_data(raw)` is attacker-controlled or otherwise untrusted input? The provided evidence shows `pickle.loads(base64.b64decode(raw))` but does not establish the trust boundary needed to verify the full claim.",
+      "related_entity_refs": [
+        {
+          "entity_id": "obs_44c2d0396c23700a",
+          "entity_type": "observation"
+        }
+      ],
+      "status": "open",
+      "updated_at": "2026-03-31T11:02:46Z"
+    },
+    "question_f49c38c95b1384f3": {
+      "answer": null,
+      "audit_id": "audit_test_mini",
+      "context": null,
+      "created_at": "2026-03-31T11:00:24Z",
+      "id": "question_f49c38c95b1384f3",
+      "prompt": "Can we confirm whether the `data` argument passed to `load_cache` originates from untrusted or external input? Current evidence shows `marshal.loads(data)` usage, but not the input trust boundary.",
+      "related_entity_refs": [
+        {
+          "entity_id": "obs_0251f24ff2cf90af",
+          "entity_type": "observation"
+        }
+      ],
+      "status": "open",
+      "updated_at": "2026-03-31T11:00:24Z"
+    }
+  },
+  "schema_version": "1.0.0",
+  "tasks": {}
+}

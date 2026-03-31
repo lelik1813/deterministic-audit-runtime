@@ -1,0 +1,1672 @@
+{
+  "audit": {
+    "current_snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+    "id": "audit_test_mini",
+    "status": "in_progress",
+    "target": {
+      "repo_label": "dar-fixture-mini",
+      "repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\dar-fixture-mini",
+      "vcs": "git"
+    },
+    "title": "Mini fixture test"
+  },
+  "contradictions": [],
+  "decisions": [],
+  "findings": [
+    {
+      "confidence": "medium",
+      "finding_id": "issue_07592a76e2d97adb",
+      "impact": "`app.py` uses `assert DEBUG, \"not in debug mode\"` for a security-relevant control. In Python optimized mode (e.g., `-O`), assertions are stripped, which removes this check and can allow execution without the intended protection.",
+      "issue_id": "issue_07592a76e2d97adb",
+      "recommended_fix": null,
+      "severity": "high",
+      "severity_rule_ref": "security.assert_used_for_enforcement",
+      "source_observation_ids": [
+        "obs_7d3141386e8cd51f"
+      ],
+      "status": "proposed",
+      "summary": "`app.py` uses `assert DEBUG, \"not in debug mode\"` for a security-relevant control. In Python optimized mode (e.g., `-O`), assertions are stripped, which removes this check and can allow execution without the intended protection.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_7d3141386e8cd51f",
+          "pattern_match_ids": [
+            "pm_assert_in_production_03d2c5dcd91542ab"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "assert DEBUG, \"not in debug mode\"",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 104,
+                "start": 104
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Security-relevant control uses assert, which can be stripped in optimized runtime and bypassed.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_7d3141386e8cd51f"
+      ],
+      "title": "Security check implemented with assert can be bypassed in optimized runtime",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_08561d1578a57d7d",
+      "impact": "The repository includes a concrete password value (`PASSWORD=super_secret_password`) in `.env.example`. Even in an example file, embedding a realistic default credential can lead to reuse in deployed environments or accidental leakage into derived configs.",
+      "issue_id": "issue_08561d1578a57d7d",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_5fc95ff19f55d41b"
+      ],
+      "status": "proposed",
+      "summary": "The repository includes a concrete password value (`PASSWORD=super_secret_password`) in `.env.example`. Even in an example file, embedding a realistic default credential can lead to reuse in deployed environments or accidental leakage into derived configs.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "model_discovered",
+          "observation_id": "obs_5fc95ff19f55d41b",
+          "source_refs": [
+            {
+              "excerpt": "PASSWORD=super_secret_password",
+              "file_hash": "94cf933bdd27025341a7c5fdcab65e3333557a7d9ec5f555939d6e30915f6002",
+              "file_path": ".env.example",
+              "line_range": {
+                "end": 3,
+                "start": 3
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Hardcoded PASSWORD value in .env.example introduces a default credential that may be reused or leaked.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_5fc95ff19f55d41b"
+      ],
+      "title": "Hardcoded default password in example environment file",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_1bd68fdae80a9745",
+      "impact": "`app.py` decodes JWTs with `verify_signature` set to `False`, which allows attackers to forge arbitrary tokens that will be accepted as valid. This can enable authentication and authorization bypass wherever decoded token claims are trusted.",
+      "issue_id": "issue_1bd68fdae80a9745",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_79623f78cb346bbd"
+      ],
+      "status": "proposed",
+      "summary": "`app.py` decodes JWTs with `verify_signature` set to `False`, which allows attackers to forge arbitrary tokens that will be accepted as valid. This can enable authentication and authorization bypass wherever decoded token claims are trusted.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_79623f78cb346bbd",
+          "pattern_match_ids": [
+            "pm_jwt_no_verify_138441a180d340db"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return jwt.decode(token, algorithms=[\"HS256\"], options={\"verify_signature\": False})",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 89,
+                "start": 89
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "JWT decoding disables signature verification, allowing forged tokens to be accepted.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_79623f78cb346bbd"
+      ],
+      "title": "JWT signature verification is disabled during token decoding",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_229c8cc272ad5a72",
+      "impact": "Security code generation uses Python's non-cryptographic PRNG via random.randint(100000, 999999) in app.py. This can make generated verification codes more predictable than cryptographically secure randomness, weakening the security of code-based verification.",
+      "issue_id": "issue_229c8cc272ad5a72",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_a2f3686406f8032f"
+      ],
+      "status": "proposed",
+      "summary": "Security code generation uses Python's non-cryptographic PRNG via random.randint(100000, 999999) in app.py. This can make generated verification codes more predictable than cryptographically secure randomness, weakening the security of code-based verification.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_a2f3686406f8032f",
+          "pattern_match_ids": [
+            "pm_weak_random_5874e8d409391e2c"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return random.randint(100000, 999999)",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 39,
+                "start": 39
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Security code generation uses random.randint from non-cryptographic PRNG.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_a2f3686406f8032f"
+      ],
+      "title": "Insecure security-code generation uses non-cryptographic PRNG",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_2f32af659b94f83a",
+      "impact": "A route in app.py is explicitly decorated with @csrf_exempt, which disables CSRF validation for that endpoint. This can allow cross-site request forgery against authenticated users when cookie-based authentication is in use.",
+      "issue_id": "issue_2f32af659b94f83a",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_4e2b90e21659b3a2"
+      ],
+      "status": "proposed",
+      "summary": "A route in app.py is explicitly decorated with @csrf_exempt, which disables CSRF validation for that endpoint. This can allow cross-site request forgery against authenticated users when cookie-based authentication is in use.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_4e2b90e21659b3a2",
+          "pattern_match_ids": [
+            "pm_disabled_csrf_0c0984f717c57ee6"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "@csrf_exempt",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 100,
+                "start": 100
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "CSRF protection is explicitly disabled for a route via @csrf_exempt.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_4e2b90e21659b3a2"
+      ],
+      "title": "CSRF protection disabled on application route",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_40cbbad5f0d12b17",
+      "impact": "The application defines a SECRET_KEY directly in app.py, creating a risk that secret material is exposed through source disclosure, repository access, logs, or artifact leakage. This can weaken session and token integrity assumptions tied to Flask secret usage.",
+      "issue_id": "issue_40cbbad5f0d12b17",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_f26784b08a3b7257"
+      ],
+      "status": "proposed",
+      "summary": "The application defines a SECRET_KEY directly in app.py, creating a risk that secret material is exposed through source disclosure, repository access, logs, or artifact leakage. This can weaken session and token integrity assumptions tied to Flask secret usage.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_f26784b08a3b7257",
+          "pattern_match_ids": [
+            "pm_default_secret_key_2011cafe1fa83fb3"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "SECRET_KEY = \"<REDACTED:ee0e9a70>\"",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 20,
+                "start": 20
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Hardcoded application SECRET_KEY is present in source, enabling secret exposure if code/config leaks.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_f26784b08a3b7257"
+      ],
+      "title": "Hardcoded Flask SECRET_KEY in source code",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_4ae1025dfc24257c",
+      "impact": "A concrete `SECRET_KEY` value (`sk_test_abc123def456`) is present in `.env.example`. If this sample value is copied into deployment configuration, the application could run with a predictable signing secret, reducing security of signed data.",
+      "issue_id": "issue_4ae1025dfc24257c",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_633615e60c20f1e9"
+      ],
+      "status": "proposed",
+      "summary": "A concrete `SECRET_KEY` value (`sk_test_abc123def456`) is present in `.env.example`. If this sample value is copied into deployment configuration, the application could run with a predictable signing secret, reducing security of signed data.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "model_discovered",
+          "observation_id": "obs_633615e60c20f1e9",
+          "source_refs": [
+            {
+              "excerpt": "SECRET_KEY=sk_test_abc123def456",
+              "file_hash": "94cf933bdd27025341a7c5fdcab65e3333557a7d9ec5f555939d6e30915f6002",
+              "file_path": ".env.example",
+              "line_range": {
+                "end": 1,
+                "start": 1
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Hardcoded SECRET_KEY value in .env.example can propagate insecure default signing secret if reused in deployments.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_633615e60c20f1e9"
+      ],
+      "title": "Hardcoded SECRET_KEY in .env.example may be reused in deployments",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_4d4d1662a2fd816d",
+      "impact": "The code in app.py hard-enables debug mode via DEBUG = True, creating an insecure default runtime configuration that can expose sensitive diagnostic behavior if deployed without override.",
+      "issue_id": "issue_4d4d1662a2fd816d",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_ea3f2a5265671b19"
+      ],
+      "status": "proposed",
+      "summary": "The code in app.py hard-enables debug mode via DEBUG = True, creating an insecure default runtime configuration that can expose sensitive diagnostic behavior if deployed without override.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_ea3f2a5265671b19",
+          "pattern_match_ids": [
+            "pm_django_debug_bff090975b25f29b"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "DEBUG = True",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 25,
+                "start": 25
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Debug mode flag is hard-enabled in code via DEBUG = True, creating insecure runtime defaults.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_ea3f2a5265671b19"
+      ],
+      "title": "Debug mode is hard-coded as enabled",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_7793395f77f3b316",
+      "impact": "Password hashing in app.py uses hashlib.md5(...).hexdigest(), which is cryptographically broken and allows fast offline cracking of password hashes if they are exposed. Use a password-specific slow hash (for example Argon2id, scrypt, or bcrypt) with a per-password salt.",
+      "issue_id": "issue_7793395f77f3b316",
+      "recommended_fix": null,
+      "severity": "high",
+      "severity_rule_ref": "CWE-327",
+      "source_observation_ids": [
+        "obs_dac2b15bb2eedc77"
+      ],
+      "status": "proposed",
+      "summary": "Password hashing in app.py uses hashlib.md5(...).hexdigest(), which is cryptographically broken and allows fast offline cracking of password hashes if they are exposed. Use a password-specific slow hash (for example Argon2id, scrypt, or bcrypt) with a per-password salt.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_dac2b15bb2eedc77",
+          "pattern_match_ids": [
+            "pm_weak_hash_md5_26b5b48a479c5680"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return hashlib.md5(pwd.encode()).hexdigest()",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 31,
+                "start": 31
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "MD5 is used in password hashing logic, which is cryptographically broken for security-sensitive hashing.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_dac2b15bb2eedc77"
+      ],
+      "title": "Insecure password hashing uses MD5",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_7c2041c1ce6e8797",
+      "impact": "A debug endpoint in app.py returns SECRET_KEY directly in the HTTP JSON response (`{\"key\": SECRET_KEY}`), exposing sensitive secret material to callers and creating a direct secret-disclosure risk.",
+      "issue_id": "issue_7c2041c1ce6e8797",
+      "recommended_fix": null,
+      "severity": "high",
+      "severity_rule_ref": "sensitive-data-exposure:secret-key-in-response",
+      "source_observation_ids": [
+        "obs_5f29c6394e2cac12"
+      ],
+      "status": "proposed",
+      "summary": "A debug endpoint in app.py returns SECRET_KEY directly in the HTTP JSON response (`{\"key\": SECRET_KEY}`), exposing sensitive secret material to callers and creating a direct secret-disclosure risk.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "model_discovered",
+          "observation_id": "obs_5f29c6394e2cac12",
+          "source_refs": [
+            {
+              "excerpt": "return jsonify({\"key\": SECRET_KEY})",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 105,
+                "start": 105
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Debug endpoint returns SECRET_KEY in HTTP response, exposing sensitive secret material.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_5f29c6394e2cac12"
+      ],
+      "title": "Debug endpoint leaks application secret key",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_8734598a26d7d594",
+      "impact": "The code deserializes input using marshal.loads in app.py, which is unsafe when handling untrusted content and can introduce code-execution or integrity risks if attacker-controlled bytes reach this path.",
+      "issue_id": "issue_8734598a26d7d594",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_f9e2ee07935d9c95"
+      ],
+      "status": "proposed",
+      "summary": "The code deserializes input using marshal.loads in app.py, which is unsafe when handling untrusted content and can introduce code-execution or integrity risks if attacker-controlled bytes reach this path.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_f9e2ee07935d9c95",
+          "pattern_match_ids": [
+            "pm_marshal_loads_a3d05506deb0defb"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return marshal.loads(data)",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 52,
+                "start": 52
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "marshal.loads is used on input data, which is unsafe for untrusted content.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_f9e2ee07935d9c95"
+      ],
+      "title": "Unsafe deserialization via marshal.loads on input data",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_9170f840eb142247",
+      "impact": "In app.py line 84, the SQL statement is built by concatenating user-influenced table input into a raw text query before execution (\"SELECT * FROM \" + table). This allows SQL injection through identifier manipulation and can expose or alter unintended data.",
+      "issue_id": "issue_9170f840eb142247",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_fba8937e4ae65128"
+      ],
+      "status": "proposed",
+      "summary": "In app.py line 84, the SQL statement is built by concatenating user-influenced table input into a raw text query before execution (\"SELECT * FROM \" + table). This allows SQL injection through identifier manipulation and can expose or alter unintended data.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_fba8937e4ae65128",
+          "pattern_match_ids": [
+            "pm_sql_string_concat_27f4955eb3229d5f",
+            "pm_sqlalchemy_text_concat_07b2dca29f2a6ba3"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "cursor.execute(text(\"SELECT * FROM \" + table))",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 84,
+                "start": 84
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Raw SQL text is concatenated with table input before execution, enabling SQL injection via identifier manipulation.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_fba8937e4ae65128"
+      ],
+      "title": "SQL injection via concatenated table name in raw query",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_9d9a7eed83555ce7",
+      "impact": "`app.py` builds a SQL statement with Python `format()` using the `role` parameter (`SELECT * FROM users WHERE role = '{}'`). This is a direct code-level SQL injection risk because untrusted input is interpolated into SQL text instead of being parameterized.",
+      "issue_id": "issue_9d9a7eed83555ce7",
+      "recommended_fix": null,
+      "severity": "high",
+      "severity_rule_ref": "SEC.SQLI.001",
+      "source_observation_ids": [
+        "obs_67a2bb43d9614a62"
+      ],
+      "status": "proposed",
+      "summary": "`app.py` builds a SQL statement with Python `format()` using the `role` parameter (`SELECT * FROM users WHERE role = '{}'`). This is a direct code-level SQL injection risk because untrusted input is interpolated into SQL text instead of being parameterized.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_67a2bb43d9614a62",
+          "pattern_match_ids": [
+            "pm_sql_format_string_2bea43845c06a5eb",
+            "pm_sql_fstring_b1d942f1c4d653bc"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "cursor.execute(\"SELECT * FROM users WHERE role = '{}'\".format(role))",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 80,
+                "start": 80
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "SQL query uses Python format() with untrusted role parameter, enabling SQL injection.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_67a2bb43d9614a62"
+      ],
+      "title": "SQL injection via string-formatted role filter in user query",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_ab30b9af8a558cb6",
+      "impact": "`app.py` constructs tokens by base64-encoding the user id (`return base64.b64encode(str(uid).encode()).decode()`), which is reversible and provides no signature or encryption. An attacker can forge tokens for arbitrary user IDs, enabling authentication bypass/impersonation if this token is trusted for identity.",
+      "issue_id": "issue_ab30b9af8a558cb6",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_7fd37fd2e70647b1"
+      ],
+      "status": "proposed",
+      "summary": "`app.py` constructs tokens by base64-encoding the user id (`return base64.b64encode(str(uid).encode()).decode()`), which is reversible and provides no signature or encryption. An attacker can forge tokens for arbitrary user IDs, enabling authentication bypass/impersonation if this token is trusted for identity.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_7fd37fd2e70647b1",
+          "pattern_match_ids": [
+            "pm_base64_as_security_921a60e68eeeb044"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return base64.b64encode(str(uid).encode()).decode()",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 93,
+                "start": 93
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Token construction uses reversible base64 encoding without signing or encryption, creating unsigned/forgeable token behavior.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_7fd37fd2e70647b1"
+      ],
+      "title": "Unsigned reversible token allows account impersonation",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_ad5633318a6d1806",
+      "impact": "The code executes command input via `subprocess.run(..., shell=True)` in `app.py`, which can allow shell command injection if untrusted or insufficiently sanitized input reaches this call site.",
+      "issue_id": "issue_ad5633318a6d1806",
+      "recommended_fix": null,
+      "severity": "high",
+      "severity_rule_ref": "CWE-78",
+      "source_observation_ids": [
+        "obs_0edb766d481db97c"
+      ],
+      "status": "proposed",
+      "summary": "The code executes command input via `subprocess.run(..., shell=True)` in `app.py`, which can allow shell command injection if untrusted or insufficiently sanitized input reaches this call site.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_0edb766d481db97c",
+          "pattern_match_ids": [
+            "pm_subprocess_shell_9fedc4f78eebe92f"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return subprocess.run(cmd, shell=True)",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 65,
+                "start": 65
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "subprocess.run is called with shell=True on provided command input, creating command injection risk.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_0edb766d481db97c"
+      ],
+      "title": "Command injection risk from shell-enabled subprocess execution",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_b761e40fa7e2e10e",
+      "impact": "A verified direct code fact shows a password value hardcoded in app.py (lines 21-22). Storing credentials directly in source code increases risk of credential exposure through repository access, logs, or build artifacts.",
+      "issue_id": "issue_b761e40fa7e2e10e",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_004bafd3a70fd4e1"
+      ],
+      "status": "proposed",
+      "summary": "A verified direct code fact shows a password value hardcoded in app.py (lines 21-22). Storing credentials directly in source code increases risk of credential exposure through repository access, logs, or build artifacts.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_004bafd3a70fd4e1",
+          "pattern_match_ids": [
+            "pm_hardcoded_password_dab9981e17dd86e2",
+            "pm_api_key_in_source_979fca905e19a52c"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "password = \"<REDACTED_PASSWORD>\" password = \"<REDACTED_PASSWORD>\"",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 22,
+                "start": 21
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Hardcoded password value is stored in source code.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_004bafd3a70fd4e1"
+      ],
+      "title": "Hardcoded password embedded in source code",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_cb4361c838f13af3",
+      "impact": "The application configures CORS with a wildcard origin (\"*\"), which permits cross-origin requests from any domain. This broad trust model can expose endpoints to unintended web origins and should be restricted to explicit trusted origins.",
+      "issue_id": "issue_cb4361c838f13af3",
+      "recommended_fix": null,
+      "severity": "medium",
+      "severity_rule_ref": "cors.wildcard_origin",
+      "source_observation_ids": [
+        "obs_6f73302eac409870"
+      ],
+      "status": "proposed",
+      "summary": "The application configures CORS with a wildcard origin (\"*\"), which permits cross-origin requests from any domain. This broad trust model can expose endpoints to unintended web origins and should be restricted to explicit trusted origins.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_6f73302eac409870",
+          "pattern_match_ids": [
+            "pm_cors_wildcard_75f446faac3487a4"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "CORS(app, resources={r\"/*\": {\"origins\": \"*\"}})",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 26,
+                "start": 26
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "CORS is configured with wildcard origin (\"*\"), allowing any origin to access endpoints.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_6f73302eac409870"
+      ],
+      "title": "Overly permissive CORS policy allows any origin",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_cefdcd4d9a821851",
+      "impact": "The code calls yaml.load(text) without specifying SafeLoader, which can allow unsafe deserialization of attacker-controlled YAML and may lead to arbitrary code execution.",
+      "issue_id": "issue_cefdcd4d9a821851",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_e1479eaa39200c1d"
+      ],
+      "status": "proposed",
+      "summary": "The code calls yaml.load(text) without specifying SafeLoader, which can allow unsafe deserialization of attacker-controlled YAML and may lead to arbitrary code execution.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_e1479eaa39200c1d",
+          "pattern_match_ids": [
+            "pm_yaml_unsafe_load_105b2a1a7b6e5302"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return yaml.load(text)",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 48,
+                "start": 48
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "yaml.load is called without SafeLoader, creating unsafe deserialization risk.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_e1479eaa39200c1d"
+      ],
+      "title": "Unsafe YAML deserialization via yaml.load",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_e52adec28a34e053",
+      "impact": "The code hashes tokens using SHA-1 (`hashlib.sha1(data.encode()).hexdigest()` in `app.py`), which is considered weak for security-sensitive cryptographic purposes. This can reduce resistance to collision-based attacks and is inappropriate for token-related security logic.",
+      "issue_id": "issue_e52adec28a34e053",
+      "recommended_fix": null,
+      "severity": "high",
+      "severity_rule_ref": "cryptography.weak_hash.sha1",
+      "source_observation_ids": [
+        "obs_f6a25045a91d3ccc"
+      ],
+      "status": "proposed",
+      "summary": "The code hashes tokens using SHA-1 (`hashlib.sha1(data.encode()).hexdigest()` in `app.py`), which is considered weak for security-sensitive cryptographic purposes. This can reduce resistance to collision-based attacks and is inappropriate for token-related security logic.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_f6a25045a91d3ccc",
+          "pattern_match_ids": [
+            "pm_weak_hash_sha1_90323145e9472410"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return hashlib.sha1(data.encode()).hexdigest()",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 35,
+                "start": 35
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "SHA-1 is used for token hashing, which is weak for security-sensitive cryptographic use.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_f6a25045a91d3ccc"
+      ],
+      "title": "Weak cryptographic hash (SHA-1) used for token hashing",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_eb8af6abf753f258",
+      "impact": "The repository includes a concrete API_KEY value (`ak_live_zxywvu987654321`) in `.env.example` line 2. Even in an example file, committing key-like credential material increases the risk of accidental real-key reuse, leakage through forks, and automated secret harvesting.",
+      "issue_id": "issue_eb8af6abf753f258",
+      "recommended_fix": null,
+      "severity": "medium",
+      "severity_rule_ref": "credential_exposure.hardcoded_secret",
+      "source_observation_ids": [
+        "obs_0ae8aab8eaf7ddd3"
+      ],
+      "status": "proposed",
+      "summary": "The repository includes a concrete API_KEY value (`ak_live_zxywvu987654321`) in `.env.example` line 2. Even in an example file, committing key-like credential material increases the risk of accidental real-key reuse, leakage through forks, and automated secret harvesting.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "model_discovered",
+          "observation_id": "obs_0ae8aab8eaf7ddd3",
+          "source_refs": [
+            {
+              "excerpt": "API_KEY=ak_live_zxywvu987654321",
+              "file_hash": "94cf933bdd27025341a7c5fdcab65e3333557a7d9ec5f555939d6e30915f6002",
+              "file_path": ".env.example",
+              "line_range": {
+                "end": 2,
+                "start": 2
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Hardcoded API_KEY value in .env.example exposes credential material and risks accidental use of a real key.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_0ae8aab8eaf7ddd3"
+      ],
+      "title": "Hardcoded API key value committed in .env.example",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_faeb24044ddc3db9",
+      "impact": "`app.py` executes `eval(expr)` on function input. If attacker-controlled data reaches this path, arbitrary Python code may be executed, creating a code injection risk.",
+      "issue_id": "issue_faeb24044ddc3db9",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_3e72135f657e6cd2"
+      ],
+      "status": "proposed",
+      "summary": "`app.py` executes `eval(expr)` on function input. If attacker-controlled data reaches this path, arbitrary Python code may be executed, creating a code injection risk.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_3e72135f657e6cd2",
+          "pattern_match_ids": [
+            "pm_eval_usage_652dac92f98befb7"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "return eval(expr)",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 57,
+                "start": 57
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "eval is executed on function input, allowing code injection if attacker-controlled data reaches this path.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_3e72135f657e6cd2"
+      ],
+      "title": "Unsafe eval on input enables code injection",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    },
+    {
+      "confidence": "medium",
+      "finding_id": "issue_fea7624aa41a5fc3",
+      "impact": "The application entrypoint runs Flask with `debug=True` in `app.py`, which can expose the interactive debugger and detailed error information at runtime if used in a non-development environment.",
+      "issue_id": "issue_fea7624aa41a5fc3",
+      "recommended_fix": null,
+      "severity": null,
+      "severity_rule_ref": null,
+      "source_observation_ids": [
+        "obs_ccae47f0d138ce44"
+      ],
+      "status": "proposed",
+      "summary": "The application entrypoint runs Flask with `debug=True` in `app.py`, which can expose the interactive debugger and detailed error information at runtime if used in a non-development environment.",
+      "supporting_evidence": [
+        {
+          "evidence_class": "direct_code_fact",
+          "evidence_origin": "deterministic_pattern",
+          "observation_id": "obs_ccae47f0d138ce44",
+          "pattern_match_ids": [
+            "pm_flask_debug_7b98c2bbc77b8325"
+          ],
+          "source_refs": [
+            {
+              "excerpt": "app.run(debug=True)",
+              "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+              "file_path": "app.py",
+              "line_range": {
+                "end": 109,
+                "start": 109
+              },
+              "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+            }
+          ],
+          "statement": "Application runner starts Flask with debug=True, exposing debugger and verbose error surface in runtime.",
+          "status": "verified"
+        }
+      ],
+      "supporting_evidence_classes": [
+        "direct_code_fact"
+      ],
+      "supporting_observation_ids": [
+        "obs_ccae47f0d138ce44"
+      ],
+      "title": "Flask application is started with debug mode enabled",
+      "uncertainty": {
+        "contradiction_ids": [],
+        "contradictions": [],
+        "open_question_ids": [],
+        "open_questions": []
+      }
+    }
+  ],
+  "open_questions": [
+    {
+      "answer": null,
+      "context": null,
+      "prompt": "The provided evidence confirms f-string SQL construction with uid at app.py:70, but where is the corresponding direct execution call that establishes exploitability (SQL injection) for this specific query?",
+      "question_id": "question_3ea68b4e472d4206",
+      "related_entity_refs": [
+        {
+          "entity_id": "obs_4e7897872a7db07d",
+          "entity_type": "observation"
+        }
+      ],
+      "status": "open"
+    },
+    {
+      "answer": null,
+      "context": null,
+      "prompt": "`FLASK_DEBUG=true` is evidenced in `.env.example`, but is `.env.example` actually used as a production default/deployment input? Without runtime or deployment evidence, the production-insecurity portion of the claim cannot be verified.",
+      "question_id": "question_41209db262cd0014",
+      "related_entity_refs": [
+        {
+          "entity_id": "obs_fdba9aadde3e52d3",
+          "entity_type": "observation"
+        }
+      ],
+      "status": "open"
+    },
+    {
+      "answer": null,
+      "context": null,
+      "prompt": "Can we confirm that `raw` at `app.py:44` is attacker-controlled/untrusted input in this snapshot? The provided evidence proves `pickle.loads(base64.b64decode(raw))` is used, but does not by itself establish input trust boundary.",
+      "question_id": "question_8435a67b29b6d6ef",
+      "related_entity_refs": [
+        {
+          "entity_id": "obs_1c4022f3100c6cad",
+          "entity_type": "observation"
+        }
+      ],
+      "status": "open"
+    }
+  ],
+  "report_id": "report_bee780372a253679",
+  "schema_version": "1.0.0",
+  "source_audit_id": "audit_test_mini",
+  "source_state_digest": "bee780372a25367927ad446b09d26b9cf32fbeb19fbc07a3bb57b283c0e70cce",
+  "summary": {
+    "contradiction_count": 0,
+    "decision_count": 0,
+    "finding_count": 22,
+    "open_question_count": 3,
+    "verified_observation_count": 22,
+    "verified_observation_evidence_class_counts": {
+      "blocked_verification": 0,
+      "derived_structural_fact": 0,
+      "direct_code_fact": 22,
+      "inferred_hypothesis": 0,
+      "pattern_match": 0
+    },
+    "verified_observation_evidence_origin_counts": {
+      "deterministic_pattern": 18,
+      "mixed_pattern_model": 0,
+      "model_discovered": 4
+    }
+  },
+  "suppression_records": [],
+  "verified_observations": [
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_004bafd3a70fd4e1",
+      "pattern_match_ids": [
+        "pm_hardcoded_password_dab9981e17dd86e2",
+        "pm_api_key_in_source_979fca905e19a52c"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "password = \"<REDACTED_PASSWORD>\" password = \"<REDACTED_PASSWORD>\"",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 22,
+            "start": 21
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Hardcoded password value is stored in source code.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "observation_id": "obs_0ae8aab8eaf7ddd3",
+      "source_refs": [
+        {
+          "excerpt": "API_KEY=ak_live_zxywvu987654321",
+          "file_hash": "94cf933bdd27025341a7c5fdcab65e3333557a7d9ec5f555939d6e30915f6002",
+          "file_path": ".env.example",
+          "line_range": {
+            "end": 2,
+            "start": 2
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Hardcoded API_KEY value in .env.example exposes credential material and risks accidental use of a real key.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_0edb766d481db97c",
+      "pattern_match_ids": [
+        "pm_subprocess_shell_9fedc4f78eebe92f"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return subprocess.run(cmd, shell=True)",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 65,
+            "start": 65
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "subprocess.run is called with shell=True on provided command input, creating command injection risk.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_3e72135f657e6cd2",
+      "pattern_match_ids": [
+        "pm_eval_usage_652dac92f98befb7"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return eval(expr)",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 57,
+            "start": 57
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "eval is executed on function input, allowing code injection if attacker-controlled data reaches this path.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_4e2b90e21659b3a2",
+      "pattern_match_ids": [
+        "pm_disabled_csrf_0c0984f717c57ee6"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "@csrf_exempt",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 100,
+            "start": 100
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "CSRF protection is explicitly disabled for a route via @csrf_exempt.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "observation_id": "obs_5f29c6394e2cac12",
+      "source_refs": [
+        {
+          "excerpt": "return jsonify({\"key\": SECRET_KEY})",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 105,
+            "start": 105
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Debug endpoint returns SECRET_KEY in HTTP response, exposing sensitive secret material.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "observation_id": "obs_5fc95ff19f55d41b",
+      "source_refs": [
+        {
+          "excerpt": "PASSWORD=super_secret_password",
+          "file_hash": "94cf933bdd27025341a7c5fdcab65e3333557a7d9ec5f555939d6e30915f6002",
+          "file_path": ".env.example",
+          "line_range": {
+            "end": 3,
+            "start": 3
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Hardcoded PASSWORD value in .env.example introduces a default credential that may be reused or leaked.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "observation_id": "obs_633615e60c20f1e9",
+      "source_refs": [
+        {
+          "excerpt": "SECRET_KEY=sk_test_abc123def456",
+          "file_hash": "94cf933bdd27025341a7c5fdcab65e3333557a7d9ec5f555939d6e30915f6002",
+          "file_path": ".env.example",
+          "line_range": {
+            "end": 1,
+            "start": 1
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Hardcoded SECRET_KEY value in .env.example can propagate insecure default signing secret if reused in deployments.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_67a2bb43d9614a62",
+      "pattern_match_ids": [
+        "pm_sql_format_string_2bea43845c06a5eb",
+        "pm_sql_fstring_b1d942f1c4d653bc"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "cursor.execute(\"SELECT * FROM users WHERE role = '{}'\".format(role))",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 80,
+            "start": 80
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "SQL query uses Python format() with untrusted role parameter, enabling SQL injection.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_6f73302eac409870",
+      "pattern_match_ids": [
+        "pm_cors_wildcard_75f446faac3487a4"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "CORS(app, resources={r\"/*\": {\"origins\": \"*\"}})",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 26,
+            "start": 26
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "CORS is configured with wildcard origin (\"*\"), allowing any origin to access endpoints.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_79623f78cb346bbd",
+      "pattern_match_ids": [
+        "pm_jwt_no_verify_138441a180d340db"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return jwt.decode(token, algorithms=[\"HS256\"], options={\"verify_signature\": False})",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 89,
+            "start": 89
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "JWT decoding disables signature verification, allowing forged tokens to be accepted.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_7d3141386e8cd51f",
+      "pattern_match_ids": [
+        "pm_assert_in_production_03d2c5dcd91542ab"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "assert DEBUG, \"not in debug mode\"",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 104,
+            "start": 104
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Security-relevant control uses assert, which can be stripped in optimized runtime and bypassed.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_7fd37fd2e70647b1",
+      "pattern_match_ids": [
+        "pm_base64_as_security_921a60e68eeeb044"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return base64.b64encode(str(uid).encode()).decode()",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 93,
+            "start": 93
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Token construction uses reversible base64 encoding without signing or encryption, creating unsigned/forgeable token behavior.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_a2f3686406f8032f",
+      "pattern_match_ids": [
+        "pm_weak_random_5874e8d409391e2c"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return random.randint(100000, 999999)",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 39,
+            "start": 39
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Security code generation uses random.randint from non-cryptographic PRNG.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_ccae47f0d138ce44",
+      "pattern_match_ids": [
+        "pm_flask_debug_7b98c2bbc77b8325"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "app.run(debug=True)",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 109,
+            "start": 109
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Application runner starts Flask with debug=True, exposing debugger and verbose error surface in runtime.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_dac2b15bb2eedc77",
+      "pattern_match_ids": [
+        "pm_weak_hash_md5_26b5b48a479c5680"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return hashlib.md5(pwd.encode()).hexdigest()",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 31,
+            "start": 31
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "MD5 is used in password hashing logic, which is cryptographically broken for security-sensitive hashing.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_e1479eaa39200c1d",
+      "pattern_match_ids": [
+        "pm_yaml_unsafe_load_105b2a1a7b6e5302"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return yaml.load(text)",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 48,
+            "start": 48
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "yaml.load is called without SafeLoader, creating unsafe deserialization risk.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_ea3f2a5265671b19",
+      "pattern_match_ids": [
+        "pm_django_debug_bff090975b25f29b"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "DEBUG = True",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 25,
+            "start": 25
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Debug mode flag is hard-enabled in code via DEBUG = True, creating insecure runtime defaults.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_f26784b08a3b7257",
+      "pattern_match_ids": [
+        "pm_default_secret_key_2011cafe1fa83fb3"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "SECRET_KEY = \"<REDACTED:ee0e9a70>\"",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 20,
+            "start": 20
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Hardcoded application SECRET_KEY is present in source, enabling secret exposure if code/config leaks.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_f6a25045a91d3ccc",
+      "pattern_match_ids": [
+        "pm_weak_hash_sha1_90323145e9472410"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return hashlib.sha1(data.encode()).hexdigest()",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 35,
+            "start": 35
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "SHA-1 is used for token hashing, which is weak for security-sensitive cryptographic use.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_f9e2ee07935d9c95",
+      "pattern_match_ids": [
+        "pm_marshal_loads_a3d05506deb0defb"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "return marshal.loads(data)",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 52,
+            "start": 52
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "marshal.loads is used on input data, which is unsafe for untrusted content.",
+      "status": "verified"
+    },
+    {
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "observation_id": "obs_fba8937e4ae65128",
+      "pattern_match_ids": [
+        "pm_sql_string_concat_27f4955eb3229d5f",
+        "pm_sqlalchemy_text_concat_07b2dca29f2a6ba3"
+      ],
+      "source_refs": [
+        {
+          "excerpt": "cursor.execute(text(\"SELECT * FROM \" + table))",
+          "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+          "file_path": "app.py",
+          "line_range": {
+            "end": 84,
+            "start": 84
+          },
+          "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+        }
+      ],
+      "statement": "Raw SQL text is concatenated with table input before execution, enabling SQL injection via identifier manipulation.",
+      "status": "verified"
+    }
+  ]
+}

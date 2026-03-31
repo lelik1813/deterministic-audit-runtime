@@ -1,0 +1,785 @@
+{
+  "schema_version": "1.0.0",
+  "tasks": {
+    "task_006ac3ec35bb968a": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:18:32Z",
+      "id": "task_006ac3ec35bb968a",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_15e3c9fd91caec16"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:25:42Z"
+    },
+    "task_0127dbc4fd6f5ded": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:17:10Z",
+      "id": "task_0127dbc4fd6f5ded",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_01b09a578acb3201"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:24:38Z"
+    },
+    "task_038ab8aa1b27c587": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:26:08Z",
+      "id": "task_038ab8aa1b27c587",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_d5c9dc49e1ec9ba0"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:29:59Z"
+    },
+    "task_0dee02563b4908e4": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:17:26Z",
+      "id": "task_0dee02563b4908e4",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_0d7c26d7ca74f696"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:24:56Z"
+    },
+    "task_119602b5c7366b90": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:15:01Z",
+      "id": "task_119602b5c7366b90",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "path",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "app.py"
+      },
+      "type": "module_scan",
+      "updated_at": "2026-03-31T10:16:55Z"
+    },
+    "task_138827b248a1735d": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_138827b248a1735d",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_1152cb23609e84af"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:18:02Z"
+    },
+    "task_17e0eb81b330b0bd": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:18:48Z",
+      "id": "task_17e0eb81b330b0bd",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_34050a555c33e916"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:25:55Z"
+    },
+    "task_1a4cdf5bdb46dada": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:30:51Z",
+      "id": "task_1a4cdf5bdb46dada",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_c0b57138bdbf5f6e"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:31:37Z"
+    },
+    "task_1a87cd510757baef": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_1a87cd510757baef",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_a7ceeed4d61d33d1"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:21:24Z"
+    },
+    "task_1f31bfe1f21d7171": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:25:55Z",
+      "id": "task_1f31bfe1f21d7171",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_b86fcb73c64fc6a7"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:28:23Z"
+    },
+    "task_263bfd92c76e8d1a": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_263bfd92c76e8d1a",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_b86fcb73c64fc6a7"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:21:40Z"
+    },
+    "task_2bf3abffcfcfc504": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_2bf3abffcfcfc504",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_99abb79e1e9e6985"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:20:55Z"
+    },
+    "task_33bce30a106801fb": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_33bce30a106801fb",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_d5c9dc49e1ec9ba0"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:21:56Z"
+    },
+    "task_34672b7b015138ae": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:19:33Z",
+      "id": "task_34672b7b015138ae",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_56b1206512be771a"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:26:40Z"
+    },
+    "task_356eaf773df21ead": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_356eaf773df21ead",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_56b1206512be771a"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:19:33Z"
+    },
+    "task_38c349a896a7d407": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_38c349a896a7d407",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_38cfbb5db746f9da"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:19:02Z"
+    },
+    "task_3e2d91060712604a": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:18:02Z",
+      "id": "task_3e2d91060712604a",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "path",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": ".env.example"
+      },
+      "type": "module_scan",
+      "updated_at": "2026-03-31T10:30:51Z"
+    },
+    "task_46b2a349a24faf5b": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:31:22Z",
+      "id": "task_46b2a349a24faf5b",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_70b827898ef85d6b"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:32:20Z"
+    },
+    "task_46e57a04b5b4eb14": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_46e57a04b5b4eb14",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_3e3cbf5180807998"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:19:17Z"
+    },
+    "task_478ab5f938bb3b38": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_478ab5f938bb3b38",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_0f52a30a58deff5b"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:17:41Z"
+    },
+    "task_55ab50e4bd1b5f69": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_55ab50e4bd1b5f69",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_f9e2ee07935d9c95"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:24:25Z"
+    },
+    "task_5dfcec07a00c7b09": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:24:56Z",
+      "id": "task_5dfcec07a00c7b09",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_81a2f19e87acb504"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:27:27Z"
+    },
+    "task_6cf3ca8d56ce5646": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:30:51Z",
+      "id": "task_6cf3ca8d56ce5646",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_70b827898ef85d6b"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:31:22Z"
+    },
+    "task_710dbb5d3dc7914b": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_710dbb5d3dc7914b",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_700bce9df780d804"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:20:06Z"
+    },
+    "task_79c88c3d276819e0": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_79c88c3d276819e0",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_f5e32b2e69b4d18a"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:24:07Z"
+    },
+    "task_818f2d7eb2926b2e": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:19:49Z",
+      "id": "task_818f2d7eb2926b2e",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_6f3ec12fe34d0ac4"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:26:53Z"
+    },
+    "task_821b5346e24ef451": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:31:06Z",
+      "id": "task_821b5346e24ef451",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_5f68327c0612962f"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:32:04Z"
+    },
+    "task_85e74070db36d804": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:30:51Z",
+      "id": "task_85e74070db36d804",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_5f68327c0612962f"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:31:06Z"
+    },
+    "task_8e301b61474505dc": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:19:17Z",
+      "id": "task_8e301b61474505dc",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_3e3cbf5180807998"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:26:22Z"
+    },
+    "task_9217c5733fbabf6a": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_9217c5733fbabf6a",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_12da562bdc4f4e3f"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:18:16Z"
+    },
+    "task_94e9562337293aae": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:19:02Z",
+      "id": "task_94e9562337293aae",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_38cfbb5db746f9da"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:26:08Z"
+    },
+    "task_9d849e12c6e65a6c": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:25:43Z",
+      "id": "task_9d849e12c6e65a6c",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_a7ceeed4d61d33d1"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:28:11Z"
+    },
+    "task_a07b19b2af05dcd0": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_a07b19b2af05dcd0",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_8e66992fe605fd90"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:20:39Z"
+    },
+    "task_a07f5192e9a0687f": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:25:27Z",
+      "id": "task_a07f5192e9a0687f",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_a2f3686406f8032f"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:27:59Z"
+    },
+    "task_a8fac60a07bc7494": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:18:16Z",
+      "id": "task_a8fac60a07bc7494",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_12da562bdc4f4e3f"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:25:27Z"
+    },
+    "task_aaa042f9cbead3be": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_aaa042f9cbead3be",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_01b09a578acb3201"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:17:10Z"
+    },
+    "task_b2096d4898b54192": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:30:51Z",
+      "id": "task_b2096d4898b54192",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_db8b6edd94042543"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:31:51Z"
+    },
+    "task_b2a4bba146a33b46": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:24:38Z",
+      "id": "task_b2a4bba146a33b46",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_700bce9df780d804"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:27:11Z"
+    },
+    "task_b3a252b1903ea1d7": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_b3a252b1903ea1d7",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_e652b1b587dff865"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:23:33Z"
+    },
+    "task_bac8209f8a338bf4": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:26:22Z",
+      "id": "task_bac8209f8a338bf4",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_f5e32b2e69b4d18a"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:30:11Z"
+    },
+    "task_c1ebc3efa2dac36c": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:31:51Z",
+      "id": "task_c1ebc3efa2dac36c",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_db8b6edd94042543"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:32:50Z"
+    },
+    "task_c38f8576b98028bb": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_c38f8576b98028bb",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_34050a555c33e916"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:18:48Z"
+    },
+    "task_c6e245bf1b99d3c5": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:26:40Z",
+      "id": "task_c6e245bf1b99d3c5",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_f9e2ee07935d9c95"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:30:24Z"
+    },
+    "task_c9d5b980844e48aa": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:25:10Z",
+      "id": "task_c9d5b980844e48aa",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_99abb79e1e9e6985"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:27:42Z"
+    },
+    "task_cf796dd63a9e0c39": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_cf796dd63a9e0c39",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_0d7c26d7ca74f696"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:17:26Z"
+    },
+    "task_d5215dea81b5dc88": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:17:41Z",
+      "id": "task_d5215dea81b5dc88",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_0f52a30a58deff5b"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:25:10Z"
+    },
+    "task_d6e964be599eec49": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:31:37Z",
+      "id": "task_d6e964be599eec49",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_c0b57138bdbf5f6e"
+      },
+      "type": "compose_issue",
+      "updated_at": "2026-03-31T10:32:34Z"
+    },
+    "task_d6ecdfd24d2a84dc": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_d6ecdfd24d2a84dc",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_ebae6a4737c3c0e5"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:23:50Z"
+    },
+    "task_eb699baf71fd59ed": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_eb699baf71fd59ed",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_6f3ec12fe34d0ac4"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:19:49Z"
+    },
+    "task_f2c6cacf4b56819c": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_f2c6cacf4b56819c",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_15e3c9fd91caec16"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:18:32Z"
+    },
+    "task_f73a2e221ecbd426": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_f73a2e221ecbd426",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_81a2f19e87acb504"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:20:21Z"
+    },
+    "task_ff962be1b186b5be": {
+      "attempt_count": 1,
+      "audit_id": "audit_test_mini",
+      "created_at": "2026-03-31T10:16:55Z",
+      "id": "task_ff962be1b186b5be",
+      "last_error": null,
+      "status": "done",
+      "target": {
+        "kind": "observation",
+        "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+        "value": "obs_a2f3686406f8032f"
+      },
+      "type": "verify_claim",
+      "updated_at": "2026-03-31T10:21:08Z"
+    }
+  }
+}

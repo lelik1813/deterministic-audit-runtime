@@ -1,0 +1,97 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "contradiction.registered",
+      "hypothesis.rejected",
+      "hypothesis.sent_to_verification",
+      "hypothesis.supported",
+      "observation.rejected",
+      "observation.verified",
+      "question.opened"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "inference without evidence",
+      "issue creation",
+      "unsupported claims"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {
+    "obs_fdba9aadde3e52d3": {
+      "audit_id": "audit_test_mini",
+      "confidence": "medium",
+      "created_at": "2026-03-31T16:30:13Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_fdba9aadde3e52d3",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "FLASK_DEBUG=true",
+            "file_hash": "94cf933bdd27025341a7c5fdcab65e3333557a7d9ec5f555939d6e30915f6002",
+            "file_path": ".env.example",
+            "line_range": {
+              "end": 4,
+              "start": 4
+            },
+            "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+          }
+        ]
+      },
+      "statement": "FLASK_DEBUG is set to true in .env.example, creating an insecure default that can expose debug interfaces and sensitive runtime details if enabled in production.",
+      "status": "proposed",
+      "updated_at": "2026-03-31T16:30:13Z"
+    }
+  },
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "4bf6fd26ed41d148d6c2674888a54763926811bc12dc3f5f1e536e7ca2c89135",
+  "slice_id": "slice_4bf6fd26ed41d148",
+  "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+  "target_paths": [
+    ".env.example"
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_test_mini",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_3748095a8921e726",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "observation",
+      "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+      "value": "obs_fdba9aadde3e52d3"
+    },
+    "type": "verify_claim",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "Verifier"
+}

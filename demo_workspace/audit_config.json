@@ -1,0 +1,7 @@
+{
+  "audit_id": "audit_dir_real",
+  "policy": "low_noise",
+  "schema_version": "1.0.0",
+  "target_repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\runtime-audit-fixture",
+  "title": "Directory target real Codex"
+}

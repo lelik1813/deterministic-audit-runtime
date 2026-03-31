@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# build
+dist/
+build/
+
+# env
+.env
+
+# logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+workspaces/
+workspaces*/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

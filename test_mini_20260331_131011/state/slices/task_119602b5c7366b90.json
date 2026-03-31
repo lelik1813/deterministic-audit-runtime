@@ -1,0 +1,377 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "hypothesis.proposed",
+      "observation.proposed",
+      "question.opened"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "converting hypothesis to fact",
+      "issue creation",
+      "severity assignment"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "pattern_matches": [
+    {
+      "category": "secret_exposure",
+      "confidence": "medium",
+      "description": "Hardcoded SECRET_KEY - should come from environment",
+      "file_path": "app.py",
+      "line_end": 20,
+      "line_start": 20,
+      "matched_text": "SECRET_KEY = \"<REDACTED:ee0e9a70>\"",
+      "pattern_match_id": "pm_default_secret_key_2011cafe1fa83fb3",
+      "rule_id": "default_secret_key",
+      "severity_hint": "high"
+    },
+    {
+      "category": "secret_exposure",
+      "confidence": "high",
+      "description": "Hardcoded password or secret value",
+      "file_path": "app.py",
+      "line_end": 21,
+      "line_start": 21,
+      "matched_text": "password = \"<REDACTED_PASSWORD>\"",
+      "pattern_match_id": "pm_hardcoded_password_dab9981e17dd86e2",
+      "rule_id": "hardcoded_password",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "secret_exposure",
+      "confidence": "high",
+      "description": "Hardcoded API key or access token",
+      "file_path": "app.py",
+      "line_end": 22,
+      "line_start": 22,
+      "matched_text": "api_key = \"<REDACTED_API_KEY>\"",
+      "pattern_match_id": "pm_api_key_in_source_979fca905e19a52c",
+      "rule_id": "api_key_in_source",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "input_trust",
+      "confidence": "medium",
+      "description": "Django DEBUG mode enabled",
+      "file_path": "app.py",
+      "line_end": 25,
+      "line_start": 25,
+      "matched_text": "DEBUG = True",
+      "pattern_match_id": "pm_django_debug_bff090975b25f29b",
+      "rule_id": "django_debug",
+      "severity_hint": "medium"
+    },
+    {
+      "category": "input_trust",
+      "confidence": "medium",
+      "description": "CORS configured to allow all origins",
+      "file_path": "app.py",
+      "line_end": 26,
+      "line_start": 26,
+      "matched_text": "CORS(app, resources={r\"/*",
+      "pattern_match_id": "pm_cors_wildcard_75f446faac3487a4",
+      "rule_id": "cors_wildcard",
+      "severity_hint": "medium"
+    },
+    {
+      "category": "weak_crypto",
+      "confidence": "medium",
+      "description": "MD5 hash function used - cryptographically broken",
+      "file_path": "app.py",
+      "line_end": 31,
+      "line_start": 31,
+      "matched_text": "hashlib.md5(",
+      "pattern_match_id": "pm_weak_hash_md5_26b5b48a479c5680",
+      "rule_id": "weak_hash_md5",
+      "severity_hint": "high"
+    },
+    {
+      "category": "weak_crypto",
+      "confidence": "medium",
+      "description": "SHA-1 hash function used - cryptographically weak",
+      "file_path": "app.py",
+      "line_end": 35,
+      "line_start": 35,
+      "matched_text": "hashlib.sha1(",
+      "pattern_match_id": "pm_weak_hash_sha1_90323145e9472410",
+      "rule_id": "weak_hash_sha1",
+      "severity_hint": "high"
+    },
+    {
+      "category": "weak_crypto",
+      "confidence": "medium",
+      "description": "Insecure random module used - not suitable for security",
+      "file_path": "app.py",
+      "line_end": 39,
+      "line_start": 39,
+      "matched_text": "random.randint(",
+      "pattern_match_id": "pm_weak_random_5874e8d409391e2c",
+      "rule_id": "weak_random",
+      "severity_hint": "medium"
+    },
+    {
+      "category": "unsigned_token",
+      "confidence": "medium",
+      "description": "Base64 encoding/decoding used - encoding is not encryption",
+      "file_path": "app.py",
+      "line_end": 44,
+      "line_start": 44,
+      "matched_text": "base64.b64decode(",
+      "pattern_match_id": "pm_base64_as_security_22b0c6d07f8108d8",
+      "rule_id": "base64_as_security",
+      "severity_hint": "high"
+    },
+    {
+      "category": "dangerous_deserialization",
+      "confidence": "high",
+      "description": "pickle.loads on potentially untrusted data - arbitrary code execution",
+      "file_path": "app.py",
+      "line_end": 44,
+      "line_start": 44,
+      "matched_text": "pickle.loads(",
+      "pattern_match_id": "pm_pickle_loads_4243488059fd2c45",
+      "rule_id": "pickle_loads",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "dangerous_deserialization",
+      "confidence": "medium",
+      "description": "yaml.load without explicit SafeLoader - potential RCE",
+      "file_path": "app.py",
+      "line_end": 48,
+      "line_start": 48,
+      "matched_text": "yaml.load(",
+      "pattern_match_id": "pm_yaml_unsafe_load_105b2a1a7b6e5302",
+      "rule_id": "yaml_unsafe_load",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "dangerous_deserialization",
+      "confidence": "medium",
+      "description": "marshal.loads on potentially untrusted data",
+      "file_path": "app.py",
+      "line_end": 52,
+      "line_start": 52,
+      "matched_text": "marshal.loads(",
+      "pattern_match_id": "pm_marshal_loads_a3d05506deb0defb",
+      "rule_id": "marshal_loads",
+      "severity_hint": "high"
+    },
+    {
+      "category": "code_execution",
+      "confidence": "high",
+      "description": "eval() used - potential code injection if input is not sanitized",
+      "file_path": "app.py",
+      "line_end": 57,
+      "line_start": 57,
+      "matched_text": "eval(",
+      "pattern_match_id": "pm_eval_usage_652dac92f98befb7",
+      "rule_id": "eval_usage",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "code_execution",
+      "confidence": "high",
+      "description": "exec() used - potential code injection if input is not sanitized",
+      "file_path": "app.py",
+      "line_end": 61,
+      "line_start": 61,
+      "matched_text": "exec(",
+      "pattern_match_id": "pm_exec_usage_31319582a4227319",
+      "rule_id": "exec_usage",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "code_execution",
+      "confidence": "medium",
+      "description": "subprocess with shell=True - potential command injection",
+      "file_path": "app.py",
+      "line_end": 65,
+      "line_start": 65,
+      "matched_text": "subprocess.run(cmd, shell=True",
+      "pattern_match_id": "pm_subprocess_shell_9fedc4f78eebe92f",
+      "rule_id": "subprocess_shell",
+      "severity_hint": "high"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app.py",
+      "line_end": 70,
+      "line_start": 70,
+      "matched_text": "SELECT * FROM users WHERE id = {uid}",
+      "pattern_match_id": "pm_sql_fstring_51af24de28ff1e85",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "medium",
+      "description": "SQL query uses string .format()",
+      "file_path": "app.py",
+      "line_end": 80,
+      "line_start": 80,
+      "matched_text": "cursor.execute(\"SELECT * FROM users WHERE role = '{}'\".format(",
+      "pattern_match_id": "pm_sql_format_string_2bea43845c06a5eb",
+      "rule_id": "sql_format_string",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "high",
+      "description": "SQL query uses f-string interpolation",
+      "file_path": "app.py",
+      "line_end": 80,
+      "line_start": 80,
+      "matched_text": "SELECT * FROM users WHERE role = '{}",
+      "pattern_match_id": "pm_sql_fstring_b1d942f1c4d653bc",
+      "rule_id": "sql_fstring",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "medium",
+      "description": "SQL query built with string concatenation",
+      "file_path": "app.py",
+      "line_end": 84,
+      "line_start": 84,
+      "matched_text": "cursor.execute(text(\"SELECT * FROM \" +",
+      "pattern_match_id": "pm_sql_string_concat_27f4955eb3229d5f",
+      "rule_id": "sql_string_concat",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "sql_injection",
+      "confidence": "medium",
+      "description": "SQLAlchemy text() with string concatenation",
+      "file_path": "app.py",
+      "line_end": 84,
+      "line_start": 84,
+      "matched_text": ".execute(text(\"SELECT * FROM \" +",
+      "pattern_match_id": "pm_sqlalchemy_text_concat_07b2dca29f2a6ba3",
+      "rule_id": "sqlalchemy_text_concat",
+      "severity_hint": "high"
+    },
+    {
+      "category": "unsigned_token",
+      "confidence": "high",
+      "description": "JWT decoded without signature verification",
+      "file_path": "app.py",
+      "line_end": 89,
+      "line_start": 89,
+      "matched_text": "jwt.decode(token, algorithms=[\"HS256\"], options={\"verify_signature\": False",
+      "pattern_match_id": "pm_jwt_no_verify_138441a180d340db",
+      "rule_id": "jwt_no_verify",
+      "severity_hint": "critical"
+    },
+    {
+      "category": "unsigned_token",
+      "confidence": "medium",
+      "description": "Base64 encoding/decoding used - encoding is not encryption",
+      "file_path": "app.py",
+      "line_end": 93,
+      "line_start": 93,
+      "matched_text": "base64.b64encode(",
+      "pattern_match_id": "pm_base64_as_security_921a60e68eeeb044",
+      "rule_id": "base64_as_security",
+      "severity_hint": "high"
+    },
+    {
+      "category": "input_trust",
+      "confidence": "high",
+      "description": "CSRF protection explicitly disabled",
+      "file_path": "app.py",
+      "line_end": 100,
+      "line_start": 100,
+      "matched_text": "@csrf_exempt",
+      "pattern_match_id": "pm_disabled_csrf_0c0984f717c57ee6",
+      "rule_id": "disabled_csrf",
+      "severity_hint": "high"
+    },
+    {
+      "category": "input_trust",
+      "confidence": "medium",
+      "description": "assert statement used - stripped in optimized mode (-O)",
+      "file_path": "app.py",
+      "line_end": 104,
+      "line_start": 104,
+      "matched_text": "assert ",
+      "pattern_match_id": "pm_assert_in_production_03d2c5dcd91542ab",
+      "rule_id": "assert_in_production",
+      "severity_hint": "low"
+    },
+    {
+      "category": "input_trust",
+      "confidence": "high",
+      "description": "Flask debug mode enabled in application runner",
+      "file_path": "app.py",
+      "line_end": 109,
+      "line_start": 109,
+      "matched_text": "app.run(debug=True",
+      "pattern_match_id": "pm_flask_debug_7b98c2bbc77b8325",
+      "rule_id": "flask_debug",
+      "severity_hint": "high"
+    }
+  ],
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {},
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "4d40753d976c7384e70e5daba2a2dbd37e5d3605c17ef9ab665a2cf40ba5036b",
+  "slice_id": "slice_4d40753d976c7384",
+  "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+  "target_paths": [
+    "app.py"
+  ],
+  "target_sources": [
+    {
+      "file_content": "\"\"\"Minimal vulnerable application for DAR pipeline testing.\n\nCovers all 23 DAR detection rules in ~70 lines.\n\"\"\"\nimport hashlib\nimport pickle\nimport base64\nimport subprocess\nimport yaml\nimport marshal\nimport random\nimport jwt\nfrom flask import Flask, request, jsonify\nfrom flask_cors import CORS\nfrom sqlalchemy import text\n\napp = Flask(__name__)\n\n# --- Secret Exposure (3 rules) ---\nSECRET_KEY = \"default-secret-key-for-testing\"\npassword = \"<REDACTED_PASSWORD>\"\npassword = \"<REDACTED_PASSWORD>\"\n\n# --- Configuration (2 rules) ---\nDEBUG = True\nCORS(app, resources={r\"/*\": {\"origins\": \"*\"}})\n\n\n# --- Weak Cryptography (3 rules) ---\ndef hash_password(pwd):\n    return hashlib.md5(pwd.encode()).hexdigest()\n\n\ndef hash_token(data):\n    return hashlib.sha1(data.encode()).hexdigest()\n\n\ndef generate_code():\n    return random.randint(100000, 999999)\n\n\n# --- Dangerous Deserialization (3 rules) ---\ndef load_data(raw):\n    return pickle.loads(base64.b64decode(raw))\n\n\ndef load_config(text):\n    return yaml.load(text)\n\n\ndef load_cache(data):\n    return marshal.loads(data)\n\n\n# --- Code Execution (3 rules) ---\ndef run_custom(expr):\n    return eval(expr)\n\n\ndef run_script(code):\n    exec(code)\n\n\ndef shell_cmd(cmd):\n    return subprocess.run(cmd, shell=True)\n\n\n# --- SQL Injection (4 rules) ---\ndef get_user(cursor, uid):\n    query = f\"SELECT * FROM users WHERE id = {uid}\"\n    cursor.execute(query)\n\n\ndef search_items(cursor, term):\n    q = \"SELECT * FROM items WHERE name = '\" + term + \"'\"\n    cursor.execute(q)\n\n\ndef filter_users(cursor, role):\n    cursor.execute(\"SELECT * FROM users WHERE role = '{}'\".format(role))\n\n\ndef raw_query(cursor, table):\n    cursor.execute(text(\"SELECT * FROM \" + table))\n\n\n# --- Unsigned Tokens (2 rules) ---\ndef decode_jwt(token):\n    return jwt.decode(token, algorithms=[\"HS256\"], options={\"verify_signature\": False})\n\n\ndef make_token(uid):\n    return base64.b64encode(str(uid).encode()).decode()\n\n\n# --- Input Trust (4 rules) ---\nfrom django.views.decorators.csrf import csrf_exempt\n\n\n@csrf_exempt\n@app.route(\"/debug\")\n@app.route(\"/debug\")\ndef debug_env():\n    assert DEBUG, \"not in debug mode\"\n    return jsonify({\"key\": SECRET_KEY})\n\n\nif __name__ == \"__main__\":\n    app.run(debug=True)\n",
+      "file_hash": "39d88321acb104d0b592f3d3c1fe01b208d9e69be7b2394ad251786a46b5a790",
+      "file_path": "app.py",
+      "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d"
+    }
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_test_mini",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_119602b5c7366b90",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "path",
+      "snapshot_ref": "c1f981fa2bf9e7c91c32b4ba7cbec49af76eb13d",
+      "value": "app.py"
+    },
+    "type": "module_scan",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "Reader"
+}

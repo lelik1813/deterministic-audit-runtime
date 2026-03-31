@@ -1,0 +1,851 @@
+{
+  "audit": {
+    "created_at": "2026-03-30T18:50:17Z",
+    "current_snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+    "id": "audit_codex_manual",
+    "status": "initialized",
+    "target": {
+      "repo_label": "runtime-audit-fixture",
+      "repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\runtime-audit-fixture",
+      "vcs": "git"
+    },
+    "title": "Manual Codex test",
+    "updated_at": "2026-03-30T18:50:19Z"
+  },
+  "candidates": {},
+  "contradictions": {},
+  "decisions": {},
+  "hypotheses": {},
+  "issues": {},
+  "observations": {
+    "obs_1d5a5a3534892dfd": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_1d5a5a3534892dfd",
+      "pattern_match_ids": [
+        "pm_base64_as_security_d3fb4a94d3e29f2d",
+        "pm_pickle_loads_ebc95e9f2af78cf7"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "# Unsafe deserialization result, status = order_service.import_orders(data_blob, user_id) return jsonify(result), status",
+            "file_hash": "e5e0a605d393e259576b7ea78b06fcc360b5338c8f9382f1c558d5ac2186794f",
+            "file_path": "app/routes/orders.py",
+            "line_range": {
+              "end": 201,
+              "start": 199
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "except json.JSONDecodeError: pass # Fall back to pickle for backward compatibility try: return pickle.loads(base64.b64decode(data)) except Exception:",
+            "file_hash": "f711e27241a1e8abb01e58ce3d79ee4f53013af28c48941a6f62b7f03ed43413",
+            "file_path": "app/utils/helpers.py",
+            "line_range": {
+              "end": 72,
+              "start": 66
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Unsafe deserialization: deserialize_data falls back to pickle.loads on base64-decoded input, allowing code execution from untrusted blobs.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_1d5e56095fbd08d1": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "derived_structural_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_1d5e56095fbd08d1",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "role = data.get('role', 'user') # Basic validation if not username or not email or not password: return jsonify({'error': 'Username, email, and password are required'}), 400 if not validate_email(email): return jsonify({'error': 'Invalid email format'}), 400 # Allow role to be specified by client (should be restricted) result, status = auth_service.register(username, email, password, role) return jsonify(result), status",
+            "file_hash": "f0db203bd4c98a8d2999f2f527da487c4cfc0f77e20d52dfaa2e4276f555368a",
+            "file_path": "app/routes/users.py",
+            "line_range": {
+              "end": 29,
+              "start": 18
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "def register(self, username, email, password, role='user'): \"\"\"Register a new user.\"\"\" # Check if username exists existing = user_repository.find_by_username(username) if existing: return {'error': 'Username already exists'}, 400 # Check if email exists existing = user_repository.find_by_email(email) if existing: return {'error': 'Email already exists'}, 400 # Hash password and create user password_hash = hash_password(password) user_id = user_repository.create(username, email, password_hash, role) # Log the registration self._log_audit(user_id, 'user_registered', 'user', user_id)",
+            "file_hash": "c5e514f3f0768a082f3b77b40447b3cc12f7ef1b88a2c859a6402e2df49e6eb5",
+            "file_path": "app/services/auth.py",
+            "line_range": {
+              "end": 36,
+              "start": 18
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Client-controlled role assignment during registration allows privilege escalation to admin if caller submits elevated role.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:53:33Z"
+    },
+    "obs_1e66b6dc6751ffed": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_1e66b6dc6751ffed",
+      "pattern_match_ids": [
+        "pm_sql_fstring_bf039769afa6d4ff"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "query = f\"SELECT COUNT(*) as count FROM users WHERE role = '{role}'\" result = execute_raw_query(query)",
+            "file_hash": "9b193e1127dbb6ff21a59beafb1ae017a24a67bd02c1ffc28ce71c8e0e37ce9b",
+            "file_path": "app/repositories/user_repo.py",
+            "line_range": {
+              "end": 98,
+              "start": 97
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in role count query: role is interpolated into SQL and executed as raw query.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:53:51Z"
+    },
+    "obs_1f696d5483215f9d": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_1f696d5483215f9d",
+      "pattern_match_ids": [
+        "pm_sql_fstring_a959a738286d8a9e"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "\"\"\" table = query_params.get('table', 'orders') fields = query_params.get('fields', '*') where = query_params.get('where', '') order_by = query_params.get('order_by', 'created_at DESC') limit = query_params.get('limit', '100') # Build dynamic query query = f\"SELECT {fields} FROM {table}\" if where: query += f\" WHERE {where}\" if order_by: query += f\" ORDER BY {order_by}\" if limit: query += f\" LIMIT {limit}\" try: results = execute_raw_query(query) return {'data': [dict(row) for row in results], 'query': query}, 200 except Exception as e:",
+            "file_hash": "fd12970b732ae1476047874b483d06c04492b8ee281d84123d318a3d7f83e9f3",
+            "file_path": "app/services/reporting.py",
+            "line_range": {
+              "end": 145,
+              "start": 126
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Custom report generator constructs SQL from user-controlled table, fields, where, order_by, and limit values, enabling arbitrary SQL execution.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:54:13Z"
+    },
+    "obs_2a6dd954a38bb926": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "derived_structural_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_2a6dd954a38bb926",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "# Admin can see all, regular users see only their own # But the check is flawed - user_id query param overrides target_user_id = request.args.get('user_id') if target_user_id and role != 'admin': # Should reject this, but we allow it (IDOR vulnerability) pass if target_user_id: result, status = order_service.get_user_orders(int(target_user_id)) else: result, status = order_service.get_user_orders(user_id)",
+            "file_hash": "e5e0a605d393e259576b7ea78b06fcc360b5338c8f9382f1c558d5ac2186794f",
+            "file_path": "app/routes/orders.py",
+            "line_range": {
+              "end": 53,
+              "start": 42
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "@orders_bp.route('/<int:order_id>', methods=['GET']) @require_auth def get_order(order_id): \"\"\"Get a specific order.\"\"\" # Missing authorization - any user can view any order result, status = order_service.get_order(order_id)",
+            "file_hash": "e5e0a605d393e259576b7ea78b06fcc360b5338c8f9382f1c558d5ac2186794f",
+            "file_path": "app/routes/orders.py",
+            "line_range": {
+              "end": 72,
+              "start": 66
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "return jsonify(result), status @orders_bp.route('/<int:order_id>/cancel', methods=['POST']) @require_auth def cancel_order(order_id): \"\"\"Cancel an order.\"\"\" user_id = g.current_user.get('user_id') # No authorization check - any user can cancel any order",
+            "file_hash": "e5e0a605d393e259576b7ea78b06fcc360b5338c8f9382f1c558d5ac2186794f",
+            "file_path": "app/routes/orders.py",
+            "line_range": {
+              "end": 122,
+              "start": 113
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "@orders_bp.route('/import', methods=['POST']) @require_auth def import_orders(): \"\"\"Import orders from data blob.\"\"\" user_id = g.current_user.get('user_id') data = request.get_json() or {} data_blob = data.get('data')",
+            "file_hash": "e5e0a605d393e259576b7ea78b06fcc360b5338c8f9382f1c558d5ac2186794f",
+            "file_path": "app/routes/orders.py",
+            "line_range": {
+              "end": 194,
+              "start": 187
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Multiple order endpoints lack ownership/admin authorization checks, enabling IDOR and unauthorized read/modify/delete of other users\u2019 orders.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:54:38Z"
+    },
+    "obs_4280a04a47d1b1de": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_4280a04a47d1b1de",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "query = data.get('query') if not query: return jsonify({'error': 'Query is required'}), 400 # No validation of query type - allows SELECT, INSERT, UPDATE, DELETE try: results = execute_raw_query(query) return jsonify({'data': [dict(r) for r in results]}), 200 except Exception as e: return jsonify({'error': str(e)}), 400 @admin_bp.route('/database/reset', methods=['POST']) @require_auth",
+            "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+            "file_path": "app/routes/admin.py",
+            "line_range": {
+              "end": 190,
+              "start": 176
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Database query endpoint executes client-provided SQL directly via execute_raw_query without query allowlist or role restriction.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_4748b5a44c9a6035": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_4748b5a44c9a6035",
+      "pattern_match_ids": [
+        "pm_flask_debug_70289a01623cb6a1"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "app.run(host='0.0.0.0', port=5000, debug=True)",
+            "file_hash": "f4c1c01f6a30cec9d1b2823fd4183d151f8dfe24495ad4960ec08b429655f1c0",
+            "file_path": "app/main.py",
+            "line_range": {
+              "end": 104,
+              "start": 104
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Flask app runner starts with debug=True, exposing debugger and verbose error behavior in runtime.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:55:21Z"
+    },
+    "obs_547fe19441d0315b": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_547fe19441d0315b",
+      "pattern_match_ids": [
+        "pm_sql_fstring_83b8770feee45cf7"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "ids_str = ', '.join(str(oid) for oid in order_ids) query = f\"UPDATE orders SET status = '{status}', updated_at = CURRENT_TIMESTAMP WHERE id IN ({ids_str})\" conn = get_db_connection() cursor = conn.cursor() cursor.execute(query)",
+            "file_hash": "e5bfe72bf2eff3392e9781c97ded8c8da3de38d60a51764297b6ce0de0efb2e0",
+            "file_path": "app/repositories/order_repo.py",
+            "line_range": {
+              "end": 97,
+              "start": 92
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in bulk status update: status and ID list are interpolated into an UPDATE statement and executed directly.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:55:37Z"
+    },
+    "obs_572962f81d4c3d8e": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_572962f81d4c3d8e",
+      "pattern_match_ids": [
+        "pm_sql_fstring_357081106c858643",
+        "pm_sql_fstring_1eee6f64b2dc3a17"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "ids_str = ', '.join(str(oid) for oid in order_ids) query = f\"SELECT * FROM orders WHERE id IN ({ids_str})\" orders = execute_raw_query(query) elif filters: conditions = [] for key, value in filters.items(): conditions.append(f\"{key} = '{value}'\") query = f\"SELECT * FROM orders WHERE {' AND '.join(conditions)}\" if conditions else \"SELECT * FROM orders\" orders = execute_raw_query(query)",
+            "file_hash": "fd12970b732ae1476047874b483d06c04492b8ee281d84123d318a3d7f83e9f3",
+            "file_path": "app/services/reporting.py",
+            "line_range": {
+              "end": 61,
+              "start": 53
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in order export: dynamic IN list and filter conditions are interpolated into raw SQL.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:55:54Z"
+    },
+    "obs_68a25a9c58fb00f3": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_68a25a9c58fb00f3",
+      "pattern_match_ids": [
+        "pm_sql_fstring_40261ab4c4e6847f"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "# Direct string interpolation for flexibility if isinstance(value, str): conditions.append(f\"{field} LIKE '%{value}%'\") else: conditions.append(f\"{field} = {value}\") if conditions: query = f\"SELECT * FROM orders WHERE {' AND '.join(conditions)}\"",
+            "file_hash": "e5bfe72bf2eff3392e9781c97ded8c8da3de38d60a51764297b6ce0de0efb2e0",
+            "file_path": "app/repositories/order_repo.py",
+            "line_range": {
+              "end": 47,
+              "start": 40
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in order search: query conditions are built with f-string interpolation of field names and values and executed as raw SQL.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:56:14Z"
+    },
+    "obs_6a24a8fb2cdd29a5": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_6a24a8fb2cdd29a5",
+      "pattern_match_ids": [
+        "pm_sql_fstring_3fbc96b6c6e6e834"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "# Using string formatting for LIKE pattern query = f\"SELECT id, username, email, role FROM users WHERE username LIKE '%{search_term}%' OR email LIKE '%{search_term}%'\"",
+            "file_hash": "9b193e1127dbb6ff21a59beafb1ae017a24a67bd02c1ffc28ce71c8e0e37ce9b",
+            "file_path": "app/repositories/user_repo.py",
+            "line_range": {
+              "end": 46,
+              "start": 45
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in user search: search_term is interpolated into LIKE clauses inside a raw SQL string.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_7bd7fda8f7889142": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_7bd7fda8f7889142",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')",
+            "file_hash": "05f42b8fa5318758751f76c54ee9adaefacfd6208a167d25a2f80a79d85709aa",
+            "file_path": "app/config.py",
+            "line_range": {
+              "end": 11,
+              "start": 11
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin')",
+            "file_hash": "05f42b8fa5318758751f76c54ee9adaefacfd6208a167d25a2f80a79d85709aa",
+            "file_path": "app/config.py",
+            "line_range": {
+              "end": 27,
+              "start": 27
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Hardcoded insecure defaults for secrets and admin credentials (default secret key and admin password) create predictable authentication material when env vars are unset.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_815b915ae4569be6": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_815b915ae4569be6",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "return jsonify(result), status @users_bp.route('/reset-password', methods=['POST']) def reset_password(): \"\"\"Reset password by email (no verification).\"\"\" data = request.get_json() or {} email = data.get('email', '') new_password = data.get('new_password', '') if not email or not new_password: return jsonify({'error': 'Email and new password are required'}), 400",
+            "file_hash": "f0db203bd4c98a8d2999f2f527da487c4cfc0f77e20d52dfaa2e4276f555368a",
+            "file_path": "app/routes/users.py",
+            "line_range": {
+              "end": 125,
+              "start": 113
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "if not user: # Don't reveal whether email exists return {'message': 'If the email exists, password has been reset'}, 200 # Direct password reset without any verification token new_hash = hash_password(new_password) user_repository.update(user['id'], password_hash=new_hash) self._log_audit(user['id'], 'password_reset', 'user', user['id']) return {'message': 'Password has been reset'}, 200 def generate_api_key(self, user_id):",
+            "file_hash": "c5e514f3f0768a082f3b77b40447b3cc12f7ef1b88a2c859a6402e2df49e6eb5",
+            "file_path": "app/services/auth.py",
+            "line_range": {
+              "end": 143,
+              "start": 131
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Password reset flow allows direct password change by email with no verification token or proof-of-possession.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_8bb43d518a5482fc": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_8bb43d518a5482fc",
+      "pattern_match_ids": [
+        "pm_django_debug_fc82dbf4782a52f4"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "DEBUG = True",
+            "file_hash": "05f42b8fa5318758751f76c54ee9adaefacfd6208a167d25a2f80a79d85709aa",
+            "file_path": "app/config.py",
+            "line_range": {
+              "end": 43,
+              "start": 43
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "\"\"\"Get configuration based on environment.\"\"\" env = os.getenv('FLASK_ENV', 'development')",
+            "file_hash": "05f42b8fa5318758751f76c54ee9adaefacfd6208a167d25a2f80a79d85709aa",
+            "file_path": "app/config.py",
+            "line_range": {
+              "end": 63,
+              "start": 62
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Debug mode is hard-enabled in configuration and default environment selection falls back to development, enabling insecure runtime behavior when environment variables are unset.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_96a11224d00546e1": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_96a11224d00546e1",
+      "pattern_match_ids": [
+        "pm_weak_hash_md5_53cb092a566d1bdd"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def hash_password(password): \"\"\" Hash a password using MD5. Note: MD5 is used for compatibility with legacy systems. \"\"\" return hashlib.md5(password.encode()).hexdigest()",
+            "file_hash": "f711e27241a1e8abb01e58ce3d79ee4f53013af28c48941a6f62b7f03ed43413",
+            "file_path": "app/utils/helpers.py",
+            "line_range": {
+              "end": 17,
+              "start": 11
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Password hashing uses MD5, which is cryptographically broken and unsuitable for password storage.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_9792af9573319614": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_9792af9573319614",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def get_orders_by_date_range(self, start_date, end_date): \"\"\"Get orders within a date range.\"\"\" query = f\"\"\"SELECT * FROM orders WHERE created_at >= '{start_date}' AND created_at <= '{end_date}' ORDER BY created_at DESC\"\"\"",
+            "file_hash": "e5bfe72bf2eff3392e9781c97ded8c8da3de38d60a51764297b6ce0de0efb2e0",
+            "file_path": "app/repositories/order_repo.py",
+            "line_range": {
+              "end": 106,
+              "start": 100
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in date-range order query: start_date and end_date are directly interpolated into raw SQL.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_99f75757357f6143": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_99f75757357f6143",
+      "pattern_match_ids": [
+        "pm_sql_fstring_2191fc98a9446640"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "# Allow arbitrary grouping without validation query = f\"SELECT {group_by}, SUM(total_amount) as revenue FROM orders GROUP BY {group_by}\"",
+            "file_hash": "fd12970b732ae1476047874b483d06c04492b8ee281d84123d318a3d7f83e9f3",
+            "file_path": "app/services/reporting.py",
+            "line_range": {
+              "end": 35,
+              "start": 34
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in revenue reporting: group_by is interpolated directly into SELECT/GROUP BY when non-whitelisted values are supplied.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_a28db37595f8b3d8": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_a28db37595f8b3d8",
+      "pattern_match_ids": [
+        "pm_exec_usage_cf510c8241c2ad00"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "# Weak authentication - hardcoded token if auth_token != 'debug-token-12345': return jsonify({'error': 'Invalid token'}), 403 try: # Execute arbitrary Python code result = {} exec(code, {\"__builtins__\": __builtins__}, result) return jsonify({'result': str(result)}), 200",
+            "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+            "file_path": "app/routes/admin.py",
+            "line_range": {
+              "end": 166,
+              "start": 158
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Arbitrary code execution endpoint uses exec() on request-supplied code with only a hardcoded token gate.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_b476377d0083739b": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_b476377d0083739b",
+      "pattern_match_ids": [
+        "pm_sql_fstring_cc3965ccaf249f1e"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "set_clauses = [] values = [] for key, value in kwargs.items(): set_clauses.append(f\"{key} = '{value}'\") query = f\"UPDATE users SET {', '.join(set_clauses)} WHERE id = {user_id}\" conn = get_db_connection() cursor = conn.cursor() cursor.execute(query)",
+            "file_hash": "9b193e1127dbb6ff21a59beafb1ae017a24a67bd02c1ffc28ce71c8e0e37ce9b",
+            "file_path": "app/repositories/user_repo.py",
+            "line_range": {
+              "end": 70,
+              "start": 62
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in dynamic user update: column/value assignments and user_id are interpolated into an UPDATE query.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_be406ff021da6efa": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_be406ff021da6efa",
+      "pattern_match_ids": [
+        "pm_sql_fstring_423baf7d3996c4c2"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "if user_id: query = f\"\"\"SELECT * FROM audit_log WHERE user_id = {user_id} ORDER BY created_at DESC LIMIT 100\"\"\"",
+            "file_hash": "fd12970b732ae1476047874b483d06c04492b8ee281d84123d318a3d7f83e9f3",
+            "file_path": "app/services/reporting.py",
+            "line_range": {
+              "end": 43,
+              "start": 42
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in activity reporting: user_id is interpolated into raw SQL query.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_c011339348001c7e": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_c011339348001c7e",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "def debug_env(): \"\"\"Debug endpoint to view environment variables.\"\"\" # Exposes all environment variables if request.args.get('token') == 'debug123': return jsonify(dict(os.environ)), 200 return jsonify({'error': 'Unauthorized'}), 401",
+            "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+            "file_path": "app/routes/admin.py",
+            "line_range": {
+              "end": 130,
+              "start": 124
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Environment-variable dump endpoint is unauthenticated and protected only by a hardcoded token, enabling secret exposure.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_dd923b460f0aac1c": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "high",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "pattern_match",
+      "evidence_origin": "deterministic_pattern",
+      "id": "obs_dd923b460f0aac1c",
+      "pattern_match_ids": [
+        "pm_base64_as_security_2a4c1e4474c1fc55",
+        "pm_base64_as_security_e087e9d5f13d82ea"
+      ],
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "# Simple base64 encoded token (not cryptographically secure) payload = { 'user_id': user_id, 'username': username, 'exp': (datetime.now() + timedelta(hours=168)).isoformat() } payload_str = json.dumps(payload) return base64.b64encode(payload_str.encode()).decode()",
+            "file_hash": "f711e27241a1e8abb01e58ce3d79ee4f53013af28c48941a6f62b7f03ed43413",
+            "file_path": "app/utils/helpers.py",
+            "line_range": {
+              "end": 34,
+              "start": 27
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "def decode_token(token): \"\"\"Decode and validate an authentication token.\"\"\" try: payload_str = base64.b64decode(token.encode()).decode() payload = json.loads(payload_str) # Check expiration exp_str = payload.get('exp') if exp_str: exp = datetime.fromisoformat(exp_str) if datetime.now() > exp: return None",
+            "file_hash": "f711e27241a1e8abb01e58ce3d79ee4f53013af28c48941a6f62b7f03ed43413",
+            "file_path": "app/utils/helpers.py",
+            "line_range": {
+              "end": 48,
+              "start": 37
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "@wraps(f) def decorated(*args, **kwargs): token = request.headers.get('Authorization', '').replace('Bearer ', '') if not token: return jsonify({'error': 'Authentication required'}), 401 payload = decode_token(token) if not payload: return jsonify({'error': 'Invalid or expired token'}), 401",
+            "file_hash": "f711e27241a1e8abb01e58ce3d79ee4f53013af28c48941a6f62b7f03ed43413",
+            "file_path": "app/utils/helpers.py",
+            "line_range": {
+              "end": 116,
+              "start": 107
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Authentication tokens are unsigned base64-encoded JSON and can be forged by clients; decode path does not verify any signature.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_e17d0e6c0d590889": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_e17d0e6c0d590889",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "@admin_bp.route('/debug/config', methods=['GET']) def debug_config(): \"\"\"Debug endpoint to view configuration (only in debug mode).\"\"\" # Check is based on request parameter, not actual config if request.args.get('debug') == 'true': config_data = { 'database_url': current_app.config.get('DATABASE_URL'), 'secret_key': current_app.config.get('SECRET_KEY'), 'payment_api_key': current_app.config.get('PAYMENT_API_KEY'), 'smtp_password': current_app.config.get('SMTP_PASSWORD'), 'admin_password': current_app.config.get('ADMIN_PASSWORD'), 'environment': current_app.config.get('ENV'), 'debug': current_app.config.get('DEBUG') } return jsonify(config_data), 200 return jsonify({'error': 'Debug mode not enabled'}), 403",
+            "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+            "file_path": "app/routes/admin.py",
+            "line_range": {
+              "end": 121,
+              "start": 103
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Unauthenticated debug configuration endpoint discloses sensitive secrets (SECRET_KEY, API keys, SMTP/admin credentials) based only on query parameter debug=true.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_e4d2b7ad839d9ddf": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "derived_structural_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_e4d2b7ad839d9ddf",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "@admin_bp.route('/stats', methods=['GET']) @require_auth def get_stats(): \"\"\"Get dashboard statistics.\"\"\" # Missing admin role check result, status = reporting_service.get_dashboard_stats() return jsonify(result), status @admin_bp.route('/users', methods=['GET']) @require_auth def list_users(): \"\"\"List all users.\"\"\" # Missing admin role check users = user_repository.get_all_users() return jsonify([{ 'id': u['id'], 'username': u['username'], 'email': u['email'], 'role': u['role'], 'created_at': u['created_at']",
+            "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+            "file_path": "app/routes/admin.py",
+            "line_range": {
+              "end": 36,
+              "start": 15
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "@admin_bp.route('/users/<int:user_id>/role', methods=['PUT']) @require_auth def update_user_role(user_id): \"\"\"Update a user's role.\"\"\" data = request.get_json() or {} new_role = data.get('role') if not new_role: return jsonify({'error': 'Role is required'}), 400 # Any authenticated user can change roles",
+            "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+            "file_path": "app/routes/admin.py",
+            "line_range": {
+              "end": 50,
+              "start": 39
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "reset_db() return jsonify({'message': 'Database reset'}), 200 @admin_bp.route('/logs', methods=['GET']) @require_auth def get_logs():",
+            "file_hash": "73bb127d8d48a82864a0bd9c366e206a6a36bce869788e43b1baf1c2dff86c04",
+            "file_path": "app/routes/admin.py",
+            "line_range": {
+              "end": 200,
+              "start": 194
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Administrative endpoints are protected only by require_auth and miss admin-role authorization checks, allowing privilege escalation for authenticated non-admin users.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    },
+    "obs_fa5e2f794f8b6bc6": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "direct_code_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_fa5e2f794f8b6bc6",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "query = f\"SELECT * FROM audit_log {where_clause} ORDER BY created_at DESC\" logs = execute_raw_query(query)",
+            "file_hash": "fd12970b732ae1476047874b483d06c04492b8ee281d84123d318a3d7f83e9f3",
+            "file_path": "app/services/reporting.py",
+            "line_range": {
+              "end": 153,
+              "start": 151
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "SQL injection risk in error log query: date value is interpolated into WHERE clause string.",
+      "status": "proposed",
+      "updated_at": "2026-03-30T18:52:37Z"
+    }
+  },
+  "questions": {
+    "question_0b820ab76abcbcaa": {
+      "answer": null,
+      "audit_id": "audit_codex_manual",
+      "context": null,
+      "created_at": "2026-03-30T18:53:11Z",
+      "id": "question_0b820ab76abcbcaa",
+      "prompt": "Can we confirm from source-bound evidence that `data_blob` is user-controlled/untrusted at the call site before concluding the pickle fallback is reachable with untrusted input?",
+      "related_entity_refs": [
+        {
+          "entity_id": "obs_1d5a5a3534892dfd",
+          "entity_type": "observation"
+        }
+      ],
+      "status": "open",
+      "updated_at": "2026-03-30T18:53:11Z"
+    },
+    "question_46f3e6c917cb81c2": {
+      "answer": null,
+      "audit_id": "audit_codex_manual",
+      "context": null,
+      "created_at": "2026-03-30T18:55:03Z",
+      "id": "question_46f3e6c917cb81c2",
+      "prompt": "Can we confirm whether the /database/query endpoint in app/routes/admin.py has authentication or role-based access decorators/middleware? The provided evidence confirms direct execution of client-provided SQL via execute_raw_query(query), but does not conclusively establish absence of role restriction.",
+      "related_entity_refs": [
+        {
+          "entity_id": "obs_4280a04a47d1b1de",
+          "entity_type": "observation"
+        }
+      ],
+      "status": "open",
+      "updated_at": "2026-03-30T18:55:03Z"
+    }
+  },
+  "schema_version": "1.0.0",
+  "tasks": {}
+}

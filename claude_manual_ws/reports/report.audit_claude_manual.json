@@ -1,0 +1,36 @@
+{
+  "audit": {
+    "current_snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+    "id": "audit_claude_manual",
+    "status": "initialized",
+    "target": {
+      "repo_label": "runtime-audit-fixture",
+      "repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\runtime-audit-fixture",
+      "vcs": "git"
+    },
+    "title": "Manual Claude test"
+  },
+  "contradictions": [],
+  "decisions": [],
+  "findings": [],
+  "open_questions": [],
+  "report_id": "report_c8bd1fb16d1bc0ee",
+  "schema_version": "1.0.0",
+  "source_audit_id": "audit_claude_manual",
+  "source_state_digest": "c8bd1fb16d1bc0ee3f59f4df25f99440cd28b142435c2f076fd1b8f056edd128",
+  "summary": {
+    "contradiction_count": 0,
+    "decision_count": 0,
+    "finding_count": 0,
+    "open_question_count": 0,
+    "verified_observation_count": 0,
+    "verified_observation_evidence_class_counts": {
+      "blocked_verification": 0,
+      "derived_structural_fact": 0,
+      "direct_code_fact": 0,
+      "inferred_hypothesis": 0,
+      "pattern_match": 0
+    }
+  },
+  "verified_observations": []
+}

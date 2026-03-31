@@ -1,0 +1,9 @@
+{
+  "audit_status": "analyzed",
+  "finding_count_min": 2,
+  "required_observation_ids": [
+    "obs_cors_wildcard",
+    "obs_jwt_no_verify"
+  ],
+  "required_severity_at_least_one": "high"
+}

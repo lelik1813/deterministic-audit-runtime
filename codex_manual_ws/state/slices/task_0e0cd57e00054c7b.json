@@ -1,0 +1,101 @@
+{
+  "answered_questions": {},
+  "constraints": {
+    "allowed_event_types": [
+      "issue.proposed"
+    ],
+    "context_source": "canonical_state_plus_task_only",
+    "conversational_context_allowed": false,
+    "facts_require_source_binding": true,
+    "forbidden_actions": [
+      "creating unsupported claims",
+      "using unverified observations as facts"
+    ],
+    "full_state_injection_allowed": false,
+    "structured_output_required": true
+  },
+  "contradiction_candidates": [],
+  "open_questions": {},
+  "policy": {
+    "issue_composition": {
+      "include_low_confidence": false,
+      "min_evidence_class": "derived_structural_fact",
+      "require_rule_binding_for_severity": true
+    },
+    "profile_name": "low_noise",
+    "question_emission": {
+      "emit_on_ambiguity": false,
+      "emit_on_security_concern": true,
+      "emit_on_unclear_intent": false,
+      "max_questions_per_slice": 4,
+      "suppress_near_duplicates": true
+    },
+    "task_expansion": {
+      "compose_issue_for_verified": true,
+      "defer_on_budget_soft": true,
+      "verify_claim_per_observation": true
+    }
+  },
+  "relevant_hypotheses": {},
+  "relevant_observations": {
+    "obs_1d5e56095fbd08d1": {
+      "audit_id": "audit_codex_manual",
+      "confidence": "medium",
+      "created_at": "2026-03-30T18:52:37Z",
+      "evidence_class": "derived_structural_fact",
+      "evidence_origin": "model_discovered",
+      "id": "obs_1d5e56095fbd08d1",
+      "provenance": {
+        "source_refs": [
+          {
+            "excerpt": "role = data.get('role', 'user') # Basic validation if not username or not email or not password: return jsonify({'error': 'Username, email, and password are required'}), 400 if not validate_email(email): return jsonify({'error': 'Invalid email format'}), 400 # Allow role to be specified by client (should be restricted) result, status = auth_service.register(username, email, password, role) return jsonify(result), status",
+            "file_hash": "f0db203bd4c98a8d2999f2f527da487c4cfc0f77e20d52dfaa2e4276f555368a",
+            "file_path": "app/routes/users.py",
+            "line_range": {
+              "end": 29,
+              "start": 18
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          },
+          {
+            "excerpt": "def register(self, username, email, password, role='user'): \"\"\"Register a new user.\"\"\" # Check if username exists existing = user_repository.find_by_username(username) if existing: return {'error': 'Username already exists'}, 400 # Check if email exists existing = user_repository.find_by_email(email) if existing: return {'error': 'Email already exists'}, 400 # Hash password and create user password_hash = hash_password(password) user_id = user_repository.create(username, email, password_hash, role) # Log the registration self._log_audit(user_id, 'user_registered', 'user', user_id)",
+            "file_hash": "c5e514f3f0768a082f3b77b40447b3cc12f7ef1b88a2c859a6402e2df49e6eb5",
+            "file_path": "app/services/auth.py",
+            "line_range": {
+              "end": 36,
+              "start": 18
+            },
+            "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599"
+          }
+        ]
+      },
+      "statement": "Client-controlled role assignment during registration allows privilege escalation to admin if caller submits elevated role.",
+      "status": "verified",
+      "updated_at": "2026-03-30T18:53:33Z"
+    }
+  },
+  "schema_version": "1.0.0",
+  "slice_fingerprint": "7e5c87719e483780d222aba4dbc12cd068e5a694112e08c9fa8c3766653bcc2a",
+  "slice_id": "slice_7e5c87719e483780",
+  "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+  "target_paths": [
+    "app/routes/users.py",
+    "app/services/auth.py"
+  ],
+  "task": {
+    "attempt_count": 0,
+    "audit_id": "audit_codex_manual",
+    "created_at": "1970-01-01T00:00:00Z",
+    "id": "task_0e0cd57e00054c7b",
+    "last_error": null,
+    "status": "running",
+    "target": {
+      "kind": "observation",
+      "snapshot_ref": "00d7f5425395220f39cab9c733be8fdeb0564599",
+      "value": "obs_1d5e56095fbd08d1"
+    },
+    "type": "compose_issue",
+    "updated_at": "1970-01-01T00:00:00Z"
+  },
+  "worker_role": "IssueComposer"
+}

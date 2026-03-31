@@ -1,0 +1,700 @@
+schema_version: "1.0.0"
+
+markers:
+  absent_state: "__absent__"
+  any_state: "*"
+
+default_policy:
+  unlisted_transition: reject
+  unlisted_guard_case: reject
+  unlisted_worker_event_permission: reject
+
+invalid_transition_result:
+  outcome: reject
+  code: invalid_transition
+  decision_kind: event_rejection
+  required_context_fields:
+    - entity_type
+    - entity_id
+    - current_state
+    - requested_state
+    - event_type
+    - rule_id
+
+precondition_failure_result:
+  outcome: reject
+  code: transition_precondition_failed
+  decision_kind: event_rejection
+  required_context_fields:
+    - entity_type
+    - entity_id
+    - current_state
+    - event_type
+    - rule_id
+    - failed_preconditions
+
+worker_role_event_permissions:
+  Reader:
+    allowed_event_types:
+      - observation.proposed
+      - hypothesis.proposed
+      - question.opened
+    deny_all_other_event_types: true
+  Verifier:
+    allowed_event_types:
+      - observation.verified
+      - observation.rejected
+      - contradiction.registered
+      - question.opened
+    deny_all_other_event_types: true
+  CandidateGenerator:
+    allowed_event_types:
+      - candidate.proposed
+    deny_all_other_event_types: true
+  IssueComposer:
+    allowed_event_types:
+      - issue.proposed
+    deny_all_other_event_types: true
+
+event_acceptance:
+  state_field: acceptance.status
+  states:
+    - pending
+    - accepted
+    - rejected
+  initial_state: pending
+  terminal_states:
+    - accepted
+    - rejected
+  allowed_transitions:
+    - rule_id: event.pending_to_accepted
+      from: pending
+      to: accepted
+      via_action: accept
+    - rule_id: event.pending_to_rejected
+      from: pending
+      to: rejected
+      via_action: reject
+  forbidden_transitions:
+    - rule_id: event.no_pending_self_transition
+      from: pending
+      to: pending
+    - rule_id: event.accepted_is_terminal
+      from: accepted
+      to: "*"
+    - rule_id: event.rejected_is_terminal
+      from: rejected
+      to: "*"
+
+entities:
+  audit:
+    state_field: status
+    states:
+      - initialized
+      - in_progress
+      - completed
+      - cancelled
+    initial_state: initialized
+    terminal_states:
+      - completed
+      - cancelled
+    allowed_transitions:
+      - rule_id: audit.create
+        from: "__absent__"
+        to: initialized
+        via_event_types:
+          - audit.created
+      - rule_id: audit.update_initialized
+        from: initialized
+        to: initialized
+        via_event_types:
+          - audit.updated
+      - rule_id: audit.start
+        from: initialized
+        to: in_progress
+        via_event_types:
+          - audit.updated
+      - rule_id: audit.update_in_progress
+        from: in_progress
+        to: in_progress
+        via_event_types:
+          - audit.updated
+      - rule_id: audit.complete
+        from: in_progress
+        to: completed
+        via_event_types:
+          - audit.completed
+      - rule_id: audit.cancel_from_initialized
+        from: initialized
+        to: cancelled
+        via_event_types:
+          - audit.cancelled
+      - rule_id: audit.cancel_from_in_progress
+        from: in_progress
+        to: cancelled
+        via_event_types:
+          - audit.cancelled
+    forbidden_transitions:
+      - rule_id: audit.no_direct_create_in_progress
+        from: "__absent__"
+        to: in_progress
+      - rule_id: audit.no_direct_create_completed
+        from: "__absent__"
+        to: completed
+      - rule_id: audit.no_direct_create_cancelled
+        from: "__absent__"
+        to: cancelled
+      - rule_id: audit.no_direct_initialized_to_completed
+        from: initialized
+        to: completed
+      - rule_id: audit.no_return_to_initialized
+        from: in_progress
+        to: initialized
+      - rule_id: audit.completed_is_terminal
+        from: completed
+        to: "*"
+      - rule_id: audit.cancelled_is_terminal
+        from: cancelled
+        to: "*"
+
+  task:
+    state_field: status
+    states:
+      - pending
+      - running
+      - done
+      - failed
+    initial_state: pending
+    terminal_states:
+      - done
+    allowed_transitions:
+      - rule_id: task.create
+        from: "__absent__"
+        to: pending
+        via_event_types:
+          - task.created
+      - rule_id: task.start
+        from: pending
+        to: running
+        via_event_types:
+          - task.started
+      - rule_id: task.fail_from_pending
+        from: pending
+        to: failed
+        via_event_types:
+          - task.failed
+      - rule_id: task.complete
+        from: running
+        to: done
+        via_event_types:
+          - task.completed
+      - rule_id: task.fail_from_running
+        from: running
+        to: failed
+        via_event_types:
+          - task.failed
+      - rule_id: task.retry
+        from: failed
+        to: pending
+        via_event_types:
+          - task.retried
+    forbidden_transitions:
+      - rule_id: task.no_direct_create_running
+        from: "__absent__"
+        to: running
+      - rule_id: task.no_direct_create_done
+        from: "__absent__"
+        to: done
+      - rule_id: task.no_direct_create_failed
+        from: "__absent__"
+        to: failed
+      - rule_id: task.no_pending_self_transition
+        from: pending
+        to: pending
+      - rule_id: task.no_pending_to_done
+        from: pending
+        to: done
+      - rule_id: task.no_running_to_pending
+        from: running
+        to: pending
+      - rule_id: task.no_running_self_transition
+        from: running
+        to: running
+      - rule_id: task.no_running_to_failed_without_event
+        from: running
+        to: failed
+      - rule_id: task.no_failed_self_transition
+        from: failed
+        to: failed
+      - rule_id: task.no_failed_to_running
+        from: failed
+        to: running
+      - rule_id: task.no_failed_to_done
+        from: failed
+        to: done
+      - rule_id: task.done_is_terminal
+        from: done
+        to: "*"
+
+  observation:
+    state_field: status
+    states:
+      - proposed
+      - verified
+      - rejected
+    initial_state: proposed
+    terminal_states:
+      - verified
+      - rejected
+    allowed_transitions:
+      - rule_id: observation.create
+        from: "__absent__"
+        to: proposed
+        via_event_types:
+          - observation.proposed
+      - rule_id: observation.verify
+        from: proposed
+        to: verified
+        via_event_types:
+          - observation.verified
+      - rule_id: observation.reject
+        from: proposed
+        to: rejected
+        via_event_types:
+          - observation.rejected
+    forbidden_transitions:
+      - rule_id: observation.no_direct_create_verified
+        from: "__absent__"
+        to: verified
+      - rule_id: observation.no_direct_create_rejected
+        from: "__absent__"
+        to: rejected
+      - rule_id: observation.no_proposed_self_transition
+        from: proposed
+        to: proposed
+      - rule_id: observation.verified_is_terminal
+        from: verified
+        to: "*"
+      - rule_id: observation.rejected_is_terminal
+        from: rejected
+        to: "*"
+
+  hypothesis:
+    state_field: status
+    states:
+      - proposed
+      - in_verification
+      - supported
+      - rejected
+    initial_state: proposed
+    terminal_states:
+      - supported
+      - rejected
+    allowed_transitions:
+      - rule_id: hypothesis.create
+        from: "__absent__"
+        to: proposed
+        via_event_types:
+          - hypothesis.proposed
+      - rule_id: hypothesis.send_to_verification
+        from: proposed
+        to: in_verification
+        via_event_types:
+          - hypothesis.sent_to_verification
+      - rule_id: hypothesis.support
+        from: in_verification
+        to: supported
+        via_event_types:
+          - hypothesis.supported
+      - rule_id: hypothesis.reject_from_proposed
+        from: proposed
+        to: rejected
+        via_event_types:
+          - hypothesis.rejected
+      - rule_id: hypothesis.reject_from_verification
+        from: in_verification
+        to: rejected
+        via_event_types:
+          - hypothesis.rejected
+    forbidden_transitions:
+      - rule_id: hypothesis.no_direct_create_supported
+        from: "__absent__"
+        to: supported
+      - rule_id: hypothesis.no_direct_create_rejected
+        from: "__absent__"
+        to: rejected
+      - rule_id: hypothesis.no_proposed_self_transition
+        from: proposed
+        to: proposed
+      - rule_id: hypothesis.no_skip_verification
+        from: proposed
+        to: supported
+      - rule_id: hypothesis.supported_is_terminal
+        from: supported
+        to: "*"
+      - rule_id: hypothesis.rejected_is_terminal
+        from: rejected
+        to: "*"
+
+  issue:
+    state_field: status
+    states:
+      - proposed
+      - accepted
+      - rejected
+      - closed
+    initial_state: proposed
+    terminal_states:
+      - rejected
+      - closed
+    allowed_transitions:
+      - rule_id: issue.create
+        from: "__absent__"
+        to: proposed
+        via_event_types:
+          - issue.proposed
+      - rule_id: issue.accept
+        from: proposed
+        to: accepted
+        via_event_types:
+          - issue.accepted
+      - rule_id: issue.reject
+        from: proposed
+        to: rejected
+        via_event_types:
+          - issue.rejected
+      - rule_id: issue.close
+        from: accepted
+        to: closed
+        via_event_types:
+          - issue.closed
+    forbidden_transitions:
+      - rule_id: issue.no_direct_create_accepted
+        from: "__absent__"
+        to: accepted
+      - rule_id: issue.no_direct_create_rejected
+        from: "__absent__"
+        to: rejected
+      - rule_id: issue.no_direct_create_closed
+        from: "__absent__"
+        to: closed
+      - rule_id: issue.no_proposed_self_transition
+        from: proposed
+        to: proposed
+      - rule_id: issue.no_proposed_to_closed
+        from: proposed
+        to: closed
+      - rule_id: issue.no_accepted_self_transition
+        from: accepted
+        to: accepted
+      - rule_id: issue.no_accepted_to_proposed
+        from: accepted
+        to: proposed
+      - rule_id: issue.no_accepted_to_rejected
+        from: accepted
+        to: rejected
+      - rule_id: issue.rejected_is_terminal
+        from: rejected
+        to: "*"
+      - rule_id: issue.closed_is_terminal
+        from: closed
+        to: "*"
+
+  question:
+    state_field: status
+    states:
+      - open
+      - answered
+      - closed
+    initial_state: open
+    terminal_states:
+      - closed
+    allowed_transitions:
+      - rule_id: question.create
+        from: "__absent__"
+        to: open
+        via_event_types:
+          - question.opened
+      - rule_id: question.answer
+        from: open
+        to: answered
+        via_event_types:
+          - question.answered
+      - rule_id: question.close_open
+        from: open
+        to: closed
+        via_event_types:
+          - question.closed
+      - rule_id: question.close_answered
+        from: answered
+        to: closed
+        via_event_types:
+          - question.closed
+    forbidden_transitions:
+      - rule_id: question.no_direct_create_answered
+        from: "__absent__"
+        to: answered
+      - rule_id: question.no_direct_create_closed
+        from: "__absent__"
+        to: closed
+      - rule_id: question.no_open_self_transition
+        from: open
+        to: open
+      - rule_id: question.no_answered_self_transition
+        from: answered
+        to: answered
+      - rule_id: question.no_answered_to_open
+        from: answered
+        to: open
+      - rule_id: question.closed_is_terminal
+        from: closed
+        to: "*"
+
+  contradiction:
+    state_field: status
+    states:
+      - open
+      - resolved
+    initial_state: open
+    terminal_states:
+      - resolved
+    allowed_transitions:
+      - rule_id: contradiction.create
+        from: "__absent__"
+        to: open
+        via_event_types:
+          - contradiction.registered
+      - rule_id: contradiction.resolve
+        from: open
+        to: resolved
+        via_event_types:
+          - contradiction.resolved
+    forbidden_transitions:
+      - rule_id: contradiction.no_direct_create_resolved
+        from: "__absent__"
+        to: resolved
+      - rule_id: contradiction.no_open_self_transition
+        from: open
+        to: open
+      - rule_id: contradiction.resolved_is_terminal
+        from: resolved
+        to: "*"
+
+  decision:
+    state_field: __virtual_state__
+    states:
+      - recorded
+    initial_state: recorded
+    terminal_states:
+      - recorded
+    allowed_transitions:
+      - rule_id: decision.create
+        from: "__absent__"
+        to: recorded
+        via_event_types:
+          - decision.recorded
+    forbidden_transitions:
+      - rule_id: decision.recorded_is_terminal
+        from: recorded
+        to: "*"
+
+  candidate:
+    state_field: status
+    states:
+      - proposed
+      - routed_to_verify
+      - rejected
+      - resolved_promoted
+    initial_state: proposed
+    terminal_states:
+      - rejected
+      - resolved_promoted
+    allowed_transitions:
+      - rule_id: candidate.create
+        from: "__absent__"
+        to: proposed
+        via_event_types:
+          - candidate.proposed
+      - rule_id: candidate.route_to_verify
+        from: proposed
+        to: routed_to_verify
+        via_event_types:
+          - candidate.routed_to_verify
+      - rule_id: candidate.reject_from_proposed
+        from: proposed
+        to: rejected
+        via_event_types:
+          - candidate.rejected
+      - rule_id: candidate.reject_from_routed
+        from: routed_to_verify
+        to: rejected
+        via_event_types:
+          - candidate.rejected
+      - rule_id: candidate.promote_to_observation
+        from: routed_to_verify
+        to: resolved_promoted
+        via_event_types:
+          - candidate.promoted_to_observation
+    forbidden_transitions:
+      - rule_id: candidate.no_direct_create_routed
+        from: "__absent__"
+        to: routed_to_verify
+      - rule_id: candidate.no_direct_create_rejected
+        from: "__absent__"
+        to: rejected
+      - rule_id: candidate.no_direct_create_resolved
+        from: "__absent__"
+        to: resolved_promoted
+      - rule_id: candidate.no_proposed_self_transition
+        from: proposed
+        to: proposed
+      - rule_id: candidate.no_proposed_to_resolved
+        from: proposed
+        to: resolved_promoted
+      - rule_id: candidate.no_routed_self_transition
+        from: routed_to_verify
+        to: routed_to_verify
+      - rule_id: candidate.no_routed_to_proposed
+        from: routed_to_verify
+        to: proposed
+      - rule_id: candidate.no_rejected_to_any
+        from: rejected
+        to: "*"
+      - rule_id: candidate.no_resolved_to_any
+        from: resolved_promoted
+        to: "*"
+
+cross_entity_guards:
+  - rule_id: issue.proposed_requires_existing_observations
+    entity_type: issue
+    event_type: issue.proposed
+    guard_kind: referenced_entities_exist
+    field_path: payload.evidence.observation_ids
+    referenced_entity_type: observation
+
+  - rule_id: issue.proposed_requires_verified_observations
+    entity_type: issue
+    event_type: issue.proposed
+    guard_kind: referenced_entities_in_state
+    field_path: payload.evidence.observation_ids
+    referenced_entity_type: observation
+    required_state: verified
+
+  - rule_id: issue.proposed_requires_allowed_evidence_classes
+    entity_type: issue
+    event_type: issue.proposed
+    guard_kind: referenced_entities_field_in_set
+    field_path: payload.evidence.observation_ids
+    referenced_entity_type: observation
+    referenced_field_path: evidence_class
+    allowed_values:
+      - direct_code_fact
+      - derived_structural_fact
+
+  - rule_id: issue.accepted_requires_verified_observations
+    entity_type: issue
+    event_type: issue.accepted
+    guard_kind: referenced_entities_in_state
+    field_path: payload.evidence.observation_ids
+    referenced_entity_type: observation
+    required_state: verified
+
+  - rule_id: issue.accepted_requires_allowed_evidence_classes
+    entity_type: issue
+    event_type: issue.accepted
+    guard_kind: referenced_entities_field_in_set
+    field_path: payload.evidence.observation_ids
+    referenced_entity_type: observation
+    referenced_field_path: evidence_class
+    allowed_values:
+      - direct_code_fact
+      - derived_structural_fact
+
+  - rule_id: issue.severity_requires_rule_binding
+    entity_type: issue
+    event_type: "*"
+    guard_kind: field_dependency
+    when_field:
+      path: payload.severity
+      is_non_null: true
+    requires_field:
+      path: payload.severity_rule_ref
+      is_non_null: true
+
+  - rule_id: hypothesis.cannot_be_promoted_to_observation
+    source_entity_type: hypothesis
+    target_entity_type: observation
+    guard_kind: forbidden_entity_promotion
+    required_alternative: create_new_source_bound_observation
+
+  - rule_id: hypothesis.cannot_be_promoted_to_issue
+    source_entity_type: hypothesis
+    target_entity_type: issue
+    guard_kind: forbidden_entity_promotion
+    required_alternative: verify_evidence_before_issue_creation
+
+  # Candidate layer guards - prevent shortcuts into truth-bearing entities
+  - rule_id: candidate.cannot_become_issue_directly
+    source_entity_type: candidate
+    target_entity_type: issue
+    guard_kind: forbidden_entity_promotion
+    required_alternative: promote_to_observation_then_compose_issue
+    description: "Candidates cannot become issues directly. Must be promoted to observation first."
+
+  - rule_id: candidate.cannot_become_observation_in_place
+    source_entity_type: candidate
+    target_entity_type: observation
+    guard_kind: forbidden_entity_promotion
+    required_alternative: emit_separate_observation_proposed_event
+    description: "Candidates cannot mutate into observations. A separate observation.proposed event must be created."
+
+  # Candidate promotion path validation (v1.2 Step 10)
+  # Validates that candidate.promoted_to_observation events maintain proper bidirectional links
+  - rule_id: candidate.promotion_path_valid
+    entity_type: candidate
+    event_type: candidate.promoted_to_observation
+    guard_kind: candidate_promotion_path_valid
+    description: |
+      Validates the candidate → observation promotion path.
+      Ensures bidirectional traceability: candidate.promoted_observation_id ↔ observation.provenance.candidate_ref
+
+  # Candidate promotion guards - enforce explicit promotion path (v1.2 Step 10)
+  - rule_id: candidate.promotion_requires_valid_observation_ref
+    entity_type: candidate
+    event_type: candidate.promoted_to_observation
+    guard_kind: referenced_entity_exists_and_valid
+    field_path: payload.promoted_observation_id
+    referenced_entity_type: observation
+    description: "Candidate promotion requires a valid promoted_observation_id referencing an existing observation."
+
+  - rule_id: candidate.promotion_observation_must_have_candidate_ref
+    entity_type: candidate
+    event_type: candidate.promoted_to_observation
+    guard_kind: cross_reference_consistency
+    field_path: payload.promoted_observation_id
+    referenced_entity_type: observation
+    referenced_field_path: provenance.candidate_ref
+    must_equal: entity_id
+    description: "The promoted observation must have provenance.candidate_ref pointing back to this candidate."
+
+  - rule_id: observation.candidate_ref_must_exist_for_lineage
+    entity_type: observation
+    event_type: observation.proposed
+    guard_kind: conditional_reference_exists
+    when_field:
+      path: payload.provenance.candidate_ref
+      is_non_null: true
+    referenced_entity_type: candidate
+    referenced_field_path: id
+    description: "If an observation includes candidate_ref, the candidate must exist."
+
+  - rule_id: observation.candidate_ref_requires_routed_status
+    entity_type: observation
+    event_type: observation.proposed
+    guard_kind: conditional_reference_in_state
+    when_field:
+      path: payload.provenance.candidate_ref
+      is_non_null: true
+    referenced_entity_type: candidate
+    required_state: routed_to_verify
+    description: "An observation with candidate_ref can only be created when the candidate is in routed_to_verify status."
