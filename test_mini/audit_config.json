@@ -1,7 +1,0 @@
-{
-  "audit_id": "audit_test_mini",
-  "policy": "low_noise",
-  "schema_version": "1.0.0",
-  "target_repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\dar-fixture-mini",
-  "title": "Mini fixture test"
-}

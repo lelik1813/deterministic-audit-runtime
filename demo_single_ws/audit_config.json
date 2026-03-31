@@ -2,6 +2,6 @@
   "audit_id": "audit_single_real",
   "policy": "low_noise",
   "schema_version": "1.0.0",
-  "target_repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\runtime-audit-fixture",
+  "target_repo_path": "/path/to/target-repo",
   "title": "Single file real"
 }

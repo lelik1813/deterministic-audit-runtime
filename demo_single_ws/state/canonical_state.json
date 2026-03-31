@@ -6,7 +6,7 @@
     "status": "initialized",
     "target": {
       "repo_label": "runtime-audit-fixture",
-      "repo_path": "C:\\Users\\rocki\\Documents\\EGE\\Projects\\runtime-audit-fixture",
+      "repo_path": "/path/to/target-repo",
       "vcs": "git"
     },
     "title": "Single file real",

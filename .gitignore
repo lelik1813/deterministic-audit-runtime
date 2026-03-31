@@ -25,3 +25,18 @@ workspaces*/
 __pycache__/
 *.pyc
 *.pyo
+.pytest_cache/
+
+# Claude Code session data
+.claude/
+
+# Internal agent instruction files
+_user_reply/
+
+# Developer scripts with local paths
+_scripts/
+
+# Generated workspace artifacts (runtime output)
+test_mini*/
+claude_manual_ws/
+codex_manual_ws/
