@@ -231,6 +231,7 @@ The test suite covers adapters, validators, repair, report compilation, redactio
 | [`docs/REPORT_RUNTIME_CONTRACT.md`](docs/REPORT_RUNTIME_CONTRACT.md) | Report compilation contract |
 | [`docs/OBSERVATION_TO_FINDING_MAPPING_CONTRACT.md`](docs/OBSERVATION_TO_FINDING_MAPPING_CONTRACT.md) | Observation-to-finding mapping rules |
 | [`docs/v1_2_invariants.md`](docs/v1_2_invariants.md) | Version invariants |
+| [`ARCHITECTURAL_POSITIONING.md`](ARCHITECTURAL_POSITIONING.md) | Concise architectural argument and positioning |
 
 ## Maturity
 
