@@ -1,50 +1,17 @@
-Task: Verify final public repository surface and create post-cleanup commit
-
-Invariant:
-After mandatory cleanup, the repository must be verified against the intended public surface and then captured as a new stable post-cleanup baseline before documentation work begins.
+Task: Final repository structure polish before GitHub publish
 
 Scope:
 
-1. Verify top-level repository surface against docs/PUBLICATION_CLEANUP_PLAN.md:
+* Move:
 
-* list all current top-level entries
-* identify any unexpected remaining public items
-* confirm that removed/excluded items are no longer part of tracked public surface
-* confirm demo fixtures are still structurally usable after sanitization
-
-2. Verify no local-environment leakage remains in tracked public artifact:
-
-* search tracked repository content for:
-
-  * C:\Users\
-  * rocki
-  * AppData
-  * runtime-audit-fixture
-* exclude only self-referential cleanup/planning docs from failure classification
-* report exact remaining matches, if any
-
-3. If verification passes:
-
-* create a commit with message:
-  chore: publication cleanup and sanitization
-* return commit hash and short summary
+  * demo_workspace/ → examples/demo_workspace/
+  * demo_single_ws/ → examples/demo_single_ws/
+  * demo.sh, demo.ps1 → examples/
+* Update all README paths accordingly
+* Verify demo scripts still work after move
+* Commit changes
 
 Out of scope:
 
-* Do not rewrite README
-* Do not create new architecture docs
-* Do not move demos to examples yet
-* Do not add inline code documentation
-* Do not refactor scripts
-
-Artifacts:
-
-* docs/PUBLICATION_VERIFICATION.md
-* post-cleanup commit hash
-
-Definition of Done:
-
-* Current top-level public surface is explicitly listed
-* Any remaining unexpected tracked items are reported
-* Local-path leakage check result is explicit
-* A new post-cleanup commit exists if verification passes
+* No code refactoring
+* No documentation rewrite beyond path fixes

@@ -17,7 +17,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_ROOT"
 
 GREEN='\033[0;32m' CYAN='\033[0;36m' RED='\033[0;31m' NC='\033[0m'
 step() { echo -e "${CYAN}▶ $1${NC}"; }
